@@ -12,8 +12,6 @@ import (
 	"strings"
 	"text/template"
 	"time"
-
-	"github.com/gin-gonic/gin"
 )
 
 var (
@@ -24,19 +22,16 @@ var (
 )
 
 func initWebUI(htmlResult string) {
-	gin.SetMode(gin.ReleaseMode)
-
-	router := gin.Default()
-	router.SetTrustedProxies([]string{"127.0.0.1"})
-	router.GET("/", func(context *gin.Context) {
-		context.Header("Content-Type", "text/html; charset=utf-8")
-		context.String(http.StatusOK, htmlResult)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(htmlResult))
 	})
-	router.StaticFS("/x", http.FS(htmlFiles))
+	mux.Handle("/x/", http.StripPrefix("/x/", http.FileServer(http.FS(htmlFiles))))
 
-	// 启动服务器
 	go func() {
-		if err := router.Run("127.0.0.1:12332"); err != nil {
+		if err := http.ListenAndServe("127.0.0.1:12332", mux); err != nil {
 			panic(err)
 		}
 	}()
