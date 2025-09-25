@@ -11,7 +11,9 @@ func main() {
 	// 解密存档文件
 	result, err := decryptFile(filename)
 	if err != nil {
-		fmt.Printf("解密失败: %v\n", err)
+		fmt.Println(err)
+		fmt.Println("按回车键退出...")
+		fmt.Scanln()
 		return
 	}
 

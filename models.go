@@ -24,26 +24,28 @@ type HiData struct {
 	ResStr  string `json:"resStr"`
 }
 
-// HiResult 分析结果
-type HiResult struct {
-	BoxList   []*HiData
-	HeartList []*HiData
-	MetalList []*HiData
-	SilkList  []*HiData
+type ToolData struct {
+	Name   string `json:"name"`
+	ResStr string `json:"resStr"`
 }
 
-// PlayerData 玩家数据结构
-type PlayerData struct {
-	PurchasedBonebottomHeartPiece     bool `json:"PurchasedBonebottomHeartPiece"`
-	PurchasedBonebottomToolMetal      bool `json:"PurchasedBonebottomToolMetal"`
-	PurchasedPilgrimsRestMemoryLocket bool `json:"PurchasedPilgrimsRestMemoryLocket"`
-	PurchasedBelltownMemoryLocket     bool `json:"PurchasedBelltownMemoryLocket"`
-	PurchasedBelltownSpoolSegment     bool `json:"PurchasedBelltownSpoolSegment"`
-	MerchantEnclaveShellFragment      bool `json:"MerchantEnclaveShellFragment"`
-	PurchasedGrindleSpoolPiece        bool `json:"PurchasedGrindleSpoolPiece"`
-	MetCaravanTroupeLeaderJudge       bool `json:"MetCaravanTroupeLeaderJudge"`
-	MerchantEnclaveToolMetal          bool `json:"MerchantEnclaveToolMetal"`
-	MerchantEnclaveSpoolPiece         bool `json:"MerchantEnclaveSpoolPiece"`
+type OtherData struct {
+	Name      string `json:"name"`
+	ResStr    string `json:"resStr"`
+	Completed bool   `json:"completed"`
+}
+
+// HiResult 分析结果
+type HiResult struct {
+	Completion int
+	BoxList    []*HiData
+	HeartList  []*HiData
+	MetalList  []*HiData
+	SilkList   []*HiData
+	Tools      []*ToolData
+	ToolEquips []*ToolData
+	Abilities  []*ToolData
+	Others     []*OtherData
 }
 
 // 检查项数据

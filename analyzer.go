@@ -1,14 +1,17 @@
 package main
 
 import (
+	"cmp"
 	"encoding/json"
 	"fmt"
+	"maps"
 	"slices"
+	"strconv"
 )
 
 // analyzeSaveData 分析存档数据并返回结果
 func analyzeSaveData(jsonData string) (*HiResult, error) {
-	var saveData Data
+	var saveData SaveData
 	if err := json.Unmarshal([]byte(jsonData), &saveData); err != nil {
 		return nil, fmt.Errorf("JSON解析错误: %w", err)
 	}
@@ -23,6 +26,7 @@ func analyzeSaveData(jsonData string) (*HiResult, error) {
 
 	result := &HiResult{}
 
+	var heartObtained, silkObtained int
 	for _, checkItem := range checkItems {
 		evidenceCompleted := checkEvidence(checkItem, serializedList, saveData, questData)
 		storyEventCompleted := checkStoryEvent(checkItem, storyEvents)
@@ -38,27 +42,215 @@ func analyzeSaveData(jsonData string) (*HiResult, error) {
 
 		// 根据类型分类
 		switch checkItem.Type {
-		case 0: // 面具碎片
+		case 0:
 			result.HeartList = append(result.HeartList, itemData)
-		case 1: // 丝轴碎片
+			if status == "已获得" {
+				heartObtained++
+			}
+		case 1:
 			result.SilkList = append(result.SilkList, itemData)
+			if status == "已获得" {
+				silkObtained++
+			}
 		case 3: // 忆境纪念盒
 			result.BoxList = append(result.BoxList, itemData)
 		case 4: // 制造金属
 			result.MetalList = append(result.MetalList, itemData)
 		}
 	}
+	result.Completion += heartObtained / 4
+	result.Completion += silkObtained / 2
+
+	tools := maps.Clone(tools)
+	for _, tool := range playerData.Tools.SavedData {
+		if tool.Data.IsUnlocked {
+			if !tool.Data.IsHidden {
+				result.Tools = append(result.Tools, &ToolData{
+					Name:   tools[tool.Name],
+					ResStr: "已获得",
+				})
+				result.Completion++
+			}
+			delete(tools, tool.Name)
+		}
+	}
+	for _, tool := range upgradedTools {
+		delete(tools, tool)
+	}
+	var toolsNotObtained []*ToolData
+	for _, name := range tools {
+		toolsNotObtained = append(toolsNotObtained, &ToolData{
+			Name:   name,
+			ResStr: "未获得",
+		})
+	}
+	result.Tools = append(toolsNotObtained, result.Tools...)
+	slices.SortFunc(result.Tools, func(a, b *ToolData) int {
+		return cmp.Compare(a.Name, b.Name)
+	})
+
+	toolEquips := maps.Clone(toolEquips)
+	for _, toolEquip := range playerData.ToolEquips.SavedData {
+		if toolEquip.Data.IsUnlocked && toolEquips[toolEquip.Name] != "" {
+			result.ToolEquips = append(result.ToolEquips, &ToolData{
+				Name:   toolEquips[toolEquip.Name],
+				ResStr: "已获得",
+			})
+			result.Completion++
+		}
+	}
+	for name := range toolEquips {
+		if !slices.ContainsFunc(result.ToolEquips, func(t *ToolData) bool { return t.Name == toolEquips[name] }) {
+			result.ToolEquips = append(result.ToolEquips, &ToolData{
+				Name:   toolEquips[name],
+				ResStr: "未获得",
+			})
+		}
+	}
+
+	result.Others = append(result.Others, &OtherData{
+		Name:      "织针升级",
+		ResStr:    strconv.Itoa(playerData.NailUpgrades) + "/4",
+		Completed: playerData.NailUpgrades == 4,
+	})
+	result.Completion += playerData.NailUpgrades
+
+	result.Others = append(result.Others, &OtherData{
+		Name:      "工具袋升级",
+		ResStr:    strconv.Itoa(playerData.ToolPouchUpgrades) + "/4",
+		Completed: playerData.ToolPouchUpgrades == 4,
+	})
+	result.Completion += playerData.ToolPouchUpgrades
+
+	result.Others = append(result.Others, &OtherData{
+		Name:      "工具包升级",
+		ResStr:    strconv.Itoa(playerData.ToolKitUpgrades) + "/4",
+		Completed: playerData.ToolKitUpgrades == 4,
+	})
+	result.Completion += playerData.ToolKitUpgrades
+
+	result.Others = append(result.Others, &OtherData{
+		Name:      "丝之心",
+		ResStr:    strconv.Itoa(playerData.SilkRegenMax) + "/3",
+		Completed: playerData.SilkRegenMax == 3,
+	})
+	result.Completion += playerData.SilkRegenMax
+
+	if playerData.HasNeedolin {
+		result.Abilities = append(result.Abilities, &ToolData{
+			Name:   "织忆弦针",
+			ResStr: "已获得",
+		})
+		result.Completion++
+	} else {
+		result.Abilities = append(result.Abilities, &ToolData{
+			Name:   "织忆弦针",
+			ResStr: "未获得",
+		})
+	}
+
+	if playerData.HasDash {
+		result.Abilities = append(result.Abilities, &ToolData{
+			Name:   "疾风步",
+			ResStr: "已获得",
+		})
+		result.Completion++
+	} else {
+		result.Abilities = append(result.Abilities, &ToolData{
+			Name:   "疾风步",
+			ResStr: "未获得",
+		})
+	}
+
+	if playerData.HasWalljump {
+		result.Abilities = append(result.Abilities, &ToolData{
+			Name:   "蛛攀术",
+			ResStr: "已获得",
+		})
+		result.Completion++
+	} else {
+		result.Abilities = append(result.Abilities, &ToolData{
+			Name:   "蛛攀术",
+			ResStr: "未获得",
+		})
+	}
+
+	if playerData.HasHarpoonDash {
+		result.Abilities = append(result.Abilities, &ToolData{
+			Name:   "飞针冲刺",
+			ResStr: "已获得",
+		})
+		result.Completion++
+	} else {
+		result.Abilities = append(result.Abilities, &ToolData{
+			Name:   "飞针冲刺",
+			ResStr: "未获得",
+		})
+	}
+
+	if playerData.HasSuperJump {
+		result.Abilities = append(result.Abilities, &ToolData{
+			Name:   "灵丝升腾",
+			ResStr: "已获得",
+		})
+		result.Completion++
+	} else {
+		result.Abilities = append(result.Abilities, &ToolData{
+			Name:   "灵丝升腾",
+			ResStr: "未获得",
+		})
+	}
+
+	if playerData.HasChargeSlash {
+		result.Abilities = append(result.Abilities, &ToolData{
+			Name:   "蓄力斩",
+			ResStr: "已获得",
+		})
+		result.Completion++
+	} else {
+		result.Abilities = append(result.Abilities, &ToolData{
+			Name:   "蓄力斩",
+			ResStr: "未获得",
+		})
+	}
+
+	if playerData.HasBoundCrestUpgrader {
+		result.Others = append(result.Others, &OtherData{
+			Name:      "绑定纹章升级器",
+			ResStr:    "已获得",
+			Completed: true,
+		})
+		result.Completion++
+	} else {
+		result.Others = append(result.Others, &OtherData{
+			Name:   "绑定纹章升级器",
+			ResStr: "未获得",
+		})
+	}
+
+	if playerData.HasBoundCrestUpgrader {
+		result.Others = append(result.Others, &OtherData{
+			Name:      "永绽花",
+			ResStr:    "已获得",
+			Completed: true,
+		})
+		result.Completion++
+	} else {
+		result.Others = append(result.Others, &OtherData{
+			Name:   "永绽花",
+			ResStr: "未获得",
+		})
+	}
 
 	return result, nil
 }
 
-// checkEvidence 检查证据是否完成
 func checkEvidence(checkItem CheckItem, serializedList []struct {
 	ID        string `json:"ID"`
 	Mutator   int    `json:"Mutator"`
 	SceneName string `json:"SceneName"`
 	Value     bool   `json:"Value"`
-}, saveData Data, questData []struct {
+}, saveData SaveData, questData []struct {
 	Data struct {
 		CompletedCount   int  `json:"CompletedCount"`
 		HasBeenSeen      bool `json:"HasBeenSeen"`
@@ -80,10 +272,10 @@ func checkEvidence(checkItem CheckItem, serializedList []struct {
 		})
 		return itemIndex >= 0 && serializedList[itemIndex].Value
 
-	case 1: // 商店购买
+	case 1:
 		return checkShopPurchase(checkItem.Evidence2, saveData)
 
-	case 2: // 任务完成
+	case 2:
 		questIndex := slices.IndexFunc(questData, func(questItem struct {
 			Data struct {
 				CompletedCount   int  `json:"CompletedCount"`
@@ -102,8 +294,7 @@ func checkEvidence(checkItem CheckItem, serializedList []struct {
 	return false
 }
 
-// checkShopPurchase 检查商店购买状态
-func checkShopPurchase(evidenceId string, saveData Data) bool {
+func checkShopPurchase(evidenceId string, saveData SaveData) bool {
 	switch evidenceId {
 	case "1":
 		return saveData.PlayerData.PurchasedBonebottomHeartPiece
@@ -129,7 +320,6 @@ func checkShopPurchase(evidenceId string, saveData Data) bool {
 	return false
 }
 
-// checkStoryEvent 检查故事事件
 func checkStoryEvent(checkItem CheckItem, storyEvents []struct {
 	EventType int     `json:"EventType"`
 	PlayTime  float64 `json:"PlayTime"`
@@ -148,12 +338,11 @@ func checkStoryEvent(checkItem CheckItem, storyEvents []struct {
 	})
 }
 
-// determineStatus 确定完成状态
 func determineStatus(evidenceCompleted, storyEventCompleted bool) string {
 	if evidenceCompleted && storyEventCompleted {
-		return "已完成"
+		return "已获得"
 	} else if evidenceCompleted && !storyEventCompleted {
 		return "疑似BUG"
 	}
-	return "未完成"
+	return "未获得"
 }

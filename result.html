@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>丝之歌完成度</title>
+    <link rel="stylesheet" href="http://127.0.0.1:12332/x/static/index.css" />
+    <script src="http://127.0.0.1:12332/x/static/vue.global.prod.js"></script>
+    <script src="http://127.0.0.1:12332/x/static/index.full.min.js"></script>
+    <style>
+        .el-table .danger-row {
+            --el-table-tr-bg-color: var(--el-color-danger-light-7);
+        }
+        .el-table .warning-row {
+            --el-table-tr-bg-color: var(--el-color-warning-light-7);
+        }
+        .el-table .success-row {
+            --el-table-tr-bg-color: var(--el-color-success-light-7);
+        }
+    </style>
+</head>
+
+<body>
+<div id="app" style="display: flex; flex-direction: column; align-items: center; min-height: 100vh;">
+    <el-text size="large">完成度： {{"{{"}}Completion{{"}}"}}%</el-text>
+    <el-text v-if="Completion > 100">已知bug，曲镰会导致本页面完成度多1，请及时告诉我。</el-text>
+    <h2>面具碎片</h2>
+    <el-table :show-header="false" border :data="HeartList" style="width: 50%" :row-class-name="determineRowClass">
+        <el-table-column prop="scene" label="位置">
+        </el-table-column>
+        <el-table-column prop="resStr" label="状态" width="80">
+        </el-table-column>
+    </el-table>
+    <h2>丝轴碎片</h2>
+    <el-table :show-header="false" border :data="SilkList" style="width: 50%" :row-class-name="determineRowClass">
+        <el-table-column prop="scene" label="位置">
+        </el-table-column>
+        <el-table-column prop="resStr" label="状态" width="80">
+        </el-table-column>
+    </el-table>
+    <h2>纹章（除猎手外）</h2>
+    <el-table :show-header="false" border :data="ToolEquips" style="width: 50%" :row-class-name="determineRowClass">
+        <el-table-column prop="name" label="名称">
+        </el-table-column>
+        <el-table-column prop="resStr" label="状态" width="80">
+        </el-table-column>
+    </el-table>
+    <h2>法术和工具</h2>
+    <el-text>曲镰、丝弹、壳嚢没有正确翻译，如果你拥有以上道具，请将其英文告诉我。此外已知bug，曲镰会导致本页面完成度多1，请及时告诉我。</el-text>
+    <el-table :show-header="false" border :data="Tools" style="width: 50%" :row-class-name="determineRowClass">
+        <el-table-column prop="name" label="名称">
+        </el-table-column>
+        <el-table-column prop="resStr" label="状态" width="80">
+        </el-table-column>
+    </el-table>
+    <h2>能力</h2>
+    <el-table :show-header="false" border :data="Abilities" style="width: 50%" :row-class-name="determineRowClass">
+        <el-table-column prop="name" label="名称">
+        </el-table-column>
+        <el-table-column prop="resStr" label="状态" width="80">
+        </el-table-column>
+    </el-table>
+    <h2>其它</h2>
+    <el-table :show-header="false" border :data="Others" style="width: 50%" :row-class-name="determineRowClass">
+        <el-table-column prop="name" label="名称">
+        </el-table-column>
+        <el-table-column prop="resStr" label="状态" width="80">
+        </el-table-column>
+    </el-table>
+    <h2>制造金属（不占完成度，但工具必须）</h2>
+    <el-table :show-header="false" border :data="MetalList" style="width: 50%" :row-class-name="determineRowClass">
+        <el-table-column prop="scene" label="位置">
+        </el-table-column>
+        <el-table-column prop="resStr" label="状态" width="80">
+        </el-table-column>
+    </el-table>
+    <h2>忆境纪念盒（不占完成度）</h2>
+    <el-table :show-header="false" border :data="BoxList" style="width: 50%" :row-class-name="determineRowClass">
+        <el-table-column prop="scene" label="位置">
+        </el-table-column>
+        <el-table-column prop="resStr" label="状态" width="80">
+        </el-table-column>
+    </el-table>
+</div>
+
+<script>
+    const { createApp } = Vue;
+    const app = createApp({
+        data() {
+            return {{.Data}};
+        },
+        methods: {
+            determineRowClass({row}) {
+                if (row.completed !== undefined) {
+                    if (row.completed) {
+                        return 'success-row';
+                    }
+                    return row.resStr.startsWith("0") || row.resStr === "未获得" ? 'danger-row' : 'warning-row';
+                }
+                return row.resStr !== '已获得' ? 'danger-row' : 'success-row';
+            }
+        },
+    });
+    app.use(ElementPlus);
+    app.mount('#app');
+</script>
+</body>
+</html>
