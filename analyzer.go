@@ -246,7 +246,16 @@ func analyzeSaveData(jsonData string) (*HiResult, error) {
 		})
 	}
 
-	if playerData.HasBoundCrestUpgrader {
+	if slices.ContainsFunc(playerData.Collectables.SavedData, func(s struct {
+		Data struct {
+			Amount            int `json:"Amount"`
+			AmountWhileHidden int `json:"AmountWhileHidden"`
+			IsSeenMask        int `json:"IsSeenMask"`
+		} `json:"Data"`
+		Name string `json:"Name"`
+	}) bool {
+		return s.Name == "White Flower" && s.Data.Amount == 1 && s.Data.IsSeenMask == 1
+	}) {
 		result.Others = append(result.Others, &OtherData{
 			Name:      "永绽花",
 			ResStr:    "已获得",
