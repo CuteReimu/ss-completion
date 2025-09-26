@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"runtime"
 	"strings"
 	"text/template"
 	"time"
@@ -62,7 +63,17 @@ func displayResults(result *HiResult) {
 	}
 	htmlResult := b.String()
 	initWebUI(htmlResult)
-	_ = exec.Command("rundll32", "url.dll,FileProtocolHandler", "http://127.0.0.1:12332/").Start()
+	switch strings.ToLower(runtime.GOOS) {
+	case "windows":
+		_ = exec.Command("rundll32", "url.dll,FileProtocolHandler", "http://127.0.0.1:12332/").Start()
+	case "linux":
+		_ = exec.Command("xdg-open", "http://127.0.0.1:12332/").Start()
+	case "darwin":
+		_ = exec.Command("open", "http://127.0.0.1:12332/").Start()
+	default:
+		fmt.Println("不支持自动打开浏览器的操作系统：", runtime.GOOS)
+		fmt.Println("请手动打开浏览器并访问: http://127.0.0.1:12332/")
+	}
 	time.AfterFunc(3*time.Second, func() {
 		fmt.Println("按回车键退出...")
 	})
