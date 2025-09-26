@@ -14,6 +14,9 @@
 ## 使用方法
 
 ```bash
+# 考虑到cdn访问较慢，不如直接下载打包进去
+./download_cdn.sh
+
 # 编译程序
 go build -o ss-completion .
 
@@ -22,4 +25,6 @@ go build -o ss-completion .
 
 # 如果不提供参数，程序会提示输入文件路径
 ./ss-completion
+
+# 启动后访问 http://127.0.0.1:12332/ 即可
 ```
