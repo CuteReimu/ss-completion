@@ -15,6 +15,7 @@ var tools = map[string]string{
 	"Bell Bind":            "护佑钟",
 	"Fractured Mask":       "碎面甲",
 	"Curve Claws":          "弧爪",
+	"Curve Claws Upgraded": "曲镰",
 	"Pimpilo":              "爆燃嚢",
 	"Multibind":            "多重缚丝器",
 	"Lava Charm":           "熔岩钟",
@@ -22,13 +23,14 @@ var tools = map[string]string{
 	"Dazzle Bind":          "爪镜",
 	"Revenge Crystal":      "记忆晶石",
 	"Dead Mans Purse":      "亡虫嚢",
+	"Shell Satchel":        "壳囊",
 	"Wallcling":            "登极握爪",
 	"Silk Charge":          "丝刃镖",
 	"Lifeblood Syringe":    "生质液瓶",
 	"Mosscreep Tool 2":     "德鲁伊双瞳",
 	"Thief Charm":          "窃者印记",
 	"Magnetite Dice":       "磁石骰",
-	"Thief Claw":           "窃者印记",
+	"Thief Claw":           "撬赃钩",
 	"Spool Extender":       "储丝延展器",
 	"Cogwork Flier":        "齿轮蜂",
 	"Quickbind":            "注丝套针",
@@ -55,14 +57,16 @@ var tools = map[string]string{
 	"Scuttlebrace":         "迅捷脊锁",
 	"Shakra Ring":          "投掷环",
 	"Harpoon":              "长针",
-	"WebShot Weaver":       "丝弹（雪山？存疑）",
+	"WebShot Weaver":       "丝弹（雪山）",
+	"WebShot Forge":        "丝弹（熔炉之女）",
+	"WebShot Architect":    "丝弹（建筑师）",
 	"Flea Charm":           "蚤母卵",
 	"Pinstress Tool":       "针徽",
 	"Dazzle Bind Upgraded": "双生爪镜",
 	"Silk Boss Needle":     "苍白之爪",
 }
 
-var upgradedTools = []string{"Mosscreep Tool 2", "Dazzle Bind Upgraded"}
+var upgradedTools = []string{"Mosscreep Tool 2", "Dazzle Bind Upgraded", "WebShot Weaver", "WebShot Forge", "WebShot Architect", "Curve Claws Upgraded"}
 
 var toolEquips = map[string]string{
 	"Reaper":     "收割者纹章",

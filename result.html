@@ -22,8 +22,8 @@
 
 <body>
 <div id="app" style="display: flex; flex-direction: column; align-items: center; min-height: 100vh;">
+    <el-text size="small">感谢计时器生成器交流群的群友们热心提供存档，协助开发</el-text>
     <el-text size="large">完成度： {{"{{"}}Completion{{"}}"}}%</el-text>
-    <el-text v-if="Completion > 100">已知bug，曲镰会导致本页面完成度多1，请及时告诉我。</el-text>
     <h2>面具碎片</h2>
     <el-table :show-header="false" border :data="HeartList" style="width: 50%" :row-class-name="determineRowClass">
         <el-table-column prop="scene" label="位置">
@@ -46,7 +46,6 @@
         </el-table-column>
     </el-table>
     <h2>法术和工具</h2>
-    <el-text>曲镰、丝弹、壳嚢没有正确翻译，如果你拥有以上道具，请将其英文告诉我。此外已知bug，曲镰会导致本页面完成度多1，请及时告诉我。</el-text>
     <el-table :show-header="false" border :data="Tools" style="width: 50%" :row-class-name="determineRowClass">
         <el-table-column prop="name" label="名称">
         </el-table-column>

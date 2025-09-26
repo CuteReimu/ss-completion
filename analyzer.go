@@ -7,6 +7,7 @@ import (
 	"maps"
 	"slices"
 	"strconv"
+	"strings"
 )
 
 // analyzeSaveData 分析存档数据并返回结果
@@ -65,8 +66,12 @@ func analyzeSaveData(jsonData string) (*HiResult, error) {
 	for _, tool := range playerData.Tools.SavedData {
 		if tool.Data.IsUnlocked {
 			if !tool.Data.IsHidden {
+				toolName := tools[tool.Name]
+				if toolName == "" {
+					toolName = tool.Name
+				}
 				result.Tools = append(result.Tools, &ToolData{
-					Name:   tools[tool.Name],
+					Name:   toolName,
 					ResStr: "已获得",
 				})
 				result.Completion++
@@ -77,10 +82,23 @@ func analyzeSaveData(jsonData string) (*HiResult, error) {
 	for _, tool := range upgradedTools {
 		delete(tools, tool)
 	}
+	if playerData.PermadeathMode == 0 {
+		delete(tools, "Shell Satchel")
+	} else {
+		delete(tools, "Dead Mans Purse")
+	}
 	var toolsNotObtained []*ToolData
 	for _, name := range tools {
 		toolsNotObtained = append(toolsNotObtained, &ToolData{
 			Name:   name,
+			ResStr: "未获得",
+		})
+	}
+	if !slices.ContainsFunc(result.Tools, func(data *ToolData) bool {
+		return strings.HasPrefix(data.Name, "丝弹")
+	}) {
+		toolsNotObtained = append(toolsNotObtained, &ToolData{
+			Name:   "丝弹",
 			ResStr: "未获得",
 		})
 	}
