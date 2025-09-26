@@ -254,7 +254,7 @@ func analyzeSaveData(jsonData string) (*HiResult, error) {
 		} `json:"Data"`
 		Name string `json:"Name"`
 	}) bool {
-		return s.Name == "White Flower" && s.Data.Amount == 1 && s.Data.IsSeenMask == 1
+		return s.Name == "White Flower" && s.Data.Amount == 1
 	}) {
 		result.Others = append(result.Others, &OtherData{
 			Name:      "永绽花",
