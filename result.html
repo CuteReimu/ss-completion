@@ -23,63 +23,16 @@
 <body>
 <div id="app" style="display: flex; flex-direction: column; align-items: center; min-height: 100vh;">
     <el-text size="small">感谢计时器生成器交流群的群友们热心提供存档，协助开发。代码仓库：<a href="https://github.com/CuteReimu/ss-completion" rel="noopener noreferrer" target="_blank">https://github.com/CuteReimu/ss-completion</a></el-text>
-    <el-text size="large">完成度： {{"{{"}}Completion{{"}}"}}%</el-text>
-    <h2>面具碎片</h2>
-    <el-table :show-header="false" border :data="HeartList" style="width: 50%" :row-class-name="determineRowClass">
-        <el-table-column prop="scene" label="位置">
-        </el-table-column>
-        <el-table-column prop="resStr" label="状态" width="80">
-        </el-table-column>
-    </el-table>
-    <h2>丝轴碎片</h2>
-    <el-table :show-header="false" border :data="SilkList" style="width: 50%" :row-class-name="determineRowClass">
-        <el-table-column prop="scene" label="位置">
-        </el-table-column>
-        <el-table-column prop="resStr" label="状态" width="80">
-        </el-table-column>
-    </el-table>
-    <h2>纹章（除猎手外）</h2>
-    <el-table :show-header="false" border :data="ToolEquips" style="width: 50%" :row-class-name="determineRowClass">
-        <el-table-column prop="name" label="名称">
-        </el-table-column>
-        <el-table-column prop="resStr" label="状态" width="80">
-        </el-table-column>
-    </el-table>
-    <h2>法术和工具</h2>
-    <el-table :show-header="false" border :data="Tools" style="width: 50%" :row-class-name="determineRowClass">
-        <el-table-column prop="name" label="名称">
-        </el-table-column>
-        <el-table-column prop="resStr" label="状态" width="80">
-        </el-table-column>
-    </el-table>
-    <h2>能力</h2>
-    <el-table :show-header="false" border :data="Abilities" style="width: 50%" :row-class-name="determineRowClass">
-        <el-table-column prop="name" label="名称">
-        </el-table-column>
-        <el-table-column prop="resStr" label="状态" width="80">
-        </el-table-column>
-    </el-table>
-    <h2>其它</h2>
-    <el-table :show-header="false" border :data="Others" style="width: 50%" :row-class-name="determineRowClass">
-        <el-table-column prop="name" label="名称">
-        </el-table-column>
-        <el-table-column prop="resStr" label="状态" width="80">
-        </el-table-column>
-    </el-table>
-    <h2>制造金属（不占完成度，但工具必须）</h2>
-    <el-table :show-header="false" border :data="MetalList" style="width: 50%" :row-class-name="determineRowClass">
-        <el-table-column prop="scene" label="位置">
-        </el-table-column>
-        <el-table-column prop="resStr" label="状态" width="80">
-        </el-table-column>
-    </el-table>
-    <h2>忆境纪念盒（不占完成度）</h2>
-    <el-table :show-header="false" border :data="BoxList" style="width: 50%" :row-class-name="determineRowClass">
-        <el-table-column prop="scene" label="位置">
-        </el-table-column>
-        <el-table-column prop="resStr" label="状态" width="80">
-        </el-table-column>
-    </el-table>
+    <el-text size="large">完成度：{{"{{"}}completion{{"}}"}}%</el-text>
+    <template v-for="itemAndName in data" :key="itemAndName.type">
+        <h2>{{"{{"}}itemAndName.type{{"}}"}}</h2>
+        <el-table :show-header="false" border :data="itemAndName.dataList" style="width: 50%" :row-class-name="determineRowClass">
+            <el-table-column prop="name" label="名称">
+            </el-table-column>
+            <el-table-column prop="resStr" label="状态" width="80">
+            </el-table-column>
+        </el-table>
+    </template>
 </div>
 
 <script>
@@ -90,13 +43,10 @@
         },
         methods: {
             determineRowClass({row}) {
-                if (row.completed !== undefined) {
-                    if (row.completed) {
-                        return 'success-row';
-                    }
-                    return row.resStr.startsWith("0") || row.resStr === "未获得" ? 'danger-row' : 'warning-row';
+                if (row.completed) {
+                    return 'success-row';
                 }
-                return row.resStr !== '已获得' ? 'danger-row' : 'success-row';
+                return row.resStr.startsWith("0") || row.resStr.startsWith("未") ? 'danger-row' : 'warning-row';
             }
         },
     });

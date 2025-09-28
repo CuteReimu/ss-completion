@@ -7,11 +7,10 @@ import (
 	"maps"
 	"slices"
 	"strconv"
-	"strings"
 )
 
 // analyzeSaveData 分析存档数据并返回结果
-func analyzeSaveData(jsonData string) (*HiResult, error) {
+func analyzeSaveData(jsonData string) (*Result, error) {
 	var saveData SaveData
 	if err := json.Unmarshal([]byte(jsonData), &saveData); err != nil {
 		return nil, fmt.Errorf("JSON解析错误: %w", err)
@@ -25,7 +24,8 @@ func analyzeSaveData(jsonData string) (*HiResult, error) {
 	questCompletion := playerData.QuestCompletionData
 	questData := questCompletion.SavedData
 
-	result := &HiResult{}
+	var completion int
+	result := make(map[string][]*Data, len(ListOrder))
 
 	var heartObtained, silkObtained int
 	for _, checkItem := range checkItems {
@@ -34,47 +34,43 @@ func analyzeSaveData(jsonData string) (*HiResult, error) {
 
 		status := determineStatus(evidenceCompleted, storyEventCompleted)
 
-		itemData := &HiData{
-			CheckId: checkItem.CheckId,
-			Scene:   checkItem.Scene,
-			Axis:    checkItem.Axis,
-			ResStr:  status,
+		itemData := &Data{
+			Name:      checkItem.Scene,
+			ResStr:    status,
+			Completed: status == "已获得",
 		}
 
 		// 根据类型分类
 		switch checkItem.Type {
 		case 0:
-			result.HeartList = append(result.HeartList, itemData)
+			result[NameHeartList] = append(result[NameHeartList], itemData)
 			if status == "已获得" {
 				heartObtained++
 			}
 		case 1:
-			result.SilkList = append(result.SilkList, itemData)
+			result[NameSilkList] = append(result[NameSilkList], itemData)
 			if status == "已获得" {
 				silkObtained++
 			}
 		case 3: // 忆境纪念盒
-			result.BoxList = append(result.BoxList, itemData)
+			result[NameBoxList] = append(result[NameBoxList], itemData)
 		case 4: // 制造金属
-			result.MetalList = append(result.MetalList, itemData)
+			result[NameMetalList] = append(result[NameMetalList], itemData)
 		}
 	}
-	result.Completion += heartObtained / 4
-	result.Completion += silkObtained / 2
+	completion += heartObtained / 4
+	completion += silkObtained / 2
 
 	tools := maps.Clone(tools)
 	for _, tool := range playerData.Tools.SavedData {
 		if tool.Data.IsUnlocked {
 			if !tool.Data.IsHidden {
-				toolName := tools[tool.Name]
-				if toolName == "" {
-					toolName = tool.Name
-				}
-				result.Tools = append(result.Tools, &ToolData{
-					Name:   toolName,
-					ResStr: "已获得",
+				result[NameTools] = append(result[NameTools], &Data{
+					Name:      tools[tool.Name],
+					ResStr:    "已获得",
+					Completed: true,
 				})
-				result.Completion++
+				completion++
 			}
 			delete(tools, tool.Name)
 		}
@@ -87,189 +83,186 @@ func analyzeSaveData(jsonData string) (*HiResult, error) {
 	} else {
 		delete(tools, "Dead Mans Purse")
 	}
-	var toolsNotObtained []*ToolData
+	var toolsNotObtained []*Data
 	for _, name := range tools {
-		toolsNotObtained = append(toolsNotObtained, &ToolData{
+		toolsNotObtained = append(toolsNotObtained, &Data{
 			Name:   name,
 			ResStr: "未获得",
 		})
 	}
-	if !slices.ContainsFunc(result.Tools, func(data *ToolData) bool {
-		return strings.HasPrefix(data.Name, "丝弹")
-	}) {
-		toolsNotObtained = append(toolsNotObtained, &ToolData{
-			Name:   "丝弹",
-			ResStr: "未获得",
-		})
-	}
-	result.Tools = append(toolsNotObtained, result.Tools...)
-	slices.SortFunc(result.Tools, func(a, b *ToolData) int {
+	result[NameTools] = append(toolsNotObtained, result[NameTools]...)
+	slices.SortFunc(result[NameTools], func(a, b *Data) int {
 		return cmp.Compare(a.Name, b.Name)
 	})
 
 	toolEquips := maps.Clone(toolEquips)
 	for _, toolEquip := range playerData.ToolEquips.SavedData {
 		if toolEquip.Data.IsUnlocked && toolEquips[toolEquip.Name] != "" {
-			result.ToolEquips = append(result.ToolEquips, &ToolData{
-				Name:   toolEquips[toolEquip.Name],
-				ResStr: "已获得",
+			result[NameToolEquips] = append(result[NameToolEquips], &Data{
+				Name:      toolEquips[toolEquip.Name],
+				ResStr:    "已获得",
+				Completed: true,
 			})
-			result.Completion++
+			completion++
 		}
 	}
 	for name := range toolEquips {
-		if !slices.ContainsFunc(result.ToolEquips, func(t *ToolData) bool { return t.Name == toolEquips[name] }) {
-			result.ToolEquips = append(result.ToolEquips, &ToolData{
+		if !slices.ContainsFunc(result[NameToolEquips], func(t *Data) bool { return t.Name == toolEquips[name] }) {
+			result[NameToolEquips] = append(result[NameToolEquips], &Data{
 				Name:   toolEquips[name],
 				ResStr: "未获得",
 			})
 		}
 	}
 
-	result.Others = append(result.Others, &OtherData{
+	result[NameOthers] = append(result[NameOthers], &Data{
 		Name:      "织针升级",
 		ResStr:    strconv.Itoa(playerData.NailUpgrades) + "/4",
 		Completed: playerData.NailUpgrades == 4,
 	})
-	result.Completion += playerData.NailUpgrades
+	completion += playerData.NailUpgrades
 
-	result.Others = append(result.Others, &OtherData{
+	result[NameOthers] = append(result[NameOthers], &Data{
 		Name:      "工具袋升级",
 		ResStr:    strconv.Itoa(playerData.ToolPouchUpgrades) + "/4",
 		Completed: playerData.ToolPouchUpgrades == 4,
 	})
-	result.Completion += playerData.ToolPouchUpgrades
+	completion += playerData.ToolPouchUpgrades
 
-	result.Others = append(result.Others, &OtherData{
+	result[NameOthers] = append(result[NameOthers], &Data{
 		Name:      "工具包升级",
 		ResStr:    strconv.Itoa(playerData.ToolKitUpgrades) + "/4",
 		Completed: playerData.ToolKitUpgrades == 4,
 	})
-	result.Completion += playerData.ToolKitUpgrades
+	completion += playerData.ToolKitUpgrades
 
-	result.Others = append(result.Others, &OtherData{
+	result[NameOthers] = append(result[NameOthers], &Data{
 		Name:      "丝之心",
 		ResStr:    strconv.Itoa(playerData.SilkRegenMax) + "/3",
 		Completed: playerData.SilkRegenMax == 3,
 	})
-	result.Completion += playerData.SilkRegenMax
+	completion += playerData.SilkRegenMax
 
 	if playerData.HasNeedolin {
-		result.Abilities = append(result.Abilities, &ToolData{
-			Name:   "织忆弦针",
-			ResStr: "已获得",
+		result[NameAbilities] = append(result[NameAbilities], &Data{
+			Name:      "织忆弦针",
+			ResStr:    "已获得",
+			Completed: true,
 		})
-		result.Completion++
+		completion++
 	} else {
-		result.Abilities = append(result.Abilities, &ToolData{
+		result[NameAbilities] = append(result[NameAbilities], &Data{
 			Name:   "织忆弦针",
 			ResStr: "未获得",
 		})
 	}
 
 	if playerData.HasDash {
-		result.Abilities = append(result.Abilities, &ToolData{
-			Name:   "疾风步",
-			ResStr: "已获得",
+		result[NameAbilities] = append(result[NameAbilities], &Data{
+			Name:      "疾风步",
+			ResStr:    "已获得",
+			Completed: true,
 		})
-		result.Completion++
+		completion++
 	} else {
-		result.Abilities = append(result.Abilities, &ToolData{
+		result[NameAbilities] = append(result[NameAbilities], &Data{
 			Name:   "疾风步",
 			ResStr: "未获得",
 		})
 	}
 
 	if playerData.HasWalljump {
-		result.Abilities = append(result.Abilities, &ToolData{
-			Name:   "蛛攀术",
-			ResStr: "已获得",
+		result[NameAbilities] = append(result[NameAbilities], &Data{
+			Name:      "蛛攀术",
+			ResStr:    "已获得",
+			Completed: true,
 		})
-		result.Completion++
+		completion++
 	} else {
-		result.Abilities = append(result.Abilities, &ToolData{
+		result[NameAbilities] = append(result[NameAbilities], &Data{
 			Name:   "蛛攀术",
 			ResStr: "未获得",
 		})
 	}
 
 	if playerData.HasHarpoonDash {
-		result.Abilities = append(result.Abilities, &ToolData{
-			Name:   "飞针冲刺",
-			ResStr: "已获得",
+		result[NameAbilities] = append(result[NameAbilities], &Data{
+			Name:      "飞针冲刺",
+			ResStr:    "已获得",
+			Completed: true,
 		})
-		result.Completion++
+		completion++
 	} else {
-		result.Abilities = append(result.Abilities, &ToolData{
+		result[NameAbilities] = append(result[NameAbilities], &Data{
 			Name:   "飞针冲刺",
 			ResStr: "未获得",
 		})
 	}
 
 	if playerData.HasSuperJump {
-		result.Abilities = append(result.Abilities, &ToolData{
-			Name:   "灵丝升腾",
-			ResStr: "已获得",
+		result[NameAbilities] = append(result[NameAbilities], &Data{
+			Name:      "灵丝升腾",
+			ResStr:    "已获得",
+			Completed: true,
 		})
-		result.Completion++
+		completion++
 	} else {
-		result.Abilities = append(result.Abilities, &ToolData{
+		result[NameAbilities] = append(result[NameAbilities], &Data{
 			Name:   "灵丝升腾",
 			ResStr: "未获得",
 		})
 	}
 
 	if playerData.HasChargeSlash {
-		result.Abilities = append(result.Abilities, &ToolData{
-			Name:   "蓄力斩",
-			ResStr: "已获得",
+		result[NameAbilities] = append(result[NameAbilities], &Data{
+			Name:      "蓄力斩",
+			ResStr:    "已获得",
+			Completed: true,
 		})
-		result.Completion++
+		completion++
 	} else {
-		result.Abilities = append(result.Abilities, &ToolData{
+		result[NameAbilities] = append(result[NameAbilities], &Data{
 			Name:   "蓄力斩",
 			ResStr: "未获得",
 		})
 	}
 
 	if playerData.HasBoundCrestUpgrader {
-		result.Others = append(result.Others, &OtherData{
+		result[NameOthers] = append(result[NameOthers], &Data{
 			Name:      "绑定纹章升级器",
 			ResStr:    "已获得",
 			Completed: true,
 		})
-		result.Completion++
+		completion++
 	} else {
-		result.Others = append(result.Others, &OtherData{
+		result[NameOthers] = append(result[NameOthers], &Data{
 			Name:   "绑定纹章升级器",
 			ResStr: "未获得",
 		})
 	}
 
-	if slices.ContainsFunc(playerData.Collectables.SavedData, func(s struct {
-		Data struct {
-			Amount            int `json:"Amount"`
-			AmountWhileHidden int `json:"AmountWhileHidden"`
-			IsSeenMask        int `json:"IsSeenMask"`
-		} `json:"Data"`
-		Name string `json:"Name"`
-	}) bool {
-		return s.Name == "White Flower" && s.Data.Amount == 1
-	}) {
-		result.Others = append(result.Others, &OtherData{
+	if playerData.HasBoundCrestUpgrader {
+		result[NameOthers] = append(result[NameOthers], &Data{
 			Name:      "永绽花",
 			ResStr:    "已获得",
 			Completed: true,
 		})
-		result.Completion++
+		completion++
 	} else {
-		result.Others = append(result.Others, &OtherData{
+		result[NameOthers] = append(result[NameOthers], &Data{
 			Name:   "永绽花",
 			ResStr: "未获得",
 		})
 	}
 
-	return result, nil
+	ret := &Result{Completion: completion}
+	for _, key := range ListOrder {
+		ret.Data = append(ret.Data, &Datas{
+			Type:     key,
+			DataList: result[key],
+		})
+	}
+	return ret, nil
 }
 
 func checkEvidence(checkItem CheckItem, serializedList []struct {
@@ -366,10 +359,12 @@ func checkStoryEvent(checkItem CheckItem, storyEvents []struct {
 }
 
 func determineStatus(evidenceCompleted, storyEventCompleted bool) string {
-	if evidenceCompleted && storyEventCompleted {
-		return "已获得"
-	} else if evidenceCompleted && !storyEventCompleted {
-		return "疑似BUG"
+	if evidenceCompleted {
+		if storyEventCompleted {
+			return "已获得"
+		} else {
+			return "疑似BUG"
+		}
 	}
 	return "未获得"
 }

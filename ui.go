@@ -51,7 +51,7 @@ func getInput() string {
 }
 
 // displayResults 显示分析结果
-func displayResults(result *HiResult) {
+func displayResults(result *Result) {
 	buf, _ := json.MarshalIndent(result, "", "  ")
 	var b bytes.Buffer
 	err := htmlTemplate.Execute(&b, map[string]any{"Data": string(buf)})

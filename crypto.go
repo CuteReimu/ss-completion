@@ -33,7 +33,7 @@ func isAlphaNumeric(char byte) bool {
 }
 
 // decryptFile 解密存档文件
-func decryptFile(filename string) (*HiResult, error) {
+func decryptFile(filename string) (*Result, error) {
 	fileContent, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
