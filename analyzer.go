@@ -56,6 +56,10 @@ func analyzeSaveData(jsonData string) (*Result, error) {
 			result[NameBoxList] = append(result[NameBoxList], itemData)
 		case 4: // 制造金属
 			result[NameMetalList] = append(result[NameMetalList], itemData)
+		case 5: // 苔莓
+			result[NameMossBerry] = append(result[NameMossBerry], itemData)
+		case 6: // 跳蚤
+			result[NameFlea] = append(result[NameFlea], itemData)
 		}
 	}
 	completion += heartObtained / 4
@@ -336,6 +340,74 @@ func checkShopPurchase(evidenceId string, saveData SaveData) bool {
 		return saveData.PlayerData.MerchantEnclaveToolMetal
 	case "10":
 		return saveData.PlayerData.MerchantEnclaveSpoolPiece
+	case "11":
+		return saveData.PlayerData.BonetownAspidBerryCollected
+	case "12":
+		return saveData.PlayerData.MosstownAspidBerryCollected
+	case "13":
+		return saveData.PlayerData.BonegraveAspidBerryCollected
+	case "14":
+		return saveData.PlayerData.SavedFleaBoneEast05
+	case "15":
+		return saveData.PlayerData.SavedFleaDock16
+	case "16":
+		return saveData.PlayerData.SavedFleaDock03D
+	case "17":
+		return saveData.PlayerData.SavedFleaBoneEast17B
+	case "18":
+		return saveData.PlayerData.SavedFleaBoneEast10Church
+	case "19":
+		return saveData.PlayerData.SavedFleaGreymoor15B
+	case "20":
+		return saveData.PlayerData.SavedFleaGreymoor06
+	case "21":
+		return saveData.PlayerData.CaravanLechSaved
+	case "22":
+		return saveData.PlayerData.SavedFleaShellwood03
+	case "23":
+		return saveData.PlayerData.SavedFleaBelltown04
+	case "24":
+		return saveData.PlayerData.SavedFleaBone06
+	case "25":
+		return saveData.PlayerData.SavedFleaAnt03
+	case "26":
+		return saveData.PlayerData.SavedFleaDust12
+	case "27":
+		return saveData.PlayerData.SavedFleaPeak05C
+	case "28":
+		return saveData.PlayerData.SavedFleaUnder21
+	case "29":
+		return saveData.PlayerData.SavedFleaUnder23
+	case "30":
+		return saveData.PlayerData.SavedFleaCoral35
+	case "31":
+		return saveData.PlayerData.SavedFleaCoral24
+	case "32":
+		return saveData.PlayerData.SavedFleaCrawl06
+	case "33":
+		return saveData.PlayerData.SavedFleaSlabCell
+	case "34":
+		return saveData.PlayerData.SavedFleaSlab06
+	case "35":
+		return saveData.PlayerData.TamedGiantFlea
+	case "36":
+		return saveData.PlayerData.MetTroupeHunterWild
+	case "37":
+		return saveData.PlayerData.SavedFleaShadow10
+	case "38":
+		return saveData.PlayerData.SavedFleaShadow28
+	case "39":
+		return saveData.PlayerData.SavedFleaDust09
+	case "40":
+		return saveData.PlayerData.SavedFleaSong14
+	case "41":
+		return saveData.PlayerData.SavedFleaSong11
+	case "42":
+		return saveData.PlayerData.SavedFleaLibrary09
+	case "43":
+		return saveData.PlayerData.SavedFleaLibrary01
+	default:
+		panic("未知ID: " + evidenceId)
 	}
 	return false
 }
@@ -345,8 +417,8 @@ func checkStoryEvent(checkItem CheckItem, storyEvents []struct {
 	PlayTime  float64 `json:"PlayTime"`
 	SceneName string  `json:"SceneName"`
 }) bool {
-	if checkItem.Type == 4 || storyEvents == nil {
-		return true // 制造金属不需要故事事件检查
+	if checkItem.Type >= 4 || storyEvents == nil {
+		return true
 	}
 
 	return slices.ContainsFunc(storyEvents, func(storyEvent struct {
