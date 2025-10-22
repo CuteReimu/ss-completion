@@ -22,12 +22,12 @@ var (
 	resultTemplateFile string
 )
 
-func initWebUI(htmlResult string) {
+func initWebUI(htmlResult []byte) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(htmlResult))
+		w.Write(htmlResult)
 	})
 	mux.Handle("/x/", http.StripPrefix("/x/", http.FileServer(http.FS(htmlFiles))))
 
@@ -61,7 +61,7 @@ func displayResults(result *Result) {
 		fmt.Scanln()
 		return
 	}
-	htmlResult := b.String()
+	htmlResult := b.Bytes()
 	initWebUI(htmlResult)
 	switch strings.ToLower(runtime.GOOS) {
 	case "windows":
