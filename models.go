@@ -1,11 +1,5 @@
 package main
 
-import (
-	"encoding/json"
-	"fmt"
-	"strings"
-)
-
 // CheckItem 检查项结构
 type CheckItem struct {
 	Type      int    `json:"type"`
