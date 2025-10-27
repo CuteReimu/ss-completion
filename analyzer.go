@@ -233,14 +233,14 @@ func analyzeSaveData(jsonData string) (*Result, error) {
 
 	if playerData.HasBoundCrestUpgrader {
 		result[NameOthers] = append(result[NameOthers], &Data{
-			Name:      "绑定纹章升级器",
+			Name:      "风灵谣",
 			ResStr:    "已获得",
 			Completed: true,
 		})
 		completion++
 	} else {
 		result[NameOthers] = append(result[NameOthers], &Data{
-			Name:   "绑定纹章升级器",
+			Name:   "风灵谣",
 			ResStr: "未获得",
 		})
 	}
