@@ -1,0 +1,3 @@
+[submodule "hollowKnightSaveParser"]
+	path = hollowKnightSaveParser
+	url = https://github.com/nov1ce-lee/hollowKnightSaveParser.git

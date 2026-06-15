@@ -1,0 +1,10 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "空洞骑士丝之歌存档分析器",
+  "outputfilename": "空洞骑士丝之歌存档分析器",
+  "assetdir": "hollowKnightSaveParser",
+  "author": {
+    "name": "novice",
+    "email": "289836737@qq.com"
+  }
+}

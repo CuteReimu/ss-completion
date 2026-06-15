@@ -1,9 +1,8 @@
+/build/bin
+/frontend/
+
 *.exe
 
 .idea/
 .vscode/
-
-*.dat
-/static/
-
-*.json
+.vs/
