@@ -1,0 +1,45 @@
+$bg-color: #0b101e;
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+body {
+  background-color: $bg-color;
+}
+
+.el-table .danger-row {
+  --el-table-tr-bg-color: var(--el-color-danger-light-3);
+}
+.el-table .warning-row {
+  --el-table-tr-bg-color: var(--el-color-warning-light-3);
+}
+.el-table .success-row {
+  --el-table-tr-bg-color: var(--el-color-success-light-3);
+}
+
+.el-upload-dragger {
+  margin: 10px 0;
+  padding: 10px !important;
+  width: 1050px;
+  background: $bg-color;
+}
+
+.card-container {
+  padding: 0;
+  column-count: 3;
+  column-gap: 16px;
+  width: 100%;
+}
+
+.el-card {
+  margin-bottom: 20px;
+  width: 100%;
+  break-inside: avoid;
+  border-radius: 20px;
+}

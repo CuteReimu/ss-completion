@@ -1,0 +1,5 @@
+frontend/wailsjs/** linguist-generated eol=lf
+go.mod eol=lf
+go.sum eol=lf
+
+./silksong.py linguist-language=Starlark

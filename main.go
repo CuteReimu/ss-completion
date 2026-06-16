@@ -2,13 +2,17 @@ package main
 
 import (
 	"embed"
+	"fmt"
+	"log"
+	"log/slog"
+	"os"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
 )
 
-//go:embed all:hollowKnightSaveParser
+//go:embed all:frontend/dist
 var assets embed.FS
 
 func main() {
@@ -23,11 +27,30 @@ func main() {
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
-		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
-		OnStartup:        app.startup,
+		OnStartup: app.startup,
+		Bind:      []any{app},
 	})
 
 	if err != nil {
 		println("Error:", err.Error())
 	}
+}
+
+func init() {
+	log.SetFlags(log.Flags() | log.Lshortfile)
+	jsonHandler := slog.NewJSONHandler(os.Stderr, &slog.HandlerOptions{
+		AddSource: true,
+		ReplaceAttr: func(groups []string, attr slog.Attr) slog.Attr {
+			if attr.Key == "error" {
+				if err, ok := attr.Value.Any().(error); ok {
+					return slog.Attr{
+						Key:   "error",
+						Value: slog.StringValue(fmt.Sprintf("%+v", err)),
+					}
+				}
+			}
+			return attr
+		},
+	})
+	slog.SetDefault(slog.New(jsonHandler))
 }

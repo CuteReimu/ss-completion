@@ -2,9 +2,16 @@
   "$schema": "https://wails.io/schemas/config.v2.json",
   "name": "空洞骑士丝之歌存档分析器",
   "outputfilename": "空洞骑士丝之歌存档分析器",
-  "assetdir": "hollowKnightSaveParser",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
   "author": {
-    "name": "novice",
-    "email": "289836737@qq.com"
+    "name": "奇葩の灵梦",
+    "email": "cutereimu@vip.qq.com"
+  },
+  "info": {
+    "productVersion": "1.0.0",
+    "copyright": "Copyright (c) 2025 CuteReimu 奇葩の灵梦"
   }
 }
