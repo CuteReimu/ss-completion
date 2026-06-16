@@ -1,32 +1,28 @@
 # 空洞骑士：丝之歌存档完成度分析工具
 
-**考虑到现在有太多类似工具写得非常好了，此项目不再维护。你可以在 Github 上搜索“丝之歌存档”即可找到类似项目。**
+本仓库实际上是把 https://github.com/nov1ce-lee/hollowKnightSaveParser 打包成桌面版。
 
-这是一个用于分析《空洞骑士：丝之歌》存档文件的**完成度**的 Go 程序。
-
-## 项目结构
-
-- `main.go` - 程序入口，简洁明了
-- `crypto.go` - 加密解密相关功能
-- `models.go` - 数据模型定义
-- `analyzer.go` - 存档分析逻辑
-- `ui.go` - 用户界面和输出
-- `user_data.go` - 用户数据结构定义
-
-## 使用方法
+## 克隆仓库
 
 ```bash
-# 考虑到cdn访问较慢，不如直接下载打包进去
-./download_cdn.sh
+# 注意要加 --recursive 参数
+git clone --recursive https://github.com/CuteReimu/ss-completion.git
+```
 
-# 编译程序
-go build -o ss-completion .
+## 编译说明
 
-# 运行程序
-./ss-completion [存档文件路径]
+首先需要 Go 和 Nodejs，然后安装 wails：
 
-# 如果不提供参数，程序会提示输入文件路径
-./ss-completion
+```bash
+go install github.com/wailsapp/wails/v2/cmd/wails@latest
+```
 
-# 启动后访问 http://127.0.0.1:12332/ 即可
+然后使用以下命令就可以调试或打包了：
+
+```bash
+# 本地调试
+wails dev
+
+# 打包
+wails build -platform=windows/amd64 -webview2 embed
 ```
