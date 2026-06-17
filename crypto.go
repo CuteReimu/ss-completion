@@ -47,7 +47,7 @@ func (a *App) DecryptFile(fileContent string) (*AnalyzeResult, error) {
 		a.errorDialog(err.Error())
 		return nil, err
 	}
-	result, err := a.analyze(buf)
+	result, err := analyze(buf)
 	if err != nil {
 		slog.Error("analyze failed", "error", err)
 		a.errorDialog(err.Error())
@@ -58,7 +58,7 @@ func (a *App) DecryptFile(fileContent string) (*AnalyzeResult, error) {
 }
 
 func (a *App) ReDecryptFile() (*AnalyzeResult, error) {
-	result, err := a.analyze(a.buf)
+	result, err := analyze(a.buf)
 	if err != nil {
 		slog.Error("analyze failed", "error", err)
 		a.errorDialog(err.Error())
@@ -120,31 +120,9 @@ type ItemResult struct {
 	StatusText string `json:"status_text"`
 }
 
-func (a *App) analyze(buf []byte) (ret *AnalyzeResult, err error) {
-	defer func() {
-		if r := recover(); r != nil {
-			err = errors.Errorf("%s", r)
-		}
-	}()
-	starlarkContent2, err := os.ReadFile("silksong.py")
-	if err != nil {
-		if !errors.Is(err, os.ErrNotExist) {
-			return nil, errors.WithStack(err)
-		}
-		starlarkContent2 = starlarkContent
-	}
-	thread := new(starlark.Thread)
-	starBuf, err := starlark.Call(thread, json.Module.Members["decode"], starlark.Tuple{starlark.String(buf)}, nil)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
-	global, err := starlark.ExecFile(thread, "silksong.py", starlarkContent2, nil)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
+func analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items starlark.Value, starBuf starlark.Value) (int, error) {
 	var totalCompletion int
-	m := make(map[string][]ItemResult)
-	for item := range starlark.Elements(global["items"].(starlark.Iterable)) {
+	for item := range starlark.Elements(items.(starlark.Iterable)) {
 		var (
 			name, category string
 			cur, total     = 0, 1
@@ -153,34 +131,34 @@ func (a *App) analyze(buf []byte) (ret *AnalyzeResult, err error) {
 		)
 		d := item.(*starlark.Dict)
 		if v, ok, err := d.Get(starlark.String("name")); err != nil {
-			return nil, errors.WithStack(err)
+			return 0, errors.WithStack(err)
 		} else if ok {
 			name, _ = starlark.AsString(v)
 		}
 		if v, ok, err := d.Get(starlark.String("category")); err != nil {
-			return nil, errors.WithStack(err)
+			return 0, errors.WithStack(err)
 		} else if ok {
 			category, _ = starlark.AsString(v)
 		}
 		if v, ok, err := d.Get(starlark.String("total")); err != nil {
-			return nil, errors.WithStack(err)
+			return 0, errors.WithStack(err)
 		} else if ok {
 			if err = starlark.AsInt(v, &total); err != nil {
-				return nil, errors.WithStack(err)
+				return 0, errors.WithStack(err)
 			}
 		}
 		if v, ok, err := d.Get(starlark.String("cur")); err != nil {
-			return nil, errors.WithStack(err)
+			return 0, errors.WithStack(err)
 		} else if ok {
 			result, err := starlark.Call(thread, v.(*starlark.Function), starlark.Tuple{starBuf}, nil)
 			if err != nil {
-				return nil, errors.WithStack(err)
+				return 0, errors.WithStack(err)
 			}
 			if err = starlark.AsInt(result, &cur); err != nil {
-				return nil, errors.WithStack(err)
+				return 0, errors.WithStack(err)
 			}
 		} else {
-			return nil, errors.Errorf("%s没有cur函数", name)
+			return 0, errors.Errorf("%s没有cur函数", name)
 		}
 		switch {
 		case cur >= total:
@@ -202,6 +180,40 @@ func (a *App) analyze(buf []byte) (ret *AnalyzeResult, err error) {
 			Status:     status,
 			StatusText: statusText,
 		})
+	}
+	return totalCompletion, nil
+}
+
+func analyze(buf []byte) (ret *AnalyzeResult, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = errors.Errorf("%s", r)
+		}
+	}()
+	starlarkContent2, err := os.ReadFile("silksong.py")
+	if err != nil {
+		if !errors.Is(err, os.ErrNotExist) {
+			return nil, errors.WithStack(err)
+		}
+		starlarkContent2 = starlarkContent
+	}
+	thread := new(starlark.Thread)
+	starBuf, err := starlark.Call(thread, json.Module.Members["decode"], starlark.Tuple{starlark.String(buf)}, nil)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	global, err := starlark.ExecFile(thread, "silksong.py", starlarkContent2, nil)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	m := make(map[string][]ItemResult)
+	totalCompletion, err := analyzeItems(m, thread, global["items"], starBuf)
+	if err != nil {
+		return nil, err
+	}
+	_, err = analyzeItems(m, thread, global["other_items"], starBuf)
+	if err != nil {
+		return nil, err
 	}
 	ret = &AnalyzeResult{
 		Completion: totalCompletion,

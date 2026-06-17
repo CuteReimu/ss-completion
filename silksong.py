@@ -1,4 +1,4 @@
-categories = ["能力", "法术", "纹章", "红色工具", "黄色工具", "蓝色工具"]
+categories = ["能力", "法术", "纹章", "红色工具", "黄色工具", "蓝色工具", "面具碎片详情"]
 
 # 工具
 def get_tool(tool_name):
@@ -422,5 +422,19 @@ items = [
         "name": "永绽花",
         "category": "能力",
         "cur": get_collectable_amount("White Flower")
+    },
+]
+
+# 字段结构同 items ，但不计入完成度
+other_items = [
+    {
+        "name": "骸底镇商店",
+        "category": "面具碎片详情",
+        "cur": lambda d: 1 if d["playerData"].get("PurchasedBonebottomHeartPiece", False) else 0
+    },
+    {
+        "name": "圣歌盟地商店",
+        "category": "面具碎片详情",
+        "cur": lambda d: 1 if d["playerData"].get("MerchantEnclaveShellFragment", False) else 0
     },
 ]

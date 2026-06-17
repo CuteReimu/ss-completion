@@ -41,7 +41,10 @@ body {
   margin-bottom: 20px;
   width: 100%;
   break-inside: avoid;
-  border-radius: 20px;
+}
+
+.el-card__body {
+  padding: 0;
 }
 
 .btn-container {

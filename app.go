@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -64,12 +65,23 @@ func (a *App) SaveBuf() {
 		a.errorDialog("还未加载user.dat")
 		return
 	}
-	if err := os.WriteFile("silksong_user_data.json", a.buf, 0444); err != nil {
+	var m any
+	err := json.Unmarshal(a.buf, &m)
+	if err != nil {
+		a.errorDialog("导出文件失败")
+		return
+	}
+	buf, err := json.MarshalIndent(m, "", "\t")
+	if err != nil {
+		a.errorDialog("导出文件失败")
+		return
+	}
+	if err := os.WriteFile("silksong_user_data.json", buf, 0644); err != nil {
 		a.errorDialog("导出文件失败")
 		return
 	}
 	if _, err := wailsRuntime.MessageDialog(a.ctx, wailsRuntime.MessageDialogOptions{
-		Type:    wailsRuntime.ErrorDialog,
+		Type:    wailsRuntime.InfoDialog,
 		Title:   "提示",
 		Message: "已生成silksong_user_data.json",
 	}); err != nil {
