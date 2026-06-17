@@ -1,5 +1,5 @@
 # 所有类别的列表，最终会按照这个列表进行排序
-categories = ["能力", "法术", "纹章", "红色工具", "黄色工具", "蓝色工具", "面具碎片详情", "灵丝轴碎片详情", "跳蚤", "忆境纪念盒（不计完成度）"]
+categories = ["红色工具", "蓝色工具", "黄色工具", "法术", "纹章", "能力", "其它", "面具碎片详情", "灵丝轴碎片详情", "跳蚤", "制造金属", "忆境纪念盒（不计完成度）", "苔莓（不占完成度）"]
 
 # 工具
 def get_tool(tool_name):
@@ -32,6 +32,9 @@ def get_collectable_amount(collectable_name):
 # category: 所属类别
 # cur: 当前值，类型为一个函数 (d) => cur ，会将存档解析后的完整json格式传入d参数，可以返回一个数值，也可以返回bool值（表示已收集/未收集）
 # total: 总值，不填则默认为1
+# icon: 图标，填写一个url，可以不填
+# wiki: Wiki链接，填写一个url，可以不填
+# desc: 简介，鼠标放上去弹出的tooltip，可以不填
 items = [
     {
         "name": "罗盘",
@@ -190,7 +193,7 @@ items = [
     {
         "name": "掘洞钻",
         "category": "红色工具",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/8/85/Delver%27s_Drill.png",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/59/Delvers_Drill.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/掘洞钻",
         "cur": get_tool("Screw Attack")
     },
@@ -392,7 +395,7 @@ items = [
     },
     {
         "name": "工具袋升级",
-        "category": "能力",
+        "category": "其它",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/e9/Tool_Pouch.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/工具袋",
         "cur": lambda d: d["playerData"].get("ToolPouchUpgrades", 0),
@@ -400,7 +403,7 @@ items = [
     },
     {
         "name": "制作匣升级",
-        "category": "能力",
+        "category": "其它",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/5d/Crafting_Kit.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/制作匣",
         "cur": lambda d: d["playerData"].get("ToolKitUpgrades", 0),
@@ -450,8 +453,8 @@ items = [
     },
     {
         "name": "丝之心",
-        "category": "能力",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/9/93/Bell_Beast_Idle.png",
+        "category": "其它",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/de/Icon_SS_Silk_Heart.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/丝之心",
         "cur": lambda d: d["playerData"]["silkRegenMax"],
         "total": 3
@@ -542,30 +545,30 @@ items = [
     },
     {
         "name": "风铃瑶",
-        "category": "能力",
+        "category": "其它",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/0/00/Icon_SS_Sylphsong_Art.png/438px-Icon_SS_Sylphsong_Art.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/%E9%A3%8E%E7%81%B5%E8%B0%A3",
         "cur": lambda d: d["playerData"]["HasBoundCrestUpgrader"]
     },
     {
         "name": "面具",
-        "category": "能力",
-        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/5/56/SS_Ancient_Mask.png",
+        "category": "其它",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/9/91/SS_Mask.png/50px-SS_Mask.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/面具碎片_(丝之歌)",
         "cur": lambda d: d["playerData"]["maxHealthBase"] - 5,
         "total": 5
     },
     {
-        "name": "灵丝轴",
-        "category": "能力",
-        "icon": "assets/wiki_Silk_Spool.png",
+        "name": "灵丝",
+        "category": "其它",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/8/83/Silk.png/80px-Silk.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/灵丝轴碎片",
         "cur": lambda d: d["playerData"]["silkMax"] - 9,
         "total": 9
     },
     {
         "name": "织针磨砺",
-        "category": "能力",
+        "category": "其它",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/8/87/Needle_2_Sharpened_Needle.png/54px-Needle_2_Sharpened_Needle.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/织针",
         "cur": lambda d: d["playerData"]["nailUpgrades"],
@@ -573,7 +576,7 @@ items = [
     },
     {
         "name": "永绽花",
-        "category": "能力",
+        "category": "其它",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/e4/Everbloom.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/永绽花",
         "cur": get_collectable_amount("White Flower")
@@ -605,39 +608,39 @@ other_items = [
         "name": "骸底镇商店",
         "category": "面具碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
-        "desc": "花费300念珠在骸底镇佩珀处购买<br>若未购买，到第三幕时，则需从蚀阶中格林德尔处购买",
+        "desc": "花费300念珠在骸底镇佩珀处购买。若未购买，到第三幕时，则需从蚀阶中格林德尔处购买",
         "cur": lambda d: d["playerData"].get("PurchasedBonebottomHeartPiece", False)
     },
     {
         "name": "圣歌盟地商店",
         "category": "面具碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
-        "desc": "花费750念珠在圣歌盟地购买<br>完成任务商贾无踪后朱比拉娜会在圣歌盟地出售",
+        "desc": "花费750念珠在圣歌盟地购买。完成任务商贾无踪后朱比拉娜会在圣歌盟地出售",
         "cur": lambda d: d["playerData"].get("MerchantEnclaveShellFragment", False)
     },
     {
         "name": "暴怒兽蝇祈愿",
         "category": "面具碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
-        "desc": "完成祈愿<b>暴怒兽蝇</b>的奖励，需要击败第一只兽蝇与第四圣咏团并且进入纺络后在钟心镇接取",
+        "desc": "完成祈愿暴怒兽蝇的奖励，需要击败第一只兽蝇与第四圣咏团并且进入纺络后在钟心镇接取",
         "cur": get_question_complete("Beastfly Hunt")
     },
     {
-        "name": "隐秘猎手祈愿",
+        "name": "隐秘猎手祈愿（第三幕）",
         "category": "面具碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "与卡梅莉塔交谈或使用深邃挽歌进入过她的记忆后，在钟心镇接取祈愿",
         "cur": get_question_complete("Ant Trapper")
     },
     {
-        "name": "竞速冠军祈愿",
+        "name": "竞速冠军祈愿（第三幕）",
         "category": "面具碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
-        "desc": "完成祈愿<b>纺络竞速冠军</b>，在飞毛腿斯威夫特设置的第三轮赛跑比赛中获胜",
+        "desc": "完成祈愿纺络竞速冠军，在飞毛腿斯威夫特设置的第三轮赛跑比赛中获胜",
         "cur": get_question_complete("Sprintmaster Race")
     },
     {
-        "name": "暗蚀之心祈愿",
+        "name": "暗蚀之心祈愿（第三幕）",
         "category": "面具碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "完成主线任务寻觅：等候终局的暗蚀之心祈愿，在钟心镇接取",
@@ -735,7 +738,7 @@ other_items = [
         "cur": get_scene_bool("Shadow_13", "Heart Piece")
     },
     {
-        "name": "雪灵山（冰晶脉窟）",
+        "name": "雪灵山（第三幕冰晶脉窟）",
         "category": "面具碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "在雪灵山冰晶脉窟顶端，需要灵丝升腾",
@@ -745,14 +748,14 @@ other_items = [
         "name": "钟心镇商店",
         "category": "灵丝轴碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
-        "desc": "花费270念珠从芙蕾的商店中购买，需要完成祈愿<b>失踪送货员</b>",
+        "desc": "花费270念珠从芙蕾的商店中购买，需要完成祈愿失踪送货员",
         "cur": lambda d: d["playerData"].get("PurchasedBelltownSpoolSegment", False)
     },
     {
         "name": "圣歌盟地商店",
         "category": "灵丝轴碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
-        "desc": "花费500念珠从朱比拉娜处购买，需要完成祈愿<b>商贾无踪</b>",
+        "desc": "花费500念珠从朱比拉娜处购买，需要完成祈愿商贾无踪",
         "cur": lambda d: d["playerData"].get("MerchantEnclaveSpoolPiece", False)
     },
     {
@@ -773,7 +776,7 @@ other_items = [
         "name": "谢尔玛祈愿",
         "category": "灵丝轴碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
-        "desc": "完成祈愿<b>愈伤良方</b>后，由谢尔玛赠与，需要使用白愈钥匙打开通往白愈厅的电梯",
+        "desc": "完成祈愿愈伤良方后，由谢尔玛赠与，需要使用白愈钥匙打开通往白愈厅的电梯",
         "cur": get_question_complete("Save Sherma")
     },
     {
@@ -924,7 +927,7 @@ other_items = [
         "cur": get_scene_bool("Crawl_09", "Collectable Item Pickup")
     },
     {
-        "name": "腐汁泽（第一幕）",
+        "name": "腐汁泽（左下）",
         "category": "忆境纪念盒（不计完成度）",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，腐汁泽区域获取",
@@ -987,7 +990,7 @@ other_items = [
         "cur": get_scene_bool("Slab_Cell_Quiet", "Collectable Item Pickup")
     },
     {
-        "name": "腐汁泽（第二幕）",
+        "name": "腐汁泽（右上）",
         "category": "忆境纪念盒（不计完成度）",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，需要幻羽披风，藏在一个悬挂的包裹中",
@@ -1216,5 +1219,110 @@ other_items = [
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "房间顶部可通过推动位于房间左侧中间的箱子到达",
         "cur": lambda d: d["playerData"].get("SavedFlea_Library_01", False)
+    },
+    {
+        "name": "忆廊椅子旁",
+        "category": "苔莓（不占完成度）",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
+        "desc": "在忆廊，位于长椅右侧的一个房间中，需要从另一侧进入",
+        "cur": get_scene_bool("Arborium_04", "moss_berry_fruit")
+    },
+    {
+        "name": "苔穴出生点左上",
+        "category": "苔莓（不占完成度）",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
+        "desc": "在苔藓洞穴，位于初始房间左上方的房间中顶部",
+        "cur": get_scene_bool("Tut_02", "moss_berry_fruit")
+    },
+    {
+        "name": "出生点织巢左侧",
+        "category": "苔莓（不占完成度）",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
+        "desc": "在阿特拉织巢左下部的一个隐藏房间中，位于长椅所在房间左侧",
+        "cur": get_scene_bool("Weave_03", "moss_berry_fruit")
+    },
+    {
+        "name": "苔穴出生点右上",
+        "category": "苔莓（不占完成度）",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
+        "desc": "在苔藓洞穴右部，阿特拉织巢大门所在房间的顶部",
+        "cur": get_scene_bool("Tut_01b", "moss_berry_fruit")
+    },
+    {
+        "name": "骸底镇上空蚊子",
+        "category": "苔莓（不占完成度）",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
+        "desc": "前两幕中，位于骸底镇上方，被一只阿克尼叼着。第三幕中，该阿克尼移动至原位置正右方的房间内",
+        "cur": lambda d: d["playerData"].get("bonetownAspidBerryCollected", False)
+    },
+    {
+        "name": "德鲁伊下方蚊子",
+        "category": "苔莓（不占完成度）",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
+        "desc": "在骸底镇的苔栖乡，位于苔藓德鲁伊所在房间正下方的一个隐藏房间内，被一只阿克尼叼着",
+        "cur": lambda d: d["playerData"].get("mosstownAspidBerryCollected", False)
+    },
+    {
+        "name": "漫游者教堂上空蚊子",
+        "category": "苔莓（不占完成度）",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
+        "desc": "位于骸冢上部，被一只阿克尼叼着",
+        "cur": lambda d: d["playerData"].get("bonegraveAspidBerryCollected", False)
+    },
+    {
+        "name": "骸骨洞窟",
+        "category": "制造金属",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
+        "desc": "在猎者小径入口左侧，髓骨洞窟右上部的大型房间的左下角，引爆燧石炸开的通道尽头",
+        "cur": get_scene_bool("Bone_07", "Collectable Item Pickup - Tool Metal")
+    },
+    {
+        "name": "深坞右侧宝箱",
+        "category": "制造金属",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
+        "desc": "在深坞右端与远野联通的房间左下角，一扇上锁的门后面的宝箱内",
+        "cur": get_scene_bool("Dock_03", "Collectable Item Pickup")
+    },
+    {
+        "name": "骸底镇购买",
+        "category": "制造金属",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
+        "desc": "在骸底镇由佩珀以60念珠出售。如果没有购买，则由格林德尔在风蚀长阶以120念珠出售",
+        "cur": lambda d: d["playerData"].get("PurchasedBonebottomToolMetal", False)
+    },
+    {
+        "name": "圣煲工厂",
+        "category": "制造金属",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
+        "desc": "在圣堡工厂右部一条管道的尽头，位于封印飞针冲刺的葬仪尖塔正下方的位置",
+        "cur": get_scene_bool("Under_19b", "Collectable Item Pickup - Tool Metal")
+    },
+    {
+        "name": "火灵竹林上方小道旁",
+        "category": "制造金属",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
+        "desc": "在火灵竹丛顶端一块可破坏天花板的后面",
+        "cur": get_scene_bool("Wisp_05", "Collectable Item Pickup - Tool Metal")
+    },
+    {
+        "name": "腐殖渠",
+        "category": "制造金属",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
+        "desc": "在腐殖渠的苍湖右端尽头",
+        "cur": get_scene_bool("Aqueduct_05", "Collectable Item Pickup - Tool Metal")
+    },
+    {
+        "name": "风蚀长阶",
+        "category": "制造金属",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
+        "desc": "在风蚀长阶右上部的一个隐藏房间中，位于通往末代裁决者Boss房的长型洞穴右侧的一个洞口底部",
+        "cur": get_scene_bool("Coral_32", "Collectable Item Pickup - Tool Metal")
+    },
+    {
+        "name": "圣歌盟地购买",
+        "category": "制造金属",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
+        "desc": "在圣歌盟地由朱比拉娜以180念珠出售",
+        "cur": lambda d: d["playerData"].get("MerchantEnclaveToolMetal", False)
     },
 ]

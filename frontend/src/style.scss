@@ -4,13 +4,16 @@ $bg-color: #0b101e;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width: 1200px;
+  width: calc(100vw - 50px);
   margin: 0 auto;
   align-items: center;
+  padding: 0;
 }
 
 body {
   background-color: $bg-color;
+  margin: 0;
+  padding: 0;
 }
 
 .el-table .danger-row {
@@ -22,17 +25,20 @@ body {
 .el-table .success-row {
   --el-table-tr-bg-color: var(--el-color-success-light-3);
 }
+.el-table .clickable-row {
+  cursor: pointer;
+}
 
 .el-upload-dragger {
   margin: 10px 0;
   padding: 10px !important;
-  width: 1050px;
+  width: 92vw;
   background: $bg-color;
 }
 
 .card-container {
   padding: 0;
-  column-count: 3;
+  column-count: 4;
   column-gap: 16px;
   width: 100%;
 }
@@ -49,9 +55,15 @@ body {
 
 .btn-container {
   padding: 0;
-  gap: 10px;
+  gap: 12px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: 100%;
+}
+
+.el-image {
+  width: 20px;
+  height: 20px;
+  margin: 0 10px 0 0;
 }

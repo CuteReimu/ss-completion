@@ -4,6 +4,9 @@ export namespace main {
 	    show_text: string;
 	    status: number;
 	    status_text: string;
+	    icon: string;
+	    desc: string;
+	    wiki: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new ItemResult(source);
@@ -14,6 +17,9 @@ export namespace main {
 	        this.show_text = source["show_text"];
 	        this.status = source["status"];
 	        this.status_text = source["status_text"];
+	        this.icon = source["icon"];
+	        this.desc = source["desc"];
+	        this.wiki = source["wiki"];
 	    }
 	}
 	export class CategoryResult {

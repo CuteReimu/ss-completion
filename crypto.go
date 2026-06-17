@@ -118,6 +118,9 @@ type ItemResult struct {
 	ShowText   string `json:"show_text"`
 	Status     int    `json:"status"` // 0-红色，1-黄色，2-绿色
 	StatusText string `json:"status_text"`
+	Icon       string `json:"icon"`
+	Desc       string `json:"desc"`
+	Wiki       string `json:"wiki"`
 }
 
 func analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items starlark.Value, starBuf starlark.Value) (int, error) {
@@ -128,6 +131,8 @@ func analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items star
 			cur, total     = 0, 1
 			status         int
 			statusText     string
+			icon, wiki     string
+			desc           string
 		)
 		d := item.(*starlark.Dict)
 		if v, ok, err := d.Get(starlark.String("name")); err != nil {
@@ -164,6 +169,21 @@ func analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items star
 		} else {
 			return 0, errors.Errorf("%s没有cur函数", name)
 		}
+		if v, ok, err := d.Get(starlark.String("icon")); err != nil {
+			return 0, errors.WithStack(err)
+		} else if ok {
+			icon, _ = starlark.AsString(v)
+		}
+		if v, ok, err := d.Get(starlark.String("desc")); err != nil {
+			return 0, errors.WithStack(err)
+		} else if ok {
+			desc, _ = starlark.AsString(v)
+		}
+		if v, ok, err := d.Get(starlark.String("wiki")); err != nil {
+			return 0, errors.WithStack(err)
+		} else if ok {
+			wiki, _ = starlark.AsString(v)
+		}
 		switch {
 		case cur >= total:
 			status = 2
@@ -183,6 +203,9 @@ func analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items star
 			ShowText:   name,
 			Status:     status,
 			StatusText: statusText,
+			Icon:       icon,
+			Desc:       desc,
+			Wiki:       wiki,
 		})
 	}
 	return totalCompletion, nil
