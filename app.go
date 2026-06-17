@@ -30,10 +30,11 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-func (a *App) OpenDataFolder() error {
+func (a *App) OpenDataFolder() {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		return err
+		a.errorDialog(err.Error())
+		return
 	}
 	homeDir = filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight Silksong")
 	var cmd *exec.Cmd
@@ -45,9 +46,12 @@ func (a *App) OpenDataFolder() error {
 	case "linux":
 		cmd = exec.Command("xdg-open", homeDir)
 	default:
-		return fmt.Errorf("不支持的操作系统: %s", runtime.GOOS)
+		a.errorDialog(fmt.Sprintf("不支持的操作系统: %s", runtime.GOOS))
+		return
 	}
-	return cmd.Start()
+	if err := cmd.Run(); err != nil {
+		a.errorDialog(err.Error())
+	}
 }
 
 func (a *App) errorDialog(s string) {
