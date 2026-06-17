@@ -3,3 +3,4 @@ go.mod eol=lf
 go.sum eol=lf
 
 silksong.py linguist-language=Starlark
+hollow.py linguist-language=Starlark
