@@ -154,7 +154,11 @@ func analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items star
 			if err != nil {
 				return 0, errors.WithStack(err)
 			}
-			if err = starlark.AsInt(result, &cur); err != nil {
+			if b, ok := result.(starlark.Bool); ok {
+				if b {
+					cur = total
+				}
+			} else if err = starlark.AsInt(result, &cur); err != nil {
 				return 0, errors.WithStack(err)
 			}
 		} else {

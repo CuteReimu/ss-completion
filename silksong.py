@@ -5,8 +5,8 @@ def get_tool(tool_name):
     def do_get_tool(d):
         for tool in d["playerData"]["Tools"]["savedData"]:
             if tool.get("Name") == tool_name:
-                return 1 if tool.get("Data", {}).get("IsUnlocked", False) else 0
-        return 0
+                return tool.get("Data", {}).get("IsUnlocked", False)
+        return False
     return do_get_tool
 
 # 纹章
@@ -14,8 +14,8 @@ def get_tool_equips(tool_equips_name):
     def do_get_tool_equips(d):
         for tool in d["playerData"]["ToolEquips"]["savedData"]:
             if tool.get("Name") == tool_equips_name:
-                return 1 if tool.get("Data", {}).get("IsUnlocked", False) else 0
-        return 0
+                return tool.get("Data", {}).get("IsUnlocked", False)
+        return False
     return do_get_tool_equips
 
 # 道具
@@ -29,7 +29,7 @@ def get_collectable_amount(collectable_name):
 
 # name：显示名称
 # category: 所属类别
-# cur: 当前值，类型为一个函数 (d) => cur ，会将存档解析后的完整json格式传入d参数
+# cur: 当前值，类型为一个函数 (d) => cur ，会将存档解析后的完整json格式传入d参数，可以返回一个数值，也可以返回bool值（表示已收集/未收集）
 # total: 总值，不填则默认为1，可以填数字，也可以填上述 cur 字段的一个函数
 items = [
     {
@@ -368,37 +368,37 @@ items = [
     {
         "name": "疾风步",
         "category": "能力",
-        "cur": lambda d: 1 if d["playerData"]["hasDash"] else 0
+        "cur": lambda d: d["playerData"]["hasDash"]
     },
     {
         "name": "蛛攀术",
         "category": "能力",
-        "cur": lambda d: 1 if d["playerData"]["hasWalljump"] else 0
+        "cur": lambda d: d["playerData"]["hasWalljump"]
     },
     {
         "name": "飞针冲刺",
         "category": "能力",
-        "cur": lambda d: 1 if d["playerData"]["hasHarpoonDash"] else 0
+        "cur": lambda d: d["playerData"]["hasHarpoonDash"]
     },
     {
         "name": "灵丝升腾",
         "category": "能力",
-        "cur": lambda d: 1 if d["playerData"]["hasSuperJump"] else 0
+        "cur": lambda d: d["playerData"]["hasSuperJump"]
     },
     {
         "name": "蓄力斩",
         "category": "能力",
-        "cur": lambda d: 1 if d["playerData"]["hasChargeSlash"] else 0
+        "cur": lambda d: d["playerData"]["hasChargeSlash"]
     },
     {
         "name": "织忆弦针",
         "category": "能力",
-        "cur": lambda d: 1 if d["playerData"]["hasNeedolin"] else 0
+        "cur": lambda d: d["playerData"]["hasNeedolin"]
     },
     {
         "name": "风铃瑶",
         "category": "能力",
-        "cur": lambda d: 1 if d["playerData"]["HasBoundCrestUpgrader"] else 0
+        "cur": lambda d: d["playerData"]["HasBoundCrestUpgrader"]
     },
     {
         "name": "面具",
@@ -425,16 +425,44 @@ items = [
     },
 ]
 
+def get_question_complete(question_name):
+    def do_get_question_complete(d):
+        for tool in d["playerData"]["QuestCompletionData"]["savedData"]:
+            if tool.get("Name") == question_name:
+                return tool.get("Data", {}).get("IsCompleted", False)
+        return False
+    return do_get_question_complete
+
 # 字段结构同 items ，但不计入完成度
 other_items = [
     {
         "name": "骸底镇商店",
         "category": "面具碎片详情",
-        "cur": lambda d: 1 if d["playerData"].get("PurchasedBonebottomHeartPiece", False) else 0
+        "cur": lambda d: d["playerData"].get("PurchasedBonebottomHeartPiece", False)
     },
     {
         "name": "圣歌盟地商店",
         "category": "面具碎片详情",
-        "cur": lambda d: 1 if d["playerData"].get("MerchantEnclaveShellFragment", False) else 0
+        "cur": lambda d: d["playerData"].get("MerchantEnclaveShellFragment", False)
+    },
+    {
+        "name": "暴怒兽蝇祈愿",
+        "category": "面具碎片详情",
+        "cur": get_question_complete("Beastfly Hunt")
+    },
+    {
+        "name": "隐秘猎手祈愿",
+        "category": "面具碎片详情",
+        "cur": get_question_complete("Ant Trapper")
+    },
+    {
+        "name": "竞速冠军祈愿",
+        "category": "面具碎片详情",
+        "cur": get_question_complete("Sprintmaster Race")
+    },
+    {
+        "name": "暗蚀之心祈愿",
+        "category": "面具碎片详情",
+        "cur": get_question_complete("Black Thread Pt5 Heart")
     },
 ]
