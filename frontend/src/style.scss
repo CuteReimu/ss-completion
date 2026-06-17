@@ -43,3 +43,12 @@ body {
   break-inside: avoid;
   border-radius: 20px;
 }
+
+.btn-container {
+  padding: 0;
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}

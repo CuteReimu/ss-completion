@@ -4,6 +4,9 @@
 *.xml
 *.log
 
+user*.dat
+silksong_user_data.json
+
 # Binaries for programs and plugins
 build/bin
 node_modules

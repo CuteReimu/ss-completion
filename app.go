@@ -8,12 +8,14 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/pkg/errors"
 	wailsRuntime "github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // App struct
 type App struct {
 	ctx context.Context
+	buf []byte
 }
 
 // NewApp creates a new App application struct
@@ -54,5 +56,57 @@ func (a *App) errorDialog(s string) {
 		Message: s,
 	}); err != nil {
 		wailsRuntime.LogError(a.ctx, s)
+	}
+}
+
+func (a *App) SaveBuf() {
+	if len(a.buf) == 0 {
+		a.errorDialog("还未加载user.dat")
+		return
+	}
+	if err := os.WriteFile("silksong_user_data.json", a.buf, 0444); err != nil {
+		a.errorDialog("导出文件失败")
+		return
+	}
+	if _, err := wailsRuntime.MessageDialog(a.ctx, wailsRuntime.MessageDialogOptions{
+		Type:    wailsRuntime.ErrorDialog,
+		Title:   "提示",
+		Message: "已生成silksong_user_data.json",
+	}); err != nil {
+		wailsRuntime.LogError(a.ctx, err.Error())
+	}
+}
+
+func (a *App) ModifyScript() {
+	_, err := os.Stat("silksong.py")
+	if err != nil {
+		if !errors.Is(err, os.ErrNotExist) {
+			a.errorDialog("导出文件失败")
+			return
+		}
+	} else {
+		if v, err := wailsRuntime.MessageDialog(a.ctx, wailsRuntime.MessageDialogOptions{
+			Type:          wailsRuntime.QuestionDialog,
+			Title:         "提示",
+			Message:       "检测到silksong.py已存在，是否覆盖？",
+			Buttons:       []string{"Yes", "No"},
+			DefaultButton: "Yes",
+			CancelButton:  "No",
+		}); err != nil {
+			wailsRuntime.LogError(a.ctx, err.Error())
+		} else if v != "Yes" {
+			return
+		}
+	}
+	if err := os.WriteFile("silksong.py", starlarkContent, 0644); err != nil {
+		a.errorDialog("导出文件失败")
+		return
+	}
+	if _, err := wailsRuntime.MessageDialog(a.ctx, wailsRuntime.MessageDialogOptions{
+		Type:    wailsRuntime.ErrorDialog,
+		Title:   "提示",
+		Message: "已生成silksong.py，请自行编辑即可，编辑后不要忘了保存。",
+	}); err != nil {
+		wailsRuntime.LogError(a.ctx, err.Error())
 	}
 }

@@ -53,6 +53,17 @@ func (a *App) DecryptFile(fileContent string) (*AnalyzeResult, error) {
 		a.errorDialog(err.Error())
 		return nil, err
 	}
+	a.buf = buf
+	return result, nil
+}
+
+func (a *App) ReDecryptFile() (*AnalyzeResult, error) {
+	result, err := a.analyze(a.buf)
+	if err != nil {
+		slog.Error("analyze failed", "error", err)
+		a.errorDialog(err.Error())
+		return nil, err
+	}
 	return result, nil
 }
 

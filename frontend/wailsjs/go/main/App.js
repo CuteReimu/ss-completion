@@ -6,6 +6,18 @@ export function DecryptFile(arg1) {
   return window['go']['main']['App']['DecryptFile'](arg1);
 }
 
+export function ModifyScript() {
+  return window['go']['main']['App']['ModifyScript']();
+}
+
 export function OpenDataFolder() {
   return window['go']['main']['App']['OpenDataFolder']();
+}
+
+export function ReDecryptFile() {
+  return window['go']['main']['App']['ReDecryptFile']();
+}
+
+export function SaveBuf() {
+  return window['go']['main']['App']['SaveBuf']();
 }

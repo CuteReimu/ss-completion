@@ -4,4 +4,10 @@ import {main} from '../models';
 
 export function DecryptFile(arg1:string):Promise<main.AnalyzeResult>;
 
+export function ModifyScript():Promise<void>;
+
 export function OpenDataFolder():Promise<void>;
+
+export function ReDecryptFile():Promise<main.AnalyzeResult>;
+
+export function SaveBuf():Promise<void>;
