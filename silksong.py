@@ -1,5 +1,5 @@
 # 所有类别的列表，最终会按照这个列表进行排序
-categories = ["红色工具", "蓝色工具", "黄色工具", "法术", "纹章", "能力", "其它", "面具碎片详情", "灵丝轴碎片详情", "跳蚤", "制造金属", "忆境纪念盒（不计完成度）", "苔莓（不占完成度）"]
+categories = ["红色工具", "蓝色工具", "黄色工具", "法术", "纹章", "能力", "其它", "面具碎片详情", "灵丝轴碎片详情", "跳蚤", "制造金属", "忆境纪念盒（不计完成度）", "苔莓（不占完成度）", "遗物和音筒（不计完成度）"]
 
 # 工具
 def get_tool(tool_name):
@@ -601,6 +601,15 @@ def get_scene_bool(scene_name, item_id):
                 return entry.get("Value", False)
         return False
     return do_get_scene_bool
+
+def get_relic(relic_name):
+    def do_get_relic(d):
+        for tool in d["playerData"]["Relics"]["savedData"]:
+            if tool.get("Name") == relic_name:
+                return tool.get("Data", {}).get("IsCollected", False)
+        return False
+    return do_get_relic
+
 
 # 字段结构同 items ，但不计入完成度
 other_items = [
@@ -1324,5 +1333,152 @@ other_items = [
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
         "desc": "在圣歌盟地由朱比拉娜以180念珠出售",
         "cur": lambda d: d["playerData"].get("MerchantEnclaveToolMetal", False)
+    },
+    {
+        "name":"骨卷轴",
+        "desc":"远野织女右侧",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/e7/Bone_Scroll.png/69px-Bone_Scroll.png",
+        "cur": get_relic("Bone Record Bone_East_14")
+    },
+    {
+        "name":"骨卷轴",
+        "desc":"酒馆右侧水池",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/e7/Bone_Scroll.png/69px-Bone_Scroll.png",
+        "cur": get_relic("Bone Record Greymoor_flooded_corridor")
+    },
+    {
+        "name":"骨卷轴",
+        "desc":"工厂拿地图房间",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/e7/Bone_Scroll.png/69px-Bone_Scroll.png",
+        "cur": get_relic("Bone Record Understore_Map_Room")
+    },
+    {
+        "name":"骨卷轴",
+        "desc":"火灵竹林最顶端",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/e7/Bone_Scroll.png/69px-Bone_Scroll.png",
+        "cur": get_relic("Bone Record Wisp Top")
+    },
+    {
+        "name":"织者雕像",
+        "desc":"骸底镇上空",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/c/cd/Weaver_Effigy.png/49px-Weaver_Effigy.png",
+        "cur": get_relic("Weaver Totem Bonetown_upper_room")
+    },
+    {
+        "name":"织者雕像",
+        "desc":"壳木林下方，被寄生后可拿",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/c/cd/Weaver_Effigy.png/49px-Weaver_Effigy.png",
+        "cur": get_relic("Weaver Totem Witch")
+    },
+    {
+        "name":"织者雕像",
+        "desc":"监狱底部",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/c/cd/Weaver_Effigy.png/49px-Weaver_Effigy.png",
+        "cur": get_relic("Weaver Totem Slab_Bottom")
+    },
+    {
+        "name":"圣咏戒律",
+        "desc":"骸底镇上方悬崖",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/7/77/Choral_Commandment.png/59px-Choral_Commandment.png",
+        "cur": get_relic("Seal Chit Aspid_01")
+    },
+    {
+        "name":"圣咏戒律",
+        "desc":"白愈厅左侧",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/7/77/Choral_Commandment.png/59px-Choral_Commandment.png",
+        "cur": get_relic("Seal Chit Ward Corpse")
+    },
+    {
+        "name":"圣咏戒律",
+        "desc":"圣歌盟地再寻商贾后购买",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/7/77/Choral_Commandment.png/59px-Choral_Commandment.png",
+        "cur": get_relic("Seal Chit City Merchant")
+    },
+    {
+        "name":"圣咏戒律",
+        "desc":"第三幕白愈厅上冲",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/7/77/Choral_Commandment.png/59px-Choral_Commandment.png",
+        "cur": get_relic("Seal Chit Silk Siphon")
+    },
+    {
+        "name":"符文竖琴",
+        "desc":"阿特拉织巢右上",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/eb/Rune_Harp.png/48px-Rune_Harp.png",
+        "cur": get_relic("Weaver Record Weave_08")
+    },
+    {
+        "name":"符文竖琴",
+        "desc":"远野织巢隐藏",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/eb/Rune_Harp.png/48px-Rune_Harp.png",
+        "cur": get_relic("Weaver Record Sprint_Challenge")
+    },
+    {
+        "name":"符文竖琴",
+        "desc":"第三幕高庭，指挥家身旁",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/eb/Rune_Harp.png/48px-Rune_Harp.png",
+        "cur": get_relic("Weaver Record Conductor")
+    },
+    {
+        "name":"神秘蛋",
+        "desc":"第三幕深渊",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/44/Arcane_Egg_Silksong.png/80px-Arcane_Egg_Silksong.png",
+        "cur": get_relic("Ancient Egg Abyss Middle")
+    },
+    {
+        "name":"圣咏音筒",
+        "desc":"书库管理员房间",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/41/Psalm_Cylinder.png/79px-Psalm_Cylinder.png",
+        "cur": get_relic("Psalm Cylinder Librarian")
+    },
+    {
+        "name":"圣咏音筒",
+        "desc":"白愈厅打完boss向下",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/41/Psalm_Cylinder.png/79px-Psalm_Cylinder.png",
+        "cur": get_relic("Psalm Cylinder Ward")
+    },
+    {
+        "name":"圣咏音筒",
+        "desc":"高庭中部澡堂",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/41/Psalm_Cylinder.png/79px-Psalm_Cylinder.png",
+        "cur": get_relic("Psalm Cylinder Hang")
+    },
+    {
+        "name":"圣咏音筒",
+        "desc":"蚀阶小偷购买",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/41/Psalm_Cylinder.png/79px-Psalm_Cylinder.png",
+        "cur": get_relic("Psalm Cylinder Grindle")
+    },
+    {
+        "name":"圣咏音筒",
+        "desc":"书库右上隐藏通道",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/41/Psalm_Cylinder.png/79px-Psalm_Cylinder.png",
+        "cur": get_relic("Psalm Cylinder Library Roof")
+    },
+    {
+        "name":"圣歌音筒",
+        "desc":"书库底部，主线必拿",
+        "category": "遗物和音筒（不计完成度）",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/d/d0/Sacred_Cylinder.png/80px-Sacred_Cylinder.png",
+        "cur": get_relic("Librarian Melody Cylinder")
     },
 ]
