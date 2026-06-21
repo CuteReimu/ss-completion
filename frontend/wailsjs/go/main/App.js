@@ -6,6 +6,10 @@ export function ChangeGame(arg1) {
   return window['go']['main']['App']['ChangeGame'](arg1);
 }
 
+export function ChooseDataFile() {
+  return window['go']['main']['App']['ChooseDataFile']();
+}
+
 export function DecryptFile(arg1) {
   return window['go']['main']['App']['DecryptFile'](arg1);
 }
@@ -18,8 +22,8 @@ export function OpenDataFolder() {
   return window['go']['main']['App']['OpenDataFolder']();
 }
 
-export function ReDecryptFile() {
-  return window['go']['main']['App']['ReDecryptFile']();
+export function RefreshUserData() {
+  return window['go']['main']['App']['RefreshUserData']();
 }
 
 export function SaveBuf() {

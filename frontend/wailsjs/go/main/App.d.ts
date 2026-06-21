@@ -4,16 +4,18 @@ import {main} from '../models';
 
 export function ChangeGame(arg1:string):Promise<void>;
 
+export function ChooseDataFile():Promise<main.AnalyzeResult>;
+
 export function DecryptFile(arg1:string):Promise<main.AnalyzeResult>;
 
 export function ModifyScript():Promise<void>;
 
 export function OpenDataFolder():Promise<void>;
 
-export function ReDecryptFile():Promise<main.AnalyzeResult>;
+export function RefreshUserData():Promise<main.AnalyzeResult>;
 
 export function SaveBuf():Promise<void>;
 
 export function SelectUserData(arg1:string):Promise<main.AnalyzeResult>;
 
-export function ShowDataFolder():Promise<Array<string>>;
+export function ShowDataFolder():Promise<Array<main.Option>>;

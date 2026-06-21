@@ -54,16 +54,10 @@ func (a *App) DecryptFile(fileContent string) (*AnalyzeResult, error) {
 	a.buf = buf
 	result, err := a.analyze(buf)
 	if err != nil {
-		slog.Error("analyze failed", "error", err)
-		a.errorDialog(err.Error())
-		return nil, err
-	}
-	return result, nil
-}
-
-func (a *App) ReDecryptFile() (*AnalyzeResult, error) {
-	result, err := a.analyze(a.buf)
-	if err != nil {
+		if !a.isHollow() && err.Error() == `key "Tools" not in dict` {
+			a.errorDialog("似乎不是丝之歌的存档")
+			return nil, errors.New("似乎不是丝之歌的存档")
+		}
 		slog.Error("analyze failed", "error", err)
 		a.errorDialog(err.Error())
 		return nil, err

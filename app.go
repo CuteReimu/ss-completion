@@ -21,7 +21,8 @@ type App struct {
 	ctx context.Context
 	buf []byte
 
-	currentGame string
+	selectedFile string
+	currentGame  string
 }
 
 // NewApp creates a new App application struct
@@ -109,9 +110,14 @@ func (a *App) OpenDataFolder() {
 	}()
 }
 
+type Option struct {
+	Label string `json:"label"`
+	Value string `json:"value"`
+}
+
 var userDataFileName = []string{"user1.dat", "user2.dat", "user3.dat", "user4.dat"}
 
-func (a *App) ShowDataFolder() []string {
+func (a *App) ShowDataFolder() []Option {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		return nil
@@ -121,7 +127,7 @@ func (a *App) ShowDataFolder() []string {
 	} else {
 		homeDir = filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight Silksong")
 	}
-	var ret []string
+	var ret []Option
 	_ = filepath.WalkDir(homeDir, func(path string, info fs.DirEntry, err error) error {
 		if err != nil {
 			slog.Error("walk dir error", "error", err)
@@ -130,7 +136,7 @@ func (a *App) ShowDataFolder() []string {
 		if !info.IsDir() && slices.Contains(userDataFileName, info.Name()) {
 			dir, err := filepath.Rel(homeDir, path)
 			if err == nil {
-				ret = append(ret, dir)
+				ret = append(ret, Option{Label: dir, Value: path})
 			}
 		}
 		return nil
@@ -138,16 +144,40 @@ func (a *App) ShowDataFolder() []string {
 	return ret
 }
 
-func (a *App) SelectUserData(fileName string) (*AnalyzeResult, error) {
-	homeDir, err := os.UserHomeDir()
+func (a *App) RefreshUserData() (*AnalyzeResult, error) {
+	buf, err := os.ReadFile(a.selectedFile)
 	if err != nil {
 		a.errorDialog(err.Error())
 		return nil, err
 	}
-	filePath := filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight Silksong", fileName)
-	if a.isHollow() {
-		filePath = filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight", fileName)
+	return a.DecryptFile(string(buf))
+}
+
+func (a *App) SelectUserData(filePath string) (*AnalyzeResult, error) {
+	a.selectedFile = filePath
+	buf, err := os.ReadFile(filePath)
+	if err != nil {
+		a.errorDialog(err.Error())
+		return nil, err
 	}
+	return a.DecryptFile(string(buf))
+}
+
+func (a *App) ChooseDataFile() (*AnalyzeResult, error) {
+	filePath, err := wailsRuntime.OpenFileDialog(a.ctx, wailsRuntime.OpenDialogOptions{
+		Filters: []wailsRuntime.FileFilter{{
+			DisplayName: "存档文件",
+			Pattern:     "*.dat",
+		}},
+	})
+	if err != nil {
+		a.errorDialog(err.Error())
+		return nil, err
+	}
+	if filePath == "" {
+		return nil, nil
+	}
+	a.selectedFile = filePath
 	buf, err := os.ReadFile(filePath)
 	if err != nil {
 		a.errorDialog(err.Error())
