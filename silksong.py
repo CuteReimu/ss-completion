@@ -1554,7 +1554,7 @@ other_items = [
         "desc":"在髓骨洞窟游玩洛迪的飞镖小游戏，完成难度一（击中15次目标）后由洛迪给予。第三幕中在洛迪所在位置附近的桌子上拾取",
         "category": "工具袋&制作匣",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/e9/Tool_Pouch.png",
-        "cur": lambda d: d["playerData"].get("pinGalleriesCompleted", 0) > 0 or get_scene_bool("Bone_12", "Ladybug Craft Pickup")
+        "cur": lambda d: d["playerData"].get("pinGalleriesCompleted", 0) > 0 or get_scene_bool("Bone_12", "Ladybug Craft Pickup")(d)
     },
     {
         "name":"工具袋-朝圣者憩所购买",
