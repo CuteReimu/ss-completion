@@ -1,5 +1,5 @@
 # 所有类别的列表，最终会按照这个列表进行排序
-categories = ["红色工具", "蓝色工具", "黄色工具", "法术", "纹章", "能力", "其它", "面具碎片详情", "灵丝轴碎片详情", "跳蚤", "制造金属", "忆境纪念盒（不计完成度）", "苔莓（不占完成度）", "遗物和音筒（不计完成度）"]
+categories = ["红色工具", "蓝色工具", "黄色工具", "法术", "纹章", "能力", "其它", "面具碎片详情", "灵丝轴碎片详情", "跳蚤", "制造金属", "工具袋&制作匣", "忆境纪念盒（不计完成度）", "苔莓（不占完成度）", "遗物和音筒（不计完成度）"]
 
 # 工具
 def get_tool(tool_name):
@@ -39,20 +39,23 @@ items = [
     {
         "name": "罗盘",
         "category": "黄色工具",
+        "desc": "罗盘由沙克拉以70念珠出售",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/9/92/Compass.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/罗盘",
         "cur": get_tool("Compass")
     },
     {
-        "name": "碎壳坠",
+        "name": "碎壳挂坠",
         "category": "黄色工具",
+        "desc": "碎壳挂坠位于髓骨洞窟左部的一个小房间中",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/f/f2/Shard_Pendant.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/碎壳坠",
+        "wiki": "https://hkss.huijiwiki.com/wiki/碎壳挂坠",
         "cur": get_tool("Bone Necklace")
     },
     {
         "name": "磁石胸针",
         "category": "黄色工具",
+        "desc": "磁石胸针由骸底镇的佩珀以120念珠出售。如果进入第三幕导致骸底镇被摧毁，则由风蚀长阶的格林德尔以220念珠出售",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/22/Magnetite_Brooch.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/磁石胸针",
         "cur": get_tool("Rosary Magnet")
@@ -60,6 +63,7 @@ items = [
     {
         "name": "负重环带",
         "category": "黄色工具",
+        "desc": "负重环带由朝圣者憩所的莫特以160念珠出售。如果因进入第三幕导致朝圣者憩所被破坏，则可以在莫特的尸体旁拾取",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/ee/Weighted_Belt.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/负重环带",
         "cur": get_tool("Weighted Anklet")
@@ -67,6 +71,7 @@ items = [
     {
         "name": "棘刺手环",
         "category": "黄色工具",
+        "desc": "棘刺手环位于罪途底层右侧的一个房间下部",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/5e/Barbed_Bracelet.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/棘刺手环",
         "cur": get_tool("Barbed Wire")
@@ -74,6 +79,7 @@ items = [
     {
         "name": "亡虫囊/壳囊",
         "category": "黄色工具",
+        "desc": "亡虫囊位于沙噬虫道右上部的一具尸体处。亡虫囊在钢铁之魂模式中会被壳囊替代",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/f/fc/Dead_Bug%27s_Purse.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/亡虫囊",
         "cur": lambda d: get_tool("Dead Mans Purse")(d) or get_tool("Shell Satchel")(d)
@@ -81,6 +87,7 @@ items = [
     {
         "name": "磁石骰",
         "category": "黄色工具",
+        "desc": "与风蚀长阶的幸运儿兰布尔进行游戏并赢光其念珠后由其赠与。击败机枢舞者或获得飞针冲刺后可在幸运儿兰布尔尸体旁拾取。进入第三幕后由格林德尔以300念珠出售",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/3/3a/Magnetite_Dice.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/磁石骰",
         "cur": get_tool("Magnetite Dice")
@@ -88,6 +95,7 @@ items = [
     {
         "name": "迅捷脊锁",
         "category": "黄色工具",
+        "desc": "迅捷脊锁由圣堡工厂的第十二席建筑师以140念珠和1制造金属打造",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/05/Scuttlebrace.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/迅捷脊锁",
         "cur": get_tool("Scuttlebrace")
@@ -95,6 +103,7 @@ items = [
     {
         "name": "登极握爪",
         "category": "黄色工具",
+        "desc": "登极握爪由圣歌盟地的朱比拉娜以350念珠出售",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/f/fe/Ascendants_Grip.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/登极握爪",
         "cur": get_tool("Wallcling")
@@ -102,6 +111,7 @@ items = [
     {
         "name": "蛛丝弦",
         "category": "黄色工具",
+        "desc": "完成再寻商人祈愿后，在朱比拉娜处以320念珠购买",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/b/bf/Spider_Strings.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/蛛丝弦",
         "cur": get_tool("Musician Charm")
@@ -109,6 +119,7 @@ items = [
     {
         "name": "丝速脚环",
         "category": "黄色工具",
+        "desc": "丝速脚环位于远野的辛德里尔织巢处，需施展疾风步快速踩过织巢内所有的压力板以获得",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/b/b3/Silkspeed_Anklets.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/丝速脚环",
         "cur": get_tool("Sprintmaster")
@@ -116,6 +127,7 @@ items = [
     {
         "name": "窃者印记",
         "category": "黄色工具",
+        "desc": "窃贼印记由风蚀长阶的格林德尔以350念珠出售",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/8/80/Thiefs_Mark.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/窃者印记",
         "cur": get_tool("Thief Charm")
@@ -123,6 +135,7 @@ items = [
     {
         "name": "直针",
         "category": "红色工具",
+        "desc": "直针可以在髓骨洞窟的一座监狱中拾取，与格林德尔位于同一房间中",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/03/Straight_Pin.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/直针",
         "cur": get_tool("Straight Pin")
@@ -130,6 +143,7 @@ items = [
     {
         "name": "三重镖",
         "category": "红色工具",
+        "desc": "三重镖位于灰沼右部鸦虫湖上方的一个隐藏房间中，入口由一只高鸦虫看守",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/a6/Tri-Pins.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/三重镖",
         "cur": get_tool("Tri Pin")
@@ -137,6 +151,7 @@ items = [
     {
         "name": "蛰刺碎片",
         "category": "红色工具",
+        "desc": "蜇刺碎片由深坞的熔炉之女以140念珠和1制造金属打造",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Sting_Shard.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/蛰刺碎片",
         "cur": get_tool("Sting Shard")
@@ -144,6 +159,7 @@ items = [
     {
         "name": "钉刺",
         "category": "红色工具",
+        "desc": "钉刺由罪途的克鲁尔和班金给予，需要大黄蜂达成祈愿蟑螂内脏。如果已经进入了第三幕，则可以在克鲁尔和班金的小屋中直接拾取",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/ef/Tacks.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/钉刺",
         "cur": get_tool("Tack")
@@ -151,6 +167,7 @@ items = [
     {
         "name": "长针",
         "category": "红色工具",
+        "desc": "长针位于壳木林，一个木蜂巢后的房间中",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/c/cb/Longpin.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/长针",
         "cur": get_tool("Harpoon")
@@ -158,6 +175,7 @@ items = [
     {
         "name": "弧爪/曲镰",
         "category": "红色工具",
+        "desc": "弧爪由猎者小径的白斑斯卡尔以140念珠出售。如果白斑斯卡尔已经死亡，则弧爪会出现在上方的一个房间中，由一只斯卡尔守卫和一只斯卡尔长矛手看守",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/20/Curveclaw.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/弧爪",
         "cur": lambda d: get_tool("Curve Claws")(d) or get_tool("Curve Claws Upgraded")(d)
@@ -165,6 +183,7 @@ items = [
     {
         "name": "投掷环",
         "category": "红色工具",
+        "desc": "在达成旅者助行祈愿终迹后，沙克拉会将投掷环赠与大黄蜂",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2b/Throwing_Ring.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/投掷环",
         "cur": get_tool("Shakra Ring")
@@ -172,6 +191,7 @@ items = [
     {
         "name": "爆燃囊",
         "category": "红色工具",
+        "desc": "爆燃囊可以在灰沼中雅纳碧的住所上方的一张制作台处使用1制造金属制作",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/b/b0/Pimpillo.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/爆燃囊",
         "cur": get_tool("Pimpilo")
@@ -179,6 +199,7 @@ items = [
     {
         "name": "螺切刃",
         "category": "红色工具",
+        "desc": "螺切刃可以在卡拉卡沙川的珊瑚尖塔中拾取，需要大黄蜂击败狂暴的螺蝇才能到达",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0f/Conchcutter.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/螺切刃",
         "cur": get_tool("Conch Drill")
@@ -186,6 +207,7 @@ items = [
     {
         "name": "丝弹（三选一）",
         "category": "红色工具",
+        "desc": "损坏的工具位于腐汁泽底部的默格林织巢内。获取损坏的工具后可通过三种途径将其修复为丝弹",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/b/b3/Silkshot.png/72px-Silkshot.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/丝弹",
         "cur": lambda d: get_tool("WebShot Weaver")(d) or get_tool("WebShot Architect")(d) or get_tool("WebShot Forge")(d)
@@ -193,6 +215,7 @@ items = [
     {
         "name": "掘洞钻",
         "category": "红色工具",
+        "desc": "掘洞钻位于圣堡工厂左下方的一张桌子上",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/59/Delvers_Drill.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/掘洞钻",
         "cur": get_tool("Screw Attack")
@@ -200,6 +223,7 @@ items = [
     {
         "name": "机轮刃",
         "category": "红色工具",
+        "desc": "机轮刃由圣堡工厂的第十二席建筑师以360念珠和1制造金属打造",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/8/8e/Cogwork_Wheel.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/机轮刃",
         "cur": get_tool("Cogwork Saw")
@@ -207,6 +231,7 @@ items = [
     {
         "name": "齿轮蜂",
         "category": "红色工具",
+        "desc": "齿轮蜂可以在高庭的一张制作台处使用1制造金属制作",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/b/ba/Cogfly.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/齿轮蜂",
         "cur": get_tool("Cogwork Flier")
@@ -214,6 +239,7 @@ items = [
     {
         "name": "念珠炮",
         "category": "红色工具",
+        "desc": "念珠炮可以在高庭的念珠银行中通过摧毁念珠串装机底下的装置获得，该房间被简易锁上锁",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/25/Rosary_Cannon_Loaded.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/念珠炮",
         "cur": get_tool("Rosary Cannon")
@@ -221,6 +247,7 @@ items = [
     {
         "name": "电枢球",
         "category": "红色工具",
+        "desc": "电枢球位于忆廊上层的一个隐藏房间，由两只忆廊使徒看守",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/7/75/Voltvessels.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/电枢球",
         "cur": get_tool("Lightning Rod")
@@ -228,6 +255,7 @@ items = [
     {
         "name": "燧石板",
         "category": "红色工具",
+        "desc": "燧石板位于深坞右部的一个房间中",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/3/37/Flintslate.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/燧石板",
         "cur": get_tool("Flintstone")
@@ -235,6 +263,7 @@ items = [
     {
         "name": "跳蚤秘酿",
         "category": "红色工具",
+        "desc": "达成祈愿迷途跳蚤后跳蚤旅团会迁至灰沼，此时与格里什琴对话后，她会将跳蚤秘酿作为礼物赠予大黄蜂",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d0/Flea_Brew.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/跳蚤秘酿",
         "cur": get_tool("Flea Brew")
@@ -242,6 +271,7 @@ items = [
     {
         "name": "生质液瓶",
         "category": "红色工具",
+        "desc": "生质液瓶由沙噬虫道的炼金术士奇洛托给予，需要大黄蜂达成祈愿炼金助手",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/8/82/Plasmium_Phial.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/生质液瓶",
         "cur": get_tool("Lifeblood Syringe")
@@ -249,6 +279,7 @@ items = [
     {
         "name": "德鲁伊之眼/德鲁伊双瞳",
         "category": "蓝色工具",
+        "desc": "德鲁伊之眼由苔栖乡的苔藓德鲁伊给予，需要大黄蜂达成祈愿莓果采集。德鲁伊之眼可以升级为德鲁伊双瞳",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/1/13/Druid%27s_Eye.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/德鲁伊之眼",
         "cur": lambda d: get_tool("Mosscreep Tool 1")(d) or get_tool("Mosscreep Tool 2")(d)
@@ -256,6 +287,7 @@ items = [
     {
         "name": "熔岩钟",
         "category": "蓝色工具",
+        "desc": "熔岩钟由深坞的熔炉之女以110念珠和1制造金属打造",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/7/72/Magma_Bell.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/熔岩钟",
         "cur": get_tool("Lava Charm")
@@ -263,6 +295,7 @@ items = [
     {
         "name": "护佑钟",
         "category": "蓝色工具",
+        "desc": "护佑钟位于远野下部一个死去的炼岩工身上，在深坞的下部入口附近",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/8/8c/Warding_Bell.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/护佑钟",
         "cur": get_tool("Bell Bind")
@@ -270,6 +303,7 @@ items = [
     {
         "name": "花芯囊",
         "category": "蓝色工具",
+        "desc": "花芯囊由壳木林的灰根给予，需要达成祈愿花芯仪式",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/8/82/Pollip_Pouch.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/花芯囊",
         "cur": get_tool("Poison Pouch")
@@ -277,6 +311,7 @@ items = [
     {
         "name": "碎面甲",
         "category": "蓝色工具",
+        "desc": "裂痕面具由猎者小径的白斑斯卡尔以260念珠出售。如果白斑斯卡尔死亡，则可以在其尸体旁直接拾取裂痕面具",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/51/Fractured_Mask.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/碎面甲",
         "cur": get_tool("Fractured Mask")
@@ -284,6 +319,7 @@ items = [
     {
         "name": "多重缚丝器",
         "category": "蓝色工具",
+        "desc": "多重缚丝器由钟心镇的芙蕾以880念珠出售，需要完成祈愿失踪送货员",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/1/19/Multibinder.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/多重缚丝器",
         "cur": get_tool("Multibind")
@@ -291,6 +327,7 @@ items = [
     {
         "name": "织光仪",
         "category": "蓝色工具",
+        "desc": "织光仪位于阿特拉织巢，需要打败两只苔藓之母后获得",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/5f/Weavelight.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/织光仪",
         "cur": get_tool("White Ring")
@@ -298,6 +335,7 @@ items = [
     {
         "name": "锯齿环",
         "category": "蓝色工具",
+        "desc": "锯齿环可在位于圣堡工厂的第十二席建筑师处以230念珠和1制造金属购买打造",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/4/45/Sawtooth_Circlet.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/锯齿环",
         "cur": get_tool("Brolly Spike")
@@ -305,6 +343,7 @@ items = [
     {
         "name": "注丝套针",
         "category": "蓝色工具",
+        "desc": "注丝套针可以在白愈厅右部的一张手术台上获取",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/dd/Injector_Band.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/注丝套针",
         "cur": get_tool("Quickbind")
@@ -312,6 +351,7 @@ items = [
     {
         "name": "储丝延展器",
         "category": "蓝色工具",
+        "desc": "储丝延展器可在完成失踪商人后于圣歌盟地的朱比拉娜处以720念珠购买",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/1/17/Spool_Extender.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/储丝延展器",
         "cur": get_tool("Spool Extender")
@@ -319,6 +359,7 @@ items = [
     {
         "name": "储备缚丝",
         "category": "蓝色工具",
+        "desc": "储备缚丝可在祈愿最终会面结尾击败次席戍卫后由它赠予",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/1/13/Reserve_Bind.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/储备缚丝",
         "cur": get_tool("Reserve Bind")
@@ -326,6 +367,7 @@ items = [
     {
         "name": "爪镜/双生爪镜",
         "category": "蓝色工具",
+        "desc": "爪镜在低语书库的剧台处击败特罗比奥后由他掉落",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/f/fe/Claw_Mirror.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/爪镜",
         "cur": lambda d: get_tool("Dazzle Bind")(d) or get_tool("Dazzle Bind Upgraded")(d)
@@ -333,6 +375,7 @@ items = [
     {
         "name": "记忆晶石",
         "category": "蓝色工具",
+        "desc": "记忆晶石位于雪灵山，左部长椅附近的一条冰晶通道中。这条通道遍布可破坏的冰晶，它们会在被打碎后的数秒复原",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/6b/Memory_Crystal.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/记忆晶石",
         "cur": get_tool("Revenge Crystal")
@@ -340,6 +383,7 @@ items = [
     {
         "name": "撬赃钩",
         "category": "蓝色工具",
+        "desc": "撬赃钩可在习得飞针冲刺后于风蚀长阶的格林德尔处以740念珠购买",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/eb/Snitch_Pick.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/撬赃钩",
         "cur": get_tool("Thief Claw")
@@ -347,6 +391,7 @@ items = [
     {
         "name": "伏特丝",
         "category": "蓝色工具",
+        "desc": "伏特丝由位于电荷巢穴的伏特维姆掉落",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/c/c4/Volt_Filament.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/伏特丝",
         "cur": get_tool("Zap Imbuement")
@@ -354,20 +399,23 @@ items = [
     {
         "name": "速射索",
         "category": "蓝色工具",
+        "desc": "速射索位于腐汁泽中部的一面可破坏天花板后",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/4/4a/Quick_Sling.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/速射索",
         "cur": get_tool("Quick Sling")
     },
     {
-        "name": "净界花环",
+        "name": "纯净花环",
         "category": "蓝色工具",
+        "desc": "纯净花环藏在腐殖渠钟道站右下方洞窟中的一座废弃小屋处",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/c/c2/Wreath_of_Purity.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/净界花环",
+        "wiki": "https://hkss.huijiwiki.com/wiki/纯净花环",
         "cur": get_tool("Maggot Charm")
     },
     {
         "name": "长爪",
         "category": "蓝色工具",
+        "desc": "长爪由腐殖渠的女猎手给予，需要大黄蜂达成祈愿育巢盛宴。如果进入了第三幕中，则在相同位置由幼兽给予，需要大黄蜂达成祈愿遗孤盛宴",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/7/73/Longclaw.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/长爪",
         "cur": get_tool("Longneedle")
@@ -375,6 +423,7 @@ items = [
     {
         "name": "灵火提灯",
         "category": "蓝色工具",
+        "desc": "灵火提灯由位于火灵竹丛的炽焰之父掉落",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/8/80/Wispfire_Lantern.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/灵火提灯",
         "cur": get_tool("Wisp Lantern")
@@ -382,13 +431,15 @@ items = [
     {
         "name": "蚤母卵",
         "category": "蓝色工具",
+        "desc": "在找回全部30只迷途跳蚤后，跳蚤首领穆什卡会将蚤母卵赠与大黄蜂",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/a4/Egg_of_Flealia.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/蚤母卵",
         "cur": get_tool("Flea Charm")
     },
     {
-        "name": "针徽",
+        "name": "针徽（第三幕）",
         "category": "蓝色工具",
+        "desc": "第三幕才能获得，需要大黄蜂在祈愿针锋对决期间前往雪灵山与针姬决斗并胜利",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/50/Pin_Badge.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/针徽",
         "cur": get_tool("Pinstress Tool")
@@ -412,6 +463,7 @@ items = [
     {
         "name": "丝之矛",
         "category": "法术",
+        "desc": "丝之矛可以在苔藓洞穴内的苔栖乡中习得",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/a/a4/Icon_SS_Silkspear.png/438px-Icon_SS_Silkspear.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/丝之矛",
         "cur": get_tool("Silk Spear")
@@ -419,6 +471,7 @@ items = [
     {
         "name": "灵丝风暴",
         "category": "法术",
+        "desc": "灵丝风暴可以在灰沼内的鸦虫湖上方习得",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/8/8c/Icon_SS_Thread_Storm.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/灵丝风暴",
         "cur": get_tool("Thread Sphere")
@@ -426,6 +479,7 @@ items = [
     {
         "name": "十字绣",
         "category": "法术",
+        "desc": "十字绣可以在废鸣管风琴内击败幽影后习得",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/2/25/Icon_SS_Cross_Stitch.png/438px-Icon_SS_Cross_Stitch.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/十字绣",
         "cur": get_tool("Parry")
@@ -433,6 +487,7 @@ items = [
     {
         "name": "丝刃镖",
         "category": "法术",
+        "desc": "丝刃冲刺可以在沙噬虫道的卡恩织巢内习得，需要演奏织忆弦针来开启织巢大门",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/8/87/Icon_SS_Sharpdart.png/438px-Icon_SS_Sharpdart.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/丝刃镖",
         "cur": get_tool("Silk Charge")
@@ -440,13 +495,15 @@ items = [
     {
         "name": "符文之怒",
         "category": "法术",
+        "desc": "击败原初罪者后即可习得符文之怒",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/9/91/Icon_SS_Rune_Rage.png/438px-Icon_SS_Rune_Rage.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/符文之怒",
         "cur": get_tool("Silk Bomb")
     },
     {
-        "name": "苍白之爪",
+        "name": "苍白之爪（第三幕）",
         "category": "法术",
+        "desc": "在第三幕使用灵丝升腾回到摇篮圣所后，在崇高圣母灵丝战斗场地上的断臂旁缚丝即可习得苍白之爪",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/d/d9/Icon_SS_Pale_Nails.png/408px-Icon_SS_Pale_Nails.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/苍白之爪",
         "cur": get_tool("Silk Boss Needle")
@@ -462,6 +519,7 @@ items = [
     {
         "name": "收割者纹章",
         "category": "纹章",
+        "desc": "收割者纹章可以在灰沼的收割者教堂获取",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/0/0c/Reaper_Crest_Inventory.png/438px-Reaper_Crest_Inventory.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/收割者纹章",
         "cur": get_tool_equips("Reaper"),
@@ -469,6 +527,7 @@ items = [
     {
         "name": "漫游者纹章",
         "category": "纹章",
+        "desc": "漫游者纹章可以在苔藓洞穴左半部分的漫游者教堂获取",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/5/5e/Wanderer_Crest_Inventory.png/322px-Wanderer_Crest_Inventory.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/漫游者纹章",
         "cur": get_tool_equips("Wanderer"),
@@ -476,6 +535,7 @@ items = [
     {
         "name": "野兽纹章",
         "category": "纹章",
+        "desc": "野兽纹章可以在远野的野兽教堂获取，需要先在其中击败残暴的兽蝇",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/b/b9/Beast_Crest_Inventory.png/438px-Beast_Crest_Inventory.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/野兽纹章",
         "cur": get_tool_equips("Warrior"),
@@ -483,20 +543,23 @@ items = [
     {
         "name": "建筑师纹章",
         "category": "纹章",
+        "desc": "建筑师纹章可以在建筑师教堂获取，需要建筑师钥匙方可进入该教堂",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/d/d4/Architect_Crest_Inventory.png/412px-Architect_Crest_Inventory.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/建筑师纹章",
         "cur": get_tool_equips("Toolmaster"),
     },
     {
-        "name": "巫妪纹章",
+        "name": "女巫纹章",
         "category": "纹章",
+        "desc": "被诅咒后完成寄生手术祈愿，诅咒纹章将会转化为女巫纹章",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/d/d0/Witch_Crest_Inventory.png/426px-Witch_Crest_Inventory.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/巫妪纹章",
+        "wiki": "https://hkss.huijiwiki.com/wiki/女巫纹章",
         "cur": get_tool_equips("Witch"),
     },
     {
-        "name": "萨满纹章",
+        "name": "萨满纹章（第三幕）",
         "category": "纹章",
+        "desc": "萨满纹章可在苔藓洞穴的颓败教堂中获得，需习得灵丝升腾技艺方可抵达",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/d/d8/Shaman_Crest_Inventory.png/435px-Shaman_Crest_Inventory.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/萨满纹章",
         "cur": get_tool_equips("Spell"),
@@ -504,6 +567,7 @@ items = [
     {
         "name": "疾风步",
         "category": "能力",
+        "desc": "在深坞最顶端习得",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/f/f2/Icon_SS_Swift_Step_Art.png/438px-Icon_SS_Swift_Step_Art.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/疾风步",
         "cur": lambda d: d["playerData"]["hasDash"]
@@ -511,6 +575,7 @@ items = [
     {
         "name": "蛛攀术",
         "category": "能力",
+        "desc": "在壳木林击败碎裂者长姊打开道路后，再完成一系列平台跳跃后习得",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/3/3b/Icon_SS_Cling_Grip_Art.png/357px-Icon_SS_Cling_Grip_Art.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/蛛攀术",
         "cur": lambda d: d["playerData"]["hasWalljump"]
@@ -518,13 +583,15 @@ items = [
     {
         "name": "飞针冲刺",
         "category": "能力",
+        "desc": "飞针冲刺可以穿过位于圣堡工厂的大熔釜中央房间中的一条布满熔岩的路线来习得",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/6/6f/Icon_SS_Clawline_Art.png/438px-Icon_SS_Clawline_Art.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/飞针冲刺",
         "cur": lambda d: d["playerData"]["hasHarpoonDash"]
     },
     {
-        "name": "灵丝升腾",
+        "name": "灵丝升腾（第三幕）",
         "category": "能力",
+        "desc": "在深渊的阿布索伦织巢习得",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/e8/Icon_SS_Silk_Soar_Art.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/灵丝升腾",
         "cur": lambda d: d["playerData"]["hasSuperJump"]
@@ -532,6 +599,7 @@ items = [
     {
         "name": "蓄力斩",
         "category": "能力",
+        "desc": "大黄蜂在风蚀长阶首次与针姬相遇时，针姬会向大黄蜂提出要与其切磋练手，接受请求后便能习得蓄力斩",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/8/8e/Icon_SS_Needle_Strike_Art.png/438px-Icon_SS_Needle_Strike_Art.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/蓄力斩",
         "cur": lambda d: d["playerData"]["hasChargeSlash"]
@@ -539,6 +607,7 @@ items = [
     {
         "name": "织忆弦针",
         "category": "能力",
+        "desc": "织忆弦针将在玩家击败黑寡妇并用缚丝获取其力量后习得",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/c/c0/Icon_SS_Needolin_Art.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/织忆弦针",
         "cur": lambda d: d["playerData"]["hasNeedolin"]
@@ -584,15 +653,15 @@ items = [
 ]
 
 # 任务完成信息
-def get_question_complete(question_name):
-    def do_get_question_complete(d):
+def get_quest_complete(question_name):
+    def do_get_quest_complete(d):
         for tool in d["playerData"]["QuestCompletionData"]["savedData"]:
             if tool.get("Name") == question_name:
                 return tool.get("Data", {}).get("IsCompleted", False)
         return False
-    return do_get_question_complete
+    return do_get_quest_complete
 
-# 任务场景信息
+# 任务场景信息（bool类型）
 def get_scene_bool(scene_name, item_id):
     def do_get_scene_bool(d):
         bool_list = d.get("sceneData", {}).get("persistentBools", {}).get("serializedList", [])
@@ -609,7 +678,6 @@ def get_relic(relic_name):
                 return tool.get("Data", {}).get("IsCollected", False)
         return False
     return do_get_relic
-
 
 # 字段结构同 items ，但不计入完成度
 other_items = [
@@ -632,28 +700,28 @@ other_items = [
         "category": "面具碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "完成祈愿暴怒兽蝇的奖励，需要击败第一只兽蝇与第四圣咏团并且进入纺络后在钟心镇接取",
-        "cur": get_question_complete("Beastfly Hunt")
+        "cur": get_quest_complete("Beastfly Hunt")
     },
     {
         "name": "隐秘猎手祈愿（第三幕）",
         "category": "面具碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "与卡梅莉塔交谈或使用深邃挽歌进入过她的记忆后，在钟心镇接取祈愿",
-        "cur": get_question_complete("Ant Trapper")
+        "cur": get_quest_complete("Ant Trapper")
     },
     {
         "name": "竞速冠军祈愿（第三幕）",
         "category": "面具碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "完成祈愿纺络竞速冠军，在飞毛腿斯威夫特设置的第三轮赛跑比赛中获胜",
-        "cur": get_question_complete("Sprintmaster Race")
+        "cur": get_quest_complete("Sprintmaster Race")
     },
     {
         "name": "暗蚀之心祈愿（第三幕）",
         "category": "面具碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "完成主线任务寻觅：等候终局的暗蚀之心祈愿，在钟心镇接取",
-        "cur": get_question_complete("Black Thread Pt5 Heart")
+        "cur": get_quest_complete("Black Thread Pt5 Heart")
     },
     {
         "name": "沙噬虫道",
@@ -786,7 +854,7 @@ other_items = [
         "category": "灵丝轴碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "完成祈愿愈伤良方后，由谢尔玛赠与，需要使用白愈钥匙打开通往白愈厅的电梯",
-        "cur": get_question_complete("Save Sherma")
+        "cur": get_quest_complete("Save Sherma")
     },
     {
         "name": "骸底镇",
@@ -912,7 +980,7 @@ other_items = [
         "category": "忆境纪念盒（不计完成度）",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，祈愿任务狩猎暴烈燧甲虫的回报",
-        "cur": get_question_complete("Rock Rollers")
+        "cur": get_quest_complete("Rock Rollers")
     },
     {
         "name": "钟心镇（芙蕾商店）",
@@ -1405,7 +1473,7 @@ other_items = [
         "cur": get_relic("Seal Chit City Merchant")
     },
     {
-        "name":"圣咏戒律",
+        "name":"圣咏戒律（第三幕）",
         "desc":"第三幕白愈厅上冲",
         "category": "遗物和音筒（不计完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/7/77/Choral_Commandment.png/59px-Choral_Commandment.png",
@@ -1426,14 +1494,14 @@ other_items = [
         "cur": get_relic("Weaver Record Sprint_Challenge")
     },
     {
-        "name":"符文竖琴",
+        "name":"符文竖琴（第三幕）",
         "desc":"第三幕高庭，指挥家身旁",
         "category": "遗物和音筒（不计完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/eb/Rune_Harp.png/48px-Rune_Harp.png",
         "cur": get_relic("Weaver Record Conductor")
     },
     {
-        "name":"神秘蛋",
+        "name":"神秘蛋（第三幕）",
         "desc":"第三幕深渊",
         "category": "遗物和音筒（不计完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/44/Arcane_Egg_Silksong.png/80px-Arcane_Egg_Silksong.png",
@@ -1480,5 +1548,61 @@ other_items = [
         "category": "遗物和音筒（不计完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/d/d0/Sacred_Cylinder.png/80px-Sacred_Cylinder.png",
         "cur": get_relic("Librarian Melody Cylinder")
+    },
+    {
+        "name":"工具袋-骸骨洞窟小游戏",
+        "desc":"在髓骨洞窟游玩洛迪的飞镖小游戏，完成难度一（击中15次目标）后由洛迪给予。第三幕中在洛迪所在位置附近的桌子上拾取",
+        "category": "工具袋&制作匣",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/e9/Tool_Pouch.png",
+        "cur": lambda d: d["playerData"].get("pinGalleriesCompleted", 0) > 0 or get_scene_bool("Bone_12", "Ladybug Craft Pickup")
+    },
+    {
+        "name":"工具袋-朝圣者憩所购买",
+        "desc":"前两幕中在远野的朝圣者憩所，由莫特以220念珠出售。第三幕中由风蚀长阶的格林德尔以220念珠出售",
+        "category": "工具袋&制作匣",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/e9/Tool_Pouch.png",
+        "cur": lambda d: d["playerData"].get("PurchasedBelltownToolPouch", False) or d["playerData"].get("PurchasedPilgrimsRestToolPouch", False)
+    },
+    {
+        "name":"工具袋-跳蚤旅团",
+        "desc":"作为帮助跳蚤旅团旅行的回报，由旅团团长穆什卡在蚤托邦给予",
+        "category": "工具袋&制作匣",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/e9/Tool_Pouch.png",
+        "cur": get_scene_bool("Aqueduct_05", "Caravan Troupe Leader Fleatopia NPC")
+    },
+    {
+        "name":"工具袋-纺络虫族图鉴",
+        "desc":"达成独特祈愿研习：纺络虫族图鉴后由努努在中途酒馆给予",
+        "category": "工具袋&制作匣",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/e9/Tool_Pouch.png",
+        "cur": get_quest_complete("Journal")
+    },
+    {
+        "name":"制作匣-熔炉之女出售",
+        "desc":"在深坞，由熔炉之女以180念珠出售",
+        "category": "工具袋&制作匣",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/5d/Crafting_Kit.png",
+        "cur": lambda d: d["playerData"].get("PurchasedForgeToolKit", False)
+    },
+    {
+        "name":"制作匣-清剿鸦虫祈愿",
+        "desc":"达成祈愿清剿鸦虫后由中途酒馆的克雷吉给予",
+        "category": "工具袋&制作匣",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/5d/Crafting_Kit.png",
+        "cur": get_quest_complete("Crow Feathers")
+    },
+    {
+        "name":"制作匣-建筑师出售",
+        "desc":"在圣堡工厂，由第十二席建筑师以450念珠出售",
+        "category": "工具袋&制作匣",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/5d/Crafting_Kit.png",
+        "cur": lambda d: d["playerData"].get("PurchasedArchitectToolKit", False)
+    },
+    {
+        "name":"制作匣-格林德尔出售",
+        "desc":"在风蚀长阶，由格林德尔以700念珠出售",
+        "category": "工具袋&制作匣",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/5d/Crafting_Kit.png",
+        "cur": lambda d: d["playerData"].get("purchasedGrindleToolKit", False)
     },
 ]
