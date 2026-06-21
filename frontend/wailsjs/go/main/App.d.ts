@@ -11,3 +11,7 @@ export function OpenDataFolder():Promise<void>;
 export function ReDecryptFile():Promise<main.AnalyzeResult>;
 
 export function SaveBuf():Promise<void>;
+
+export function SelectUserData(arg1:string):Promise<main.AnalyzeResult>;
+
+export function ShowDataFolder():Promise<Array<string>>;

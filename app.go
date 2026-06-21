@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"slices"
 
 	"github.com/pkg/errors"
 	wailsRuntime "github.com/wailsapp/wails/v2/pkg/runtime"
@@ -90,6 +91,51 @@ func (a *App) OpenDataFolder() {
 	go func() {
 		_ = cmd.Run()
 	}()
+}
+
+var userDataFileName = []string{"user1.dat", "user2.dat", "user3.dat", "user4.dat"}
+
+func (a *App) ShowDataFolder() []string {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return nil
+	}
+	homeDir = filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight Silksong")
+	dir, err := os.ReadDir(homeDir)
+	if err != nil {
+		return nil
+	}
+	var ret []string
+	for _, d := range dir {
+		if !d.IsDir() {
+			continue
+		}
+		dir2, err := os.ReadDir(filepath.Join(homeDir, d.Name()))
+		if err != nil {
+			continue
+		}
+		for _, d2 := range dir2 {
+			if slices.Contains(userDataFileName, d2.Name()) {
+				ret = append(ret, filepath.Join(d.Name(), d2.Name()))
+			}
+		}
+	}
+	return ret
+}
+
+func (a *App) SelectUserData(fileName string) (*AnalyzeResult, error) {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		a.errorDialog(err.Error())
+		return nil, err
+	}
+	filePath := filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight Silksong", fileName)
+	buf, err := os.ReadFile(filePath)
+	if err != nil {
+		a.errorDialog(err.Error())
+		return nil, err
+	}
+	return a.DecryptFile(string(buf))
 }
 
 func (a *App) errorDialog(s string) {

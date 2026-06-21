@@ -21,3 +21,11 @@ export function ReDecryptFile() {
 export function SaveBuf() {
   return window['go']['main']['App']['SaveBuf']();
 }
+
+export function SelectUserData(arg1) {
+  return window['go']['main']['App']['SelectUserData'](arg1);
+}
+
+export function ShowDataFolder() {
+  return window['go']['main']['App']['ShowDataFolder']();
+}

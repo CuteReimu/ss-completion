@@ -7,7 +7,21 @@
     </div>
   </el-upload>
   <div class="btn-container">
-    <el-button @click="OpenDataFolder" type="primary">点击打开存档目录</el-button>
+    <el-button @click="refreshUserDataFiles" type="primary">刷新列表</el-button>
+    <el-select
+      v-model="selectedUserDataFile"
+      :options="userDataFiles"
+      style="max-width: 220px"
+      placeholder="选择本地存档"
+      @change="selectUserData"
+    ></el-select>
+    <el-button
+      style="margin-right: 15px"
+      type="primary"
+      @click="selectUserData"
+      :disabled="selectedUserDataFile===''"
+    ><el-icon><RefreshRight /></el-icon></el-button>
+    <el-button @click="OpenDataFolder" type="primary">打开存档目录</el-button>
     <el-button @click="OutputResult" type="primary" :disabled="disableReloadBtn">将解析后的存档导出为json</el-button>
     <el-button @click="ModifyAnalyzeScript" type="danger">修改解析脚本</el-button>
     <el-button @click="RefreshAnalyze" type="danger" :disabled="disableReloadBtn">重新加载解析脚本</el-button>
@@ -33,18 +47,42 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import {
-  ElAlert, ElText, ElUpload, ElIcon, ElTable, ElTableColumn,
+  ElAlert, ElText, ElUpload, ElIcon, ElTable, ElTableColumn, ElSelect,
   ElButton, UploadFile, ElMessage, ElCard, ElTooltip, ElImage,
 } from 'element-plus';
-import { UploadFilled } from '@element-plus/icons-vue';
+import { RefreshRight, UploadFilled } from '@element-plus/icons-vue';
 import { BrowserOpenURL, LogError } from '../wailsjs/runtime';
-import { OpenDataFolder, DecryptFile, ReDecryptFile, SaveBuf, ModifyScript } from '../wailsjs/go/main/App';
+import { OpenDataFolder, DecryptFile, ReDecryptFile, SaveBuf, ModifyScript, ShowDataFolder, SelectUserData } from '../wailsjs/go/main/App';
 import { main } from "../wailsjs/go/models";
+
+interface OptionData {
+  label: string
+  value: string
+}
 
 const disableReloadBtn = ref(true);
 const data = ref<main.AnalyzeResult>(new main.AnalyzeResult());
+const selectedUserDataFile = ref("");
+const userDataFiles = ref<OptionData[]>([]);
+
+const refreshUserDataFiles = () => {
+  ShowDataFolder().then(files => {
+    userDataFiles.value = files.map(v => ({label: v, value: v}));
+  });
+};
+
+const selectUserData = () => {
+  SelectUserData(selectedUserDataFile.value).then(res => {
+    data.value = res;
+    disableReloadBtn.value = false;
+    ElMessage({ message: "解析成功", type: 'success', plain: true });
+  }).catch(err => {
+    LogError(err);
+    ElMessage({ message: String(err), type: 'error', plain: true });
+  });
+};
 
 function determineRowClass({row}) {
   let c = '';
@@ -105,4 +143,8 @@ function openGithub() {
 function goToWiki(row: main.ItemResult) {
   if (row.wiki) BrowserOpenURL(row.wiki);
 }
+
+onMounted(() => {
+  refreshUserDataFiles();
+});
 </script>
