@@ -16,6 +16,9 @@ def get_scene_bool(scene_name, item_id):
 # cur: 当前值，类型为一个函数 (d) => cur ，会将存档解析后的完整json格式传入d参数，可以返回一个数值，也可以返回bool值（表示已收集/未收集）
 # total: 总值，不填则默认为1
 # multiple: 倍率（例如完成算作2点完成度），不填则默认为1
+# icon: 图标，填写一个url，可以不填
+# wiki: Wiki链接，填写一个url，可以不填
+# desc: 简介，鼠标放上去弹出的tooltip，可以不填
 items = [
     # ===== Boss =====
     {
