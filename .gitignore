@@ -6,6 +6,7 @@
 
 user*.dat
 silksong_user_data.json
+hollow_knight_user_data.json
 
 # Binaries for programs and plugins
 build/bin

@@ -1,40 +1,21 @@
 # 所有类别的列表，最终会按照这个列表进行排序
-categories = ["Boss", "战士之梦", "守梦者", "装备", "法术", "面具", "容器", "骨钉升级", "骨钉技艺", "护符", "梦之钉", "愚人竞技场", "格林剧团", "蜂巢", "神居", "面具碎片详情", "容器碎片详情", "幼虫"]
+categories = ["Boss", "战士之梦", "守梦者", "能力", "法术", "骨钉技艺", "护符", "愚人竞技场", "神居", "其它", "面具碎片详情", "容器碎片详情", "幼虫"]
 
-# 查询 HK sceneData 的布尔值
+# 查询 sceneData 的布尔值
 def get_scene_bool(scene_name, item_id):
     def do_get_scene_bool(d):
-        bool_list = d.get("sceneData", {}).get("persistentBoolItems", {}).get("serializedList", [])
+        bool_list = d.get("sceneData", {}).get("persistentBoolItems", [])
         for entry in bool_list:
-            sn = entry.get("sceneName") or entry.get("SceneName")
-            id_ = entry.get("id") or entry.get("ID")
-            if sn == scene_name and id_ == item_id:
-                v = entry.get("value")
-                if v is None:
-                    v = entry.get("Value")
-                return v is True
+            if entry.get("sceneName") == scene_name and entry.get("id") == item_id:
+                return entry.get("activated", False)
         return False
     return do_get_scene_bool
-
-# 访问点号分隔的嵌套字段，如 bossDoorStateTier1.completed
-def get_nested(key_path):
-    def do_get_nested(d):
-        parts = key_path.split(".")
-        obj = d["playerData"]
-        for part in parts:
-            if isinstance(obj, dict):
-                obj = obj.get(part)
-                if obj is None:
-                    return False
-            else:
-                return False
-        return bool(obj)
-    return do_get_nested
 
 # name：显示名称
 # category: 所属类别
 # cur: 当前值，类型为一个函数 (d) => cur ，会将存档解析后的完整json格式传入d参数，可以返回一个数值，也可以返回bool值（表示已收集/未收集）
 # total: 总值，不填则默认为1
+# multiple: 倍率（例如完成算作2点完成度），不填则默认为1
 items = [
     # ===== Boss =====
     {
@@ -125,14 +106,14 @@ items = [
         "name": "守护者大黄蜂",
         "category": "Boss",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/4/4f/B_Hornet_2.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/%E5%AE%88%E6%8A%A4%E8%80%85%E5%A4%A7%E9%BB%84%E8%9C%82",
+        "wiki": "https://hkss.huijiwiki.com/wiki/守护者大黄蜂",
         "cur": lambda d: d["playerData"].get("hornet1Defeated", False)
     },
     {
         "name": "岗哨大黄蜂",
         "category": "Boss",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/4/4f/B_Hornet_2.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/%E5%B2%97%E5%93%A8%E5%A4%A7%E9%BB%84%E8%9C%82",
+        "wiki": "https://hkss.huijiwiki.com/wiki/岗哨大黄蜂",
         "cur": lambda d: d["playerData"].get("hornetOutskirtsDefeated", False)
     },
     # ===== 战士之梦 =====
@@ -207,55 +188,62 @@ items = [
         "wiki": "https://hkss.huijiwiki.com/wiki/野兽赫拉",
         "cur": lambda d: d["playerData"].get("hegemolDefeated", False)
     },
-    # ===== 装备 =====
+    # ===== 能力 =====
     {
         "name": "蛾翼披风",
-        "category": "装备",
+        "category": "能力",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/a2/Icon_HK_Mothwing_Cloak.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/蛾翼披风",
-        "cur": lambda d: d["playerData"].get("hasDash", False)
+        "cur": lambda d: d["playerData"].get("hasDash", False),
+        "multiple": 2
     },
     {
         "name": "暗影披风",
-        "category": "装备",
+        "category": "能力",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/7/75/Icon_HK_Shade_Cloak.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/暗影披风",
-        "cur": lambda d: d["playerData"].get("hasShadowDash", False)
+        "cur": lambda d: d["playerData"].get("hasShadowDash", False),
+        "multiple": 2
     },
     {
         "name": "螳螂爪",
-        "category": "装备",
+        "category": "能力",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/b/bf/Icon_HK_Mantis_Claw.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/螳螂爪",
-        "cur": lambda d: d["playerData"].get("hasWalljump", False)
+        "cur": lambda d: d["playerData"].get("hasWalljump", False),
+        "multiple": 2
     },
     {
         "name": "水晶之心",
-        "category": "装备",
+        "category": "能力",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/e8/Icon_HK_Crystal_Heart.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/水晶之心",
-        "cur": lambda d: d["playerData"].get("hasSuperDash", False)
+        "cur": lambda d: d["playerData"].get("hasSuperDash", False),
+        "multiple": 2
     },
     {
         "name": "伊思玛的眼泪",
-        "category": "装备",
+        "category": "能力",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2e/Icon_HK_Ismas_Tear.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/伊思玛的眼泪",
-        "cur": lambda d: d["playerData"].get("hasAcidArmour", False)
+        "cur": lambda d: d["playerData"].get("hasAcidArmour", False),
+        "multiple": 2
     },
     {
         "name": "帝王之翼",
-        "category": "装备",
+        "category": "能力",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/9/9b/Icon_HK_Monarch_Wings.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/帝王之翼",
-        "cur": lambda d: d["playerData"].get("hasDoubleJump", False)
+        "cur": lambda d: d["playerData"].get("hasDoubleJump", False),
+        "multiple": 2
     },
     {
         "name": "王之印记",
-        "category": "装备",
+        "category": "能力",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/ec/Kings_Brand_Inventory.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/王之印记",
-        "cur": lambda d: d["playerData"].get("hasKingsBrand", False)
+        "cur": lambda d: d["playerData"].get("hasKingsBrand", False),
+        "multiple": 2
     },
     # ===== 法术 =====
     {
@@ -300,28 +288,26 @@ items = [
         "wiki": "https://hkss.huijiwiki.com/wiki/黑暗降临",
         "cur": lambda d: d["playerData"].get("quakeLevel", 0) >= 2
     },
-    # ===== 面具 =====
+    # ===== 其它 =====
     {
         "name": "面具",
-        "category": "面具",
+        "category": "其它",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/20/Ancient_Mask.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/面具碎片",
         "cur": lambda d: d["playerData"].get("maxHealthBase", 5) - 5,
         "total": 4
     },
-    # ===== 容器 =====
     {
         "name": "容器",
-        "category": "容器",
+        "category": "其它",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/4/4c/Soul_Vessel.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/容器碎片",
         "cur": lambda d: d["playerData"].get("MPReserveMax", 0) // 33,
         "total": 3
     },
-    # ===== 骨钉升级 =====
     {
         "name": "骨钉升级",
-        "category": "骨钉升级",
+        "category": "其它",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/4a/Nail_5_Pure_Nail.png/75px-Nail_5_Pure_Nail.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/骨钉",
         "cur": lambda d: d["playerData"].get("nailSmithUpgrades", 0),
@@ -633,21 +619,21 @@ items = [
     # ===== 梦之钉 =====
     {
         "name": "获得梦之钉",
-        "category": "梦之钉",
+        "category": "其它",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/a2/Icon_HK_Dream_Nail.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/梦之钉",
         "cur": lambda d: d["playerData"].get("hasDreamNail", False)
     },
     {
         "name": "觉醒梦之钉",
-        "category": "梦之钉",
+        "category": "其它",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/b/b0/Icon_HK_Awoken_Dream_Nail.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/梦之钉",
         "cur": lambda d: d["playerData"].get("dreamNailUpgraded", False)
     },
     {
-        "name": "聆听先知的遗言",
-        "category": "梦之钉",
+        "name": "先知升天",
+        "category": "其它",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/ee/Seer.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/先知",
         "cur": lambda d: d["playerData"].get("mothDeparted", False)
@@ -657,49 +643,42 @@ items = [
         "name": "勇士的试炼",
         "category": "愚人竞技场",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/b/b0/Trial_of_the_Warrior.png/150px-Trial_of_the_Warrior.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/%E5%8B%87%E5%A3%AB%E7%9A%84%E8%AF%95%E7%82%BC",
+        "wiki": "https://hkss.huijiwiki.com/wiki/勇士的试炼",
         "cur": lambda d: d["playerData"].get("colosseumBronzeCompleted", False)
     },
     {
         "name": "征服者的试炼",
         "category": "愚人竞技场",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/0/05/Trial_of_the_Conqueror.png/150px-Trial_of_the_Conqueror.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/%E5%BE%81%E6%9C%8D%E8%80%85%E7%9A%84%E8%AF%95%E7%82%BC",
+        "wiki": "https://hkss.huijiwiki.com/wiki/征服者的试炼",
         "cur": lambda d: d["playerData"].get("colosseumSilverCompleted", False)
     },
     {
         "name": "愚人的试炼",
         "category": "愚人竞技场",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/c/ca/Trial_of_the_Fool.png/150px-Trial_of_the_Fool.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/%E6%84%9A%E4%BA%BA%E7%9A%84%E8%AF%95%E7%82%BC",
+        "wiki": "https://hkss.huijiwiki.com/wiki/愚人的试炼",
         "cur": lambda d: d["playerData"].get("colosseumGoldCompleted", False)
     },
     # ===== 格林剧团 =====
     {
         "name": "格林",
-        "category": "格林剧团",
+        "category": "Boss",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/b/ba/Grimm_Idle.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/格林",
         "cur": lambda d: d["playerData"].get("killedGrimm", False)
     },
     {
-        "name": "梦魇之王格林",
-        "category": "格林剧团",
+        "name": "梦魇之王格林（也可放逐）",
+        "category": "Boss",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/9/95/Nightmare_King_without_Essence.png/276px-Nightmare_King_without_Essence.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/梦魇之王格林",
-        "cur": lambda d: d["playerData"].get("killedNightmareGrimm", False)
-    },
-    {
-        "name": "摧毁梦魇之灯",
-        "category": "格林剧团",
-        "icon": "assets/The_Lamp_of_Nightmares.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/%E6%A0%BC%E6%9E%97%E5%89%A7%E5%9B%A2",
-        "cur": lambda d: d["playerData"].get("destroyedNightmareLantern", False)
+        "cur": lambda d: d["playerData"].get("killedNightmareGrimm", False) or d["playerData"].get("destroyedNightmareLantern", False)
     },
     # ===== 蜂巢 =====
     {
         "name": "蜂巢骑士",
-        "category": "蜂巢",
+        "category": "Boss",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/3/3b/B_Hive_Knight.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/蜂巢骑士",
         "cur": lambda d: d["playerData"].get("killedHiveKnight", False)
@@ -717,28 +696,28 @@ items = [
         "category": "神居",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/6/6b/Pantheon_of_the_Master.png/300px-Pantheon_of_the_Master.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/大师万神殿",
-        "cur": get_nested("bossDoorStateTier1.completed")
+        "cur": lambda d: d["playerData"].get("bossDoorStateTier1", {}).get("completed", False)
     },
     {
         "name": "艺术家万神殿",
         "category": "神居",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/1/1a/Pantheon_of_the_Artist.png/300px-Pantheon_of_the_Artist.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/艺术家万神殿",
-        "cur": get_nested("bossDoorStateTier2.completed")
+        "cur": lambda d: d["playerData"].get("bossDoorStateTier2", {}).get("completed", False)
     },
     {
         "name": "贤者万神殿",
         "category": "神居",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/a/ad/Pantheon_of_the_Sage.png/300px-Pantheon_of_the_Sage.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/贤者万神殿",
-        "cur": get_nested("bossDoorStateTier3.completed")
+        "cur": lambda d: d["playerData"].get("bossDoorStateTier3", {}).get("completed", False)
     },
     {
         "name": "骑士万神殿",
         "category": "神居",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/e4/Pantheon_of_the_Knight.png/300px-Pantheon_of_the_Knight.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/骑士万神殿",
-        "cur": get_nested("bossDoorStateTier4.completed")
+        "cur": lambda d: d["playerData"].get("bossDoorStateTier4", {}).get("completed", False)
     },
 ]
 
@@ -1218,7 +1197,7 @@ other_items = [
         "name": "44-46-爱之塔",
         "category": "幼虫",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
-        "desc": "需要爱之钥并打败收藏家，可以一次性解救3只幼虫<br>需要注意，若解救任何1只后直接退出游戏的话会导致剩下幼虫消失的bug",
+        "desc": "需要爱之钥并打败收藏家，可以一次性解救3只幼虫。需要注意，若解救任何1只后直接退出游戏的话会导致剩下幼虫消失的bug",
         "cur": get_scene_bool("Ruins2_11", "Grub Bottle")
     },
 ]

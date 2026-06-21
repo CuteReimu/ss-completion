@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io/fs"
+	"log/slog"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -18,11 +20,13 @@ import (
 type App struct {
 	ctx context.Context
 	buf []byte
+
+	currentGame string
 }
 
 // NewApp creates a new App application struct
 func NewApp() *App {
-	return &App{}
+	return &App{currentGame: "silksong"}
 }
 
 // startup is called when the app starts. The context is saved
@@ -69,13 +73,25 @@ func (a *App) setWindowSize() {
 	wailsRuntime.WindowCenter(a.ctx)
 }
 
+func (a *App) ChangeGame(gameName string) {
+	a.currentGame = gameName
+}
+
+func (a *App) isHollow() bool {
+	return a.currentGame == "hollow"
+}
+
 func (a *App) OpenDataFolder() {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		a.errorDialog(err.Error())
 		return
 	}
-	homeDir = filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight Silksong")
+	if a.isHollow() {
+		homeDir = filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight")
+	} else {
+		homeDir = filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight Silksong")
+	}
 	var cmd *exec.Cmd
 	switch runtime.GOOS {
 	case "windows":
@@ -100,26 +116,25 @@ func (a *App) ShowDataFolder() []string {
 	if err != nil {
 		return nil
 	}
-	homeDir = filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight Silksong")
-	dir, err := os.ReadDir(homeDir)
-	if err != nil {
-		return nil
+	if a.isHollow() {
+		homeDir = filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight")
+	} else {
+		homeDir = filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight Silksong")
 	}
 	var ret []string
-	for _, d := range dir {
-		if !d.IsDir() {
-			continue
-		}
-		dir2, err := os.ReadDir(filepath.Join(homeDir, d.Name()))
+	_ = filepath.WalkDir(homeDir, func(path string, info fs.DirEntry, err error) error {
 		if err != nil {
-			continue
+			slog.Error("walk dir error", "error", err)
+			return nil
 		}
-		for _, d2 := range dir2 {
-			if slices.Contains(userDataFileName, d2.Name()) {
-				ret = append(ret, filepath.Join(d.Name(), d2.Name()))
+		if !info.IsDir() && slices.Contains(userDataFileName, info.Name()) {
+			dir, err := filepath.Rel(homeDir, path)
+			if err == nil {
+				ret = append(ret, dir)
 			}
 		}
-	}
+		return nil
+	})
 	return ret
 }
 
@@ -130,6 +145,9 @@ func (a *App) SelectUserData(fileName string) (*AnalyzeResult, error) {
 		return nil, err
 	}
 	filePath := filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight Silksong", fileName)
+	if a.isHollow() {
+		filePath = filepath.Join(homeDir, "AppData/LocalLow/Team Cherry/Hollow Knight", fileName)
+	}
 	buf, err := os.ReadFile(filePath)
 	if err != nil {
 		a.errorDialog(err.Error())
@@ -164,21 +182,26 @@ func (a *App) SaveBuf() {
 		a.errorDialog("导出文件失败")
 		return
 	}
-	if err := os.WriteFile("silksong_user_data.json", buf, 0644); err != nil {
+	fileName := "silksong_user_data.json"
+	if a.isHollow() {
+		fileName = "hollow_knight_user_data.json"
+	}
+	if err := os.WriteFile(fileName, buf, 0644); err != nil {
 		a.errorDialog("导出文件失败")
 		return
 	}
 	if _, err := wailsRuntime.MessageDialog(a.ctx, wailsRuntime.MessageDialogOptions{
 		Type:    wailsRuntime.InfoDialog,
 		Title:   "提示",
-		Message: "已生成silksong_user_data.json",
+		Message: "已生成" + fileName,
 	}); err != nil {
 		wailsRuntime.LogError(a.ctx, err.Error())
 	}
 }
 
 func (a *App) ModifyScript() {
-	_, err := os.Stat("silksong.py")
+	fileName := a.currentGame + ".py"
+	_, err := os.Stat(fileName)
 	if err != nil {
 		if !errors.Is(err, os.ErrNotExist) {
 			a.errorDialog("导出文件失败")
@@ -188,7 +211,7 @@ func (a *App) ModifyScript() {
 		if v, err := wailsRuntime.MessageDialog(a.ctx, wailsRuntime.MessageDialogOptions{
 			Type:          wailsRuntime.QuestionDialog,
 			Title:         "提示",
-			Message:       "检测到silksong.py已存在，是否覆盖？",
+			Message:       fmt.Sprintf("检测到%s已存在，是否覆盖？", fileName),
 			Buttons:       []string{"Yes", "No"},
 			DefaultButton: "Yes",
 			CancelButton:  "No",
@@ -198,14 +221,18 @@ func (a *App) ModifyScript() {
 			return
 		}
 	}
-	if err := os.WriteFile("silksong.py", starlarkContent, 0644); err != nil {
+	starlarkContent := starlarkContentSilksong
+	if a.isHollow() {
+		starlarkContent = starlarkContentHollow
+	}
+	if err := os.WriteFile(fileName, starlarkContent, 0644); err != nil {
 		a.errorDialog("导出文件失败")
 		return
 	}
 	if _, err := wailsRuntime.MessageDialog(a.ctx, wailsRuntime.MessageDialogOptions{
 		Type:    wailsRuntime.ErrorDialog,
 		Title:   "提示",
-		Message: "已生成silksong.py，请自行编辑即可，编辑后不要忘了保存。",
+		Message: fmt.Sprintf("已生成%s，请自行编辑即可，编辑后不要忘了保存。", fileName),
 	}); err != nil {
 		wailsRuntime.LogError(a.ctx, err.Error())
 	}

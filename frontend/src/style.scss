@@ -30,7 +30,7 @@ body {
 }
 
 .el-upload-dragger {
-  margin: 10px 0;
+  margin: 0 0 10px 0;
   padding: 10px !important;
   width: 92vw;
   background: $bg-color;
@@ -60,10 +60,15 @@ body {
   flex-direction: row;
   justify-content: center;
   width: 100%;
+  margin-bottom: 0;
 }
 
 .el-image {
   width: 20px;
   height: 20px;
   margin: 0 10px 0 0;
+}
+
+.el-tabs {
+  width: 100%;
 }

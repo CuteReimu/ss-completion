@@ -7,15 +7,18 @@ import (
 	"fmt"
 	"log/slog"
 	"os"
-	"strings"
 
 	"github.com/pkg/errors"
 	"go.starlark.net/lib/json"
 	"go.starlark.net/starlark"
 )
 
-//go:embed silksong.py
-var starlarkContent []byte
+var (
+	//go:embed silksong.py
+	starlarkContentSilksong []byte
+	//go:embed hollow.py
+	starlarkContentHollow []byte
+)
 var cSharpFileHeader = []byte{0, 1, 0, 0, 0, 255, 255, 255, 255, 1, 0, 0, 0, 0, 0, 0, 0, 6, 1, 0, 0, 0}
 var encryptionKey = []byte("UKu52ePUBwetZ9wNX88o54dnfKRu0T1l")
 
@@ -48,18 +51,18 @@ func (a *App) DecryptFile(fileContent string) (*AnalyzeResult, error) {
 		a.errorDialog(err.Error())
 		return nil, err
 	}
-	result, err := analyze(buf)
+	a.buf = buf
+	result, err := a.analyze(buf)
 	if err != nil {
 		slog.Error("analyze failed", "error", err)
 		a.errorDialog(err.Error())
 		return nil, err
 	}
-	a.buf = buf
 	return result, nil
 }
 
 func (a *App) ReDecryptFile() (*AnalyzeResult, error) {
-	result, err := analyze(a.buf)
+	result, err := a.analyze(a.buf)
 	if err != nil {
 		slog.Error("analyze failed", "error", err)
 		a.errorDialog(err.Error())
@@ -124,12 +127,13 @@ type ItemResult struct {
 	Wiki       string `json:"wiki"`
 }
 
-func analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items starlark.Value, starBuf starlark.Value) (int, error) {
+func (a *App) analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items starlark.Value, starBuf starlark.Value) (int, error) {
 	var totalCompletion int
 	for item := range starlark.Elements(items.(starlark.Iterable)) {
 		var (
 			name, category string
 			cur, total     = 0, 1
+			multiple       = 1
 			status         int
 			statusText     string
 			icon, wiki     string
@@ -170,6 +174,13 @@ func analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items star
 		} else {
 			return 0, errors.Errorf("%s没有cur函数", name)
 		}
+		if v, ok, err := d.Get(starlark.String("multiple")); err != nil {
+			return 0, errors.WithStack(err)
+		} else if ok {
+			if err = starlark.AsInt(v, &multiple); err != nil {
+				return 0, errors.WithStack(err)
+			}
+		}
 		if v, ok, err := d.Get(starlark.String("icon")); err != nil {
 			return 0, errors.WithStack(err)
 		} else if ok {
@@ -193,19 +204,13 @@ func analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items star
 		}
 		switch {
 		case total == 1 && cur < total:
-			statusText = "未获得"
-			if strings.HasPrefix(category, "跳蚤") {
-				statusText = "未找到"
-			}
+			statusText = "未" + getObtainedWord(a.currentGame, category)
 		case total == 1:
-			statusText = "已获得"
-			if strings.HasPrefix(category, "跳蚤") {
-				statusText = "已找到"
-			}
+			statusText = "已" + getObtainedWord(a.currentGame, category)
 		default:
 			statusText = fmt.Sprintf("%d/%d", cur, total)
 		}
-		totalCompletion += cur
+		totalCompletion += cur * multiple
 		m[category] = append(m[category], ItemResult{
 			ShowText:   name,
 			Status:     status,
@@ -218,34 +223,56 @@ func analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items star
 	return totalCompletion, nil
 }
 
-func analyze(buf []byte) (ret *AnalyzeResult, err error) {
+func getObtainedWord(gameName string, category string) string {
+	switch category {
+	case "跳蚤":
+		return "找到"
+	case "幼虫":
+		return "解救"
+	case "Boss", "战士之梦", "守梦者":
+		return "击败"
+	case "愚人竞技场", "神居":
+		return "通过"
+	case "其它":
+		if gameName == "hollow" {
+			return "达成"
+		}
+	}
+	return "获得"
+}
+
+func (a *App) analyze(buf []byte) (ret *AnalyzeResult, err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			err = errors.Errorf("%s", r)
 		}
 	}()
-	starlarkContent2, err := os.ReadFile("silksong.py")
+	fileName := a.currentGame + ".py"
+	starlarkContent, err := os.ReadFile(fileName)
 	if err != nil {
 		if !errors.Is(err, os.ErrNotExist) {
 			return nil, errors.WithStack(err)
 		}
-		starlarkContent2 = starlarkContent
+		starlarkContent = starlarkContentSilksong
+		if a.isHollow() {
+			starlarkContent = starlarkContentHollow
+		}
 	}
 	thread := new(starlark.Thread)
 	starBuf, err := starlark.Call(thread, json.Module.Members["decode"], starlark.Tuple{starlark.String(buf)}, nil)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	global, err := starlark.ExecFile(thread, "silksong.py", starlarkContent2, nil)
+	global, err := starlark.ExecFile(thread, fileName, starlarkContent, nil)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
 	m := make(map[string][]ItemResult)
-	totalCompletion, err := analyzeItems(m, thread, global["items"], starBuf)
+	totalCompletion, err := a.analyzeItems(m, thread, global["items"], starBuf)
 	if err != nil {
 		return nil, err
 	}
-	_, err = analyzeItems(m, thread, global["other_items"], starBuf)
+	_, err = a.analyzeItems(m, thread, global["other_items"], starBuf)
 	if err != nil {
 		return nil, err
 	}

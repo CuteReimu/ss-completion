@@ -1,5 +1,9 @@
 <template>
   <el-alert title="感谢计时器生成器交流群的群友们热心提供存档，协助开发。代码仓库：https://github.com/CuteReimu/ss-completion" type="info" effect="dark" close-text="前往" @close="openGithub"></el-alert>
+  <el-tabs v-model="currentGame" @tab-change="onChangeTab">
+    <el-tab-pane label="空洞骑士" name="hollow" />
+    <el-tab-pane label="丝之歌" name="silksong" />
+  </el-tabs>
   <el-upload drag accept=".dat" :auto-upload="false" :show-file-list="false" :on-change="onUploadFile">
     <el-icon class="el-icon--upload"><upload-filled style="width: 80px;"></upload-filled></el-icon>
     <div class="el-upload__text">
@@ -49,12 +53,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import {
-  ElAlert, ElText, ElUpload, ElIcon, ElTable, ElTableColumn, ElSelect,
-  ElButton, UploadFile, ElMessage, ElCard, ElTooltip, ElImage,
+  ElAlert, ElText, ElUpload, ElIcon, ElTable, ElTableColumn, ElTabs, ElTabPane,
+  ElButton, UploadFile, ElMessage, ElCard, ElTooltip, ElImage, ElSelect
 } from 'element-plus';
 import { RefreshRight, UploadFilled } from '@element-plus/icons-vue';
 import { BrowserOpenURL, LogError } from '../wailsjs/runtime';
-import { OpenDataFolder, DecryptFile, ReDecryptFile, SaveBuf, ModifyScript, ShowDataFolder, SelectUserData } from '../wailsjs/go/main/App';
+import {
+  OpenDataFolder, DecryptFile, ReDecryptFile, SaveBuf, ModifyScript,
+  ShowDataFolder, SelectUserData, ChangeGame
+} from '../wailsjs/go/main/App';
 import { main } from "../wailsjs/go/models";
 
 interface OptionData {
@@ -66,6 +73,7 @@ const disableReloadBtn = ref(true);
 const data = ref<main.AnalyzeResult>(new main.AnalyzeResult());
 const selectedUserDataFile = ref("");
 const userDataFiles = ref<OptionData[]>([]);
+const currentGame = ref("silksong");
 
 const refreshUserDataFiles = () => {
   ShowDataFolder().then(files => {
@@ -74,13 +82,20 @@ const refreshUserDataFiles = () => {
 };
 
 const selectUserData = () => {
+  disableReloadBtn.value = false;
   SelectUserData(selectedUserDataFile.value).then(res => {
     data.value = res;
-    disableReloadBtn.value = false;
     ElMessage({ message: "解析成功", type: 'success', plain: true });
   }).catch(err => {
     LogError(err);
     ElMessage({ message: String(err), type: 'error', plain: true });
+  });
+};
+
+const onChangeTab = gameName => {
+  ChangeGame(gameName).then(() => {
+    selectedUserDataFile.value = "";
+    refreshUserDataFiles();
   });
 };
 
@@ -97,10 +112,10 @@ function determineRowClass({row}) {
 
 function onUploadFile(file: UploadFile) {
   if (!file?.raw) return;
+  disableReloadBtn.value = false;
   file.raw.text().then(text => {
     DecryptFile(text).then(res => {
       data.value = res;
-      disableReloadBtn.value = false;
       ElMessage({ message: "解析成功", type: 'success', plain: true });
     }).catch(err => {
       LogError(err);
