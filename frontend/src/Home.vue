@@ -8,9 +8,9 @@
   </el-upload>
   <div class="btn-container">
     <el-button @click="OpenDataFolder" type="primary">点击打开存档目录</el-button>
-    <el-button @click="RefreshAnalyze" type="primary" :disabled="disableReloadBtn">重新解析存档</el-button>
-    <el-button @click="OutputResult" type="primary" :disabled="disableReloadBtn">导出解析后的存档</el-button>
-    <el-button @click="ModifyAnalyzeScript" type="primary">修改解析脚本</el-button>
+    <el-button @click="OutputResult" type="primary" :disabled="disableReloadBtn">将解析后的存档导出为json</el-button>
+    <el-button @click="ModifyAnalyzeScript" type="danger">修改解析脚本</el-button>
+    <el-button @click="RefreshAnalyze" type="danger" :disabled="disableReloadBtn">重新加载解析脚本</el-button>
   </div>
   <el-text size="large" style="margin: 10px 0;">完成度：{{data.Completion ?? 0}}%</el-text>
   <div class="card-container">
