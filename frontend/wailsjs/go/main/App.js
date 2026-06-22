@@ -10,10 +10,6 @@ export function ChooseDataFile() {
   return window['go']['main']['App']['ChooseDataFile']();
 }
 
-export function DecryptFile(arg1) {
-  return window['go']['main']['App']['DecryptFile'](arg1);
-}
-
 export function ModifyScript() {
   return window['go']['main']['App']['ModifyScript']();
 }
@@ -28,6 +24,10 @@ export function RefreshUserData() {
 
 export function SaveBuf() {
   return window['go']['main']['App']['SaveBuf']();
+}
+
+export function SaveScreenshot(arg1) {
+  return window['go']['main']['App']['SaveScreenshot'](arg1);
 }
 
 export function SelectUserData(arg1) {

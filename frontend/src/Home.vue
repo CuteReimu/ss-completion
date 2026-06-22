@@ -22,8 +22,9 @@
     <el-button @click="onChooseDataFile" type="primary">手动选择存档</el-button>
     <el-button @click="outputResult" type="primary" :disabled="disableReloadBtn">将解析后的存档导出为json</el-button>
     <el-button @click="modifyAnalyzeScript" type="danger">修改解析脚本</el-button>
+    <el-button @click="captureApp" type="primary" :disabled="isCapturing" :loading="isCapturing">截图</el-button>
   </div>
-  <el-text size="large" style="margin: 10px 0;">完成度：{{data.Completion ?? 0}}%</el-text>
+  <el-text size="large" style="margin: 10px 0;">完成度：{{data.Completion ?? 0}}%{{data.PlayTime ? " 游戏时长：" + data.PlayTime : ""}}</el-text>
   <div class="card-container">
     <el-card v-for="category in data.Categories">
       <template #header>{{category.name}}</template>
@@ -47,15 +48,16 @@
 import { ref, onMounted } from 'vue';
 import {
   ElAlert, ElText, ElIcon, ElTable, ElTableColumn, ElTabs, ElTabPane,
-  ElButton, UploadFile, ElMessage, ElCard, ElTooltip, ElImage, ElSelect
+  ElButton, ElMessage, ElCard, ElTooltip, ElImage, ElSelect
 } from 'element-plus';
-import { RefreshRight, UploadFilled } from '@element-plus/icons-vue';
+import { RefreshRight } from '@element-plus/icons-vue';
 import { BrowserOpenURL, LogError } from '../wailsjs/runtime';
 import {
-  OpenDataFolder, DecryptFile, ChooseDataFile, SaveBuf, ModifyScript,
-  ShowDataFolder, SelectUserData, ChangeGame, RefreshUserData
+  OpenDataFolder, ChooseDataFile, SaveBuf, ModifyScript, SaveScreenshot,
+  ShowDataFolder, SelectUserData, ChangeGame, RefreshUserData,
 } from '../wailsjs/go/main/App';
 import { main } from "../wailsjs/go/models";
+import html2canvas from 'html2canvas';
 
 interface OptionData {
   label: string
@@ -67,6 +69,7 @@ const data = ref<main.AnalyzeResult>(new main.AnalyzeResult());
 const selectedUserDataFile = ref("");
 const userDataFiles = ref<OptionData[]>([]);
 const currentGame = ref("silksong");
+const isCapturing = ref(false);
 
 const refreshUserDataFiles = () => {
   ShowDataFolder().then(files => {
@@ -154,4 +157,24 @@ const goToWiki = (row: main.ItemResult) => {
 onMounted(() => {
   refreshUserDataFiles();
 });
+
+const captureApp = () => {
+  isCapturing.value = true;
+  html2canvas(document.body, {
+    useCORS: true,
+    scale: 1,
+  }).then(canvas => {
+    SaveScreenshot(canvas.toDataURL('image/png')).then(() => {
+      ElMessage({ message: "截图已保存到剪贴板", type: 'success', plain: true });
+    }).catch(e => {
+      console.log(e);
+      ElMessage({ message: String(e), type: 'error', plain: true });
+    });
+  }).catch(err => {
+    console.log(err);
+    ElMessage({ message: String(err), type: 'error', plain: true });
+  }).finally(() => {
+    isCapturing.value = false;
+  });
+};
 </script>

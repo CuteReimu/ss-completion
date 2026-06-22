@@ -56,6 +56,7 @@ export namespace main {
 	}
 	export class AnalyzeResult {
 	    Completion: number;
+	    PlayTime: string;
 	    Categories: CategoryResult[];
 	
 	    static createFrom(source: any = {}) {
@@ -65,6 +66,7 @@ export namespace main {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.Completion = source["Completion"];
+	        this.PlayTime = source["PlayTime"];
 	        this.Categories = this.convertValues(source["Categories"], CategoryResult);
 	    }
 	

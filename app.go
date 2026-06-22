@@ -150,7 +150,7 @@ func (a *App) RefreshUserData() (*AnalyzeResult, error) {
 		a.errorDialog(err.Error())
 		return nil, err
 	}
-	return a.DecryptFile(string(buf))
+	return a.decryptFile(string(buf))
 }
 
 func (a *App) SelectUserData(filePath string) (*AnalyzeResult, error) {
@@ -160,7 +160,7 @@ func (a *App) SelectUserData(filePath string) (*AnalyzeResult, error) {
 		a.errorDialog(err.Error())
 		return nil, err
 	}
-	return a.DecryptFile(string(buf))
+	return a.decryptFile(string(buf))
 }
 
 func (a *App) ChooseDataFile() (*AnalyzeResult, error) {
@@ -183,7 +183,7 @@ func (a *App) ChooseDataFile() (*AnalyzeResult, error) {
 		a.errorDialog(err.Error())
 		return nil, err
 	}
-	return a.DecryptFile(string(buf))
+	return a.decryptFile(string(buf))
 }
 
 func (a *App) errorDialog(s string) {

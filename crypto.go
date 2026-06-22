@@ -8,6 +8,7 @@ import (
 	"log/slog"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/pkg/errors"
 	"go.starlark.net/lib/json"
@@ -45,10 +46,10 @@ func isAlphaNumeric(char byte) bool {
 	return (char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z') || (char >= '0' && char <= '9') || char == '+' || char == '/' || char == '='
 }
 
-func (a *App) DecryptFile(fileContent string) (*AnalyzeResult, error) {
-	buf, err := a.decryptFile(fileContent)
+func (a *App) decryptFile(fileContent string) (*AnalyzeResult, error) {
+	buf, err := a.doDecryptFile(fileContent)
 	if err != nil {
-		slog.Error("decryptFile failed", "error", err)
+		slog.Error("doDecryptFile failed", "error", err)
 		a.errorDialog(err.Error())
 		return nil, err
 	}
@@ -66,8 +67,8 @@ func (a *App) DecryptFile(fileContent string) (*AnalyzeResult, error) {
 	return result, nil
 }
 
-// decryptFile 解密存档文件
-func (a *App) decryptFile(fileContent string) ([]byte, error) {
+// doDecryptFile 解密存档文件
+func (a *App) doDecryptFile(fileContent string) ([]byte, error) {
 	// 查找 Base64 数据的开始和结束位置
 	base64Start := len(cSharpFileHeader)
 	base64End := len(fileContent) - 1
@@ -105,6 +106,7 @@ func (a *App) decryptFile(fileContent string) ([]byte, error) {
 
 type AnalyzeResult struct {
 	Completion int
+	PlayTime   string
 	Categories []*CategoryResult
 }
 
@@ -274,8 +276,18 @@ func (a *App) analyze(buf []byte) (ret *AnalyzeResult, err error) {
 	if err != nil {
 		return nil, err
 	}
+	playerData, _, err := starBuf.(*starlark.Dict).Get(starlark.String("playerData"))
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	playTimeValue, _, err := playerData.(*starlark.Dict).Get(starlark.String("playTime"))
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	playTime := time.Duration(playTimeValue.(starlark.Float)) * time.Second
 	ret = &AnalyzeResult{
 		Completion: totalCompletion,
+		PlayTime:   playTime.String(),
 		Categories: make([]*CategoryResult, 0, len(m)),
 	}
 	for categoryName := range starlark.Elements(global["categories"].(starlark.Iterable)) {
