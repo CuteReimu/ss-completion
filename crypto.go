@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log/slog"
 	"os"
+	"strings"
 
 	"github.com/pkg/errors"
 	"go.starlark.net/lib/json"
@@ -198,9 +199,9 @@ func (a *App) analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, i
 		}
 		switch {
 		case total == 1 && cur < total:
-			statusText = "未" + getObtainedWord(a.currentGame, category)
+			statusText = "未" + getObtainedWord(a.currentGame, category, name)
 		case total == 1:
-			statusText = "已" + getObtainedWord(a.currentGame, category)
+			statusText = "已" + getObtainedWord(a.currentGame, category, name)
 		default:
 			statusText = fmt.Sprintf("%d/%d", cur, total)
 		}
@@ -217,7 +218,7 @@ func (a *App) analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, i
 	return totalCompletion, nil
 }
 
-func getObtainedWord(gameName string, category string) string {
+func getObtainedWord(gameName, category, name string) string {
 	switch category {
 	case "跳蚤":
 		return "找到"
@@ -225,12 +226,15 @@ func getObtainedWord(gameName string, category string) string {
 		return "解救"
 	case "Boss", "战士之梦", "守梦者":
 		return "击败"
-	case "愚人竞技场", "神居":
+	case "愚人竞技场":
 		return "通过"
 	case "其它":
 		if gameName == "hollow" {
 			return "达成"
 		}
+	}
+	if gameName == "hollow" && strings.HasSuffix(name, "万神殿") {
+		return "通过"
 	}
 	return "获得"
 }
