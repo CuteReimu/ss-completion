@@ -260,7 +260,7 @@ func (a *App) ModifyScript() {
 		return
 	}
 	if _, err := wailsRuntime.MessageDialog(a.ctx, wailsRuntime.MessageDialogOptions{
-		Type:    wailsRuntime.ErrorDialog,
+		Type:    wailsRuntime.InfoDialog,
 		Title:   "提示",
 		Message: fmt.Sprintf("已生成%s，请自行编辑即可，编辑后不要忘了保存。", fileName),
 	}); err != nil {
