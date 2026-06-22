@@ -1008,7 +1008,7 @@ other_items = [
         "category": "忆境纪念盒（不计完成度）",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，腐汁泽区域获取",
-        "cur": get_scene_bool("Shadow_20", "Collectable Item Pickup (1)")
+        "cur": get_scene_bool("Shadow_20", "Collectable Item Pickup")
     },
     {
         "name": "圣堡钟道",
