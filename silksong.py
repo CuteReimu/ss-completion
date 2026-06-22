@@ -445,6 +445,38 @@ items = [
         "cur": get_tool("Pinstress Tool")
     },
     {
+        "name": "丝之心",
+        "category": "其它",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/de/Icon_SS_Silk_Heart.png",
+        "wiki": "https://hkss.huijiwiki.com/wiki/丝之心",
+        "cur": lambda d: d["playerData"]["silkRegenMax"],
+        "total": 3
+    },
+    {
+        "name": "织针磨砺",
+        "category": "其它",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/8/87/Needle_2_Sharpened_Needle.png/54px-Needle_2_Sharpened_Needle.png",
+        "wiki": "https://hkss.huijiwiki.com/wiki/织针",
+        "cur": lambda d: d["playerData"]["nailUpgrades"],
+        "total": 4
+    },
+    {
+        "name": "面具",
+        "category": "其它",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/9/91/SS_Mask.png/50px-SS_Mask.png",
+        "wiki": "https://hkss.huijiwiki.com/wiki/面具碎片_(丝之歌)",
+        "cur": lambda d: d["playerData"]["maxHealthBase"] - 5,
+        "total": 5
+    },
+    {
+        "name": "灵丝",
+        "category": "其它",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/8/83/Silk.png/80px-Silk.png",
+        "wiki": "https://hkss.huijiwiki.com/wiki/灵丝轴碎片",
+        "cur": lambda d: d["playerData"]["silkMax"] - 9,
+        "total": 9
+    },
+    {
         "name": "工具袋升级",
         "category": "其它",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/e9/Tool_Pouch.png",
@@ -507,14 +539,6 @@ items = [
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/d/d9/Icon_SS_Pale_Nails.png/408px-Icon_SS_Pale_Nails.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/苍白之爪",
         "cur": get_tool("Silk Boss Needle")
-    },
-    {
-        "name": "丝之心",
-        "category": "其它",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/de/Icon_SS_Silk_Heart.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/丝之心",
-        "cur": lambda d: d["playerData"]["silkRegenMax"],
-        "total": 3
     },
     {
         "name": "收割者纹章",
@@ -581,20 +605,20 @@ items = [
         "cur": lambda d: d["playerData"]["hasWalljump"]
     },
     {
+        "name": "织忆弦针",
+        "category": "能力",
+        "desc": "织忆弦针将在玩家击败黑寡妇并用缚丝获取其力量后习得",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/c/c0/Icon_SS_Needolin_Art.png",
+        "wiki": "https://hkss.huijiwiki.com/wiki/织忆弦针",
+        "cur": lambda d: d["playerData"]["hasNeedolin"]
+    },
+    {
         "name": "飞针冲刺",
         "category": "能力",
         "desc": "飞针冲刺可以穿过位于圣堡工厂的大熔釜中央房间中的一条布满熔岩的路线来习得",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/6/6f/Icon_SS_Clawline_Art.png/438px-Icon_SS_Clawline_Art.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/飞针冲刺",
         "cur": lambda d: d["playerData"]["hasHarpoonDash"]
-    },
-    {
-        "name": "灵丝升腾（第三幕）",
-        "category": "能力",
-        "desc": "在深渊的阿布索伦织巢习得",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/e8/Icon_SS_Silk_Soar_Art.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/灵丝升腾",
-        "cur": lambda d: d["playerData"]["hasSuperJump"]
     },
     {
         "name": "蓄力斩",
@@ -605,12 +629,12 @@ items = [
         "cur": lambda d: d["playerData"]["hasChargeSlash"]
     },
     {
-        "name": "织忆弦针",
+        "name": "灵丝升腾（第三幕）",
         "category": "能力",
-        "desc": "织忆弦针将在玩家击败黑寡妇并用缚丝获取其力量后习得",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/c/c0/Icon_SS_Needolin_Art.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/织忆弦针",
-        "cur": lambda d: d["playerData"]["hasNeedolin"]
+        "desc": "在深渊的阿布索伦织巢习得",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/e/e8/Icon_SS_Silk_Soar_Art.png",
+        "wiki": "https://hkss.huijiwiki.com/wiki/灵丝升腾",
+        "cur": lambda d: d["playerData"]["hasSuperJump"]
     },
     {
         "name": "风铃瑶",
@@ -618,30 +642,6 @@ items = [
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/0/00/Icon_SS_Sylphsong_Art.png/438px-Icon_SS_Sylphsong_Art.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/%E9%A3%8E%E7%81%B5%E8%B0%A3",
         "cur": lambda d: d["playerData"]["HasBoundCrestUpgrader"]
-    },
-    {
-        "name": "面具",
-        "category": "其它",
-        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/9/91/SS_Mask.png/50px-SS_Mask.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/面具碎片_(丝之歌)",
-        "cur": lambda d: d["playerData"]["maxHealthBase"] - 5,
-        "total": 5
-    },
-    {
-        "name": "灵丝",
-        "category": "其它",
-        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/8/83/Silk.png/80px-Silk.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/灵丝轴碎片",
-        "cur": lambda d: d["playerData"]["silkMax"] - 9,
-        "total": 9
-    },
-    {
-        "name": "织针磨砺",
-        "category": "其它",
-        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/8/87/Needle_2_Sharpened_Needle.png/54px-Needle_2_Sharpened_Needle.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/织针",
-        "cur": lambda d: d["playerData"]["nailUpgrades"],
-        "total": 4
     },
     {
         "name": "永绽花",
@@ -701,27 +701,6 @@ other_items = [
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "完成祈愿暴怒兽蝇的奖励，需要击败第一只兽蝇与第四圣咏团并且进入纺络后在钟心镇接取",
         "cur": get_quest_complete("Beastfly Hunt")
-    },
-    {
-        "name": "隐秘猎手祈愿（第三幕）",
-        "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
-        "desc": "与卡梅莉塔交谈或使用深邃挽歌进入过她的记忆后，在钟心镇接取祈愿",
-        "cur": get_quest_complete("Ant Trapper")
-    },
-    {
-        "name": "竞速冠军祈愿（第三幕）",
-        "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
-        "desc": "完成祈愿纺络竞速冠军，在飞毛腿斯威夫特设置的第三轮赛跑比赛中获胜",
-        "cur": get_quest_complete("Sprintmaster Race")
-    },
-    {
-        "name": "暗蚀之心祈愿（第三幕）",
-        "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
-        "desc": "完成主线任务寻觅：等候终局的暗蚀之心祈愿，在钟心镇接取",
-        "cur": get_quest_complete("Black Thread Pt5 Heart")
     },
     {
         "name": "沙噬虫道",
@@ -822,6 +801,27 @@ other_items = [
         "cur": get_scene_bool("Peak_06", "Heart Piece")
     },
     {
+        "name": "隐秘猎手祈愿（第三幕）",
+        "category": "面具碎片详情",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
+        "desc": "与卡梅莉塔交谈或使用深邃挽歌进入过她的记忆后，在钟心镇接取祈愿",
+        "cur": get_quest_complete("Ant Trapper")
+    },
+    {
+        "name": "竞速冠军祈愿（第三幕）",
+        "category": "面具碎片详情",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
+        "desc": "完成祈愿纺络竞速冠军，在飞毛腿斯威夫特设置的第三轮赛跑比赛中获胜",
+        "cur": get_quest_complete("Sprintmaster Race")
+    },
+    {
+        "name": "暗蚀之心祈愿（第三幕）",
+        "category": "面具碎片详情",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
+        "desc": "完成主线任务寻觅：等候终局的暗蚀之心祈愿，在钟心镇接取",
+        "cur": get_quest_complete("Black Thread Pt5 Heart")
+    },
+    {
         "name": "钟心镇商店",
         "category": "灵丝轴碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
@@ -836,7 +836,7 @@ other_items = [
         "cur": lambda d: d["playerData"].get("MerchantEnclaveSpoolPiece", False)
     },
     {
-        "name": "小偷商店",
+        "name": "格林德尔商店",
         "category": "灵丝轴碎片详情",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "花费680念珠从小偷格林德尔处购买，需要雪灵披风",
@@ -1371,7 +1371,7 @@ other_items = [
         "name": "圣煲工厂",
         "category": "制造金属",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
-        "desc": "在圣堡工厂右部一条管道的尽头，位于封印飞针冲刺的葬仪尖塔正下方的位置",
+        "desc": "在圣堡工厂右部一条管道的尽头，位于获得飞针冲刺的位置的正下方",
         "cur": get_scene_bool("Under_19b", "Collectable Item Pickup - Tool Metal")
     },
     {
