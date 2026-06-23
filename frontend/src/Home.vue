@@ -73,7 +73,7 @@ const userDataFiles = ref<OptionData[]>([]);
 const currentGame = ref("silksong");
 const isCapturing = ref(false);
 const isSortedByScene = ref(false);
-const resultByScene = computed(() => sortResultByScene(data.value.Categories));
+const resultByScene = computed(() => sortResultByScene(data.value));
 
 const refreshUserDataFiles = () => {
   ShowDataFolder().then(files => {

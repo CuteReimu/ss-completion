@@ -8,6 +8,7 @@ export namespace main {
 	    desc: string;
 	    wiki: string;
 	    scene: string;
+	    is_detail?: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new ItemResult(source);
@@ -22,6 +23,7 @@ export namespace main {
 	        this.desc = source["desc"];
 	        this.wiki = source["wiki"];
 	        this.scene = source["scene"];
+	        this.is_detail = source["is_detail"];
 	    }
 	}
 	export class CategoryResult {
@@ -60,6 +62,7 @@ export namespace main {
 	    Completion: number;
 	    PlayTime: string;
 	    Categories: CategoryResult[];
+	    SceneNames: string[];
 	
 	    static createFrom(source: any = {}) {
 	        return new AnalyzeResult(source);
@@ -70,6 +73,7 @@ export namespace main {
 	        this.Completion = source["Completion"];
 	        this.PlayTime = source["PlayTime"];
 	        this.Categories = this.convertValues(source["Categories"], CategoryResult);
+	        this.SceneNames = source["SceneNames"];
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {

@@ -1,5 +1,6 @@
 # 所有类别的列表，最终会按照这个列表进行排序
-categories = ["红色工具", "蓝色工具", "黄色工具", "法术", "纹章", "能力", "其它", "面具碎片详情", "灵丝轴碎片详情", "跳蚤", "制造金属", "工具袋&制作匣", "忆境纪念盒（不计完成度）", "苔莓（不占完成度）", "遗物和音筒（不计完成度）"]
+categories = ["红色工具", "蓝色工具", "黄色工具", "法术", "纹章", "能力", "其它", "面具碎片详情", "灵丝轴碎片详情", "跳蚤", "制造金属", "工具袋&制作匣", "忆境纪念盒（不占完成度）", "苔莓（不占完成度）", "遗物和音筒（不占完成度）"]
+scene_names = ["苔藓洞穴", "骸底镇", "髓骨洞窟", "苔栖乡", "深坞", "远野", "灰沼", "钟心镇", "壳木林", "阿特拉织巢", "风蚀长阶", "巨扉圣门", "圣咏殿", "圣歌盟地", "机枢核心", "低语书库", "圣堡工厂", "高庭", "罪石牢狱", "雪灵山", "沙噬虫道", "猎者小径", "卡拉卡沙川", "忆廊", "白愈厅", "火灵竹丛", "腐殖渠", "罪途", "腐汁泽", "其它", "第三幕"]
 
 # 工具
 def get_tool(tool_name):
@@ -359,7 +360,7 @@ items = [
     {
         "name": "织光仪",
         "category": "蓝色工具",
-        "scene": "苔藓洞穴",
+        "scene": "阿特拉织巢",
         "desc": "织光仪位于阿特拉织巢，需要打败两只苔藓之母后获得",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/5f/Weavelight.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/织光仪",
@@ -603,7 +604,7 @@ items = [
     {
         "name": "漫游者纹章",
         "category": "纹章",
-        "scene": "苔藓洞穴",
+        "scene": "骸底镇",
         "desc": "漫游者纹章可以在苔藓洞穴左半部分的漫游者教堂获取",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/5/5e/Wanderer_Crest_Inventory.png/322px-Wanderer_Crest_Inventory.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/漫游者纹章",
@@ -834,7 +835,7 @@ other_items = [
     {
         "name": "阿特拉织巢",
         "category": "面具碎片详情",
-        "scene": "苔藓洞穴",
+        "scene": "阿特拉织巢",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "阿特拉织巢的中部隐藏区域往右边的通道，需要织忆弦针",
         "cur": get_scene_bool("Weave_05b", "Heart Piece")
@@ -1040,14 +1041,14 @@ other_items = [
     {
         "name": "阿特拉织巢",
         "category": "灵丝轴碎片详情",
-        "scene": "苔藓洞穴",
+        "scene": "阿特拉织巢",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于阿特拉织巢，垂直通道的左侧，需要织忆弦针进入织巢",
         "cur": get_scene_bool("Weave_11", "Silk Spool")
     },
     {
         "name": "髓骨洞窟",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "髓骨洞窟",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，需要蛛攀术",
@@ -1055,7 +1056,7 @@ other_items = [
     },
     {
         "name": "猎者小径",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "猎者小径",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，猎者小径区域获取",
@@ -1063,7 +1064,7 @@ other_items = [
     },
     {
         "name": "远野 / 风蚀长阶",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "远野",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，由莫特以150念珠出售，若到第三幕中仍未购买则改为格林德尔以250念珠出售",
@@ -1071,23 +1072,22 @@ other_items = [
     },
     {
         "name": "灰沼",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "灰沼",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，灰沼区域获取",
         "cur": get_scene_bool("Greymoor_16", "Collectable Item Pickup")
     },
     {
-        "name": "骸底镇",
-        "category": "忆境纪念盒（不计完成度）",
-        "scene": "骸底镇",
+        "name": "骸底镇祈愿",
+        "category": "忆境纪念盒（不占完成度）",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，祈愿任务狩猎暴烈燧甲虫的回报",
         "cur": get_quest_complete("Rock Rollers")
     },
     {
         "name": "钟心镇（芙蕾商店）",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "钟心镇",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": '第一幕，由芙蕾以330念珠出售；需完成主线任务“拯救：丝缚小镇”',
@@ -1095,7 +1095,7 @@ other_items = [
     },
     {
         "name": "风蚀长阶",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "风蚀长阶",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，需要蛛攀术",
@@ -1103,7 +1103,7 @@ other_items = [
     },
     {
         "name": "沙噬虫道",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "沙噬虫道",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，沙噬虫道区域获取",
@@ -1111,7 +1111,7 @@ other_items = [
     },
     {
         "name": "腐汁泽（左下）",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "腐汁泽",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，腐汁泽区域获取",
@@ -1119,7 +1119,7 @@ other_items = [
     },
     {
         "name": "圣堡钟道",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "圣咏殿",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，击败幽影并从废鸣管风琴进入",
@@ -1127,7 +1127,7 @@ other_items = [
     },
     {
         "name": "圣堡工厂",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "圣堡工厂",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，圣堡工厂区域获取",
@@ -1135,7 +1135,7 @@ other_items = [
     },
     {
         "name": "深坞",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "深坞",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，需要简易钥匙和飞针冲刺；击败监工兄弟西格尼斯&格隆",
@@ -1143,7 +1143,7 @@ other_items = [
     },
     {
         "name": "低语书库",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "低语书库",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，低语书库区域获取",
@@ -1151,7 +1151,7 @@ other_items = [
     },
     {
         "name": "卡拉卡沙川",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "卡拉卡沙川",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，需要飞针冲刺",
@@ -1159,7 +1159,7 @@ other_items = [
     },
     {
         "name": "中途酒馆",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "灰沼",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，需要幻羽披风",
@@ -1167,7 +1167,7 @@ other_items = [
     },
     {
         "name": "忆廊",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "忆廊",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，需要幻羽披风",
@@ -1175,7 +1175,7 @@ other_items = [
     },
     {
         "name": "罪石牢狱",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "罪石牢狱",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，需要幻羽披风",
@@ -1183,7 +1183,7 @@ other_items = [
     },
     {
         "name": "腐汁泽（右上）",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "腐汁泽",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，需要幻羽披风，藏在一个悬挂的包裹中",
@@ -1191,7 +1191,7 @@ other_items = [
     },
     {
         "name": "钟心镇（第三幕）",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "第三幕",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第三幕，需要灵丝升腾",
@@ -1199,7 +1199,7 @@ other_items = [
     },
     {
         "name": "远野（第三幕）",
-        "category": "忆境纪念盒（不计完成度）",
+        "category": "忆境纪念盒（不占完成度）",
         "scene": "第三幕",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第三幕，需要灵丝升腾",
@@ -1462,9 +1462,9 @@ other_items = [
         "cur": get_scene_bool("Tut_02", "moss_berry_fruit")
     },
     {
-        "name": "出生点织巢左侧",
+        "name": "阿特拉织巢左侧",
         "category": "苔莓（不占完成度）",
-        "scene": "苔藓洞穴",
+        "scene": "阿特拉织巢",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
         "desc": "在阿特拉织巢左下部的一个隐藏房间中，位于长椅所在房间左侧",
         "cur": get_scene_bool("Weave_03", "moss_berry_fruit")
@@ -1496,7 +1496,7 @@ other_items = [
     {
         "name": "漫游者教堂上空蚊子",
         "category": "苔莓（不占完成度）",
-        "scene": "苔藓洞穴",
+        "scene": "骸底镇",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
         "desc": "位于骸冢上部，被一只阿克尼叼着",
         "cur": lambda d: d["playerData"].get("bonegraveAspidBerryCollected", False)
@@ -1569,7 +1569,7 @@ other_items = [
         "name":"骨卷轴",
         "desc":"远野织女右侧",
         "scene": "远野",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/e7/Bone_Scroll.png/69px-Bone_Scroll.png",
         "cur": get_relic("Bone Record Bone_East_14")
     },
@@ -1577,7 +1577,7 @@ other_items = [
         "name":"骨卷轴",
         "desc":"中途酒馆右侧水池",
         "scene": "灰沼",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/e7/Bone_Scroll.png/69px-Bone_Scroll.png",
         "cur": get_relic("Bone Record Greymoor_flooded_corridor")
     },
@@ -1585,7 +1585,7 @@ other_items = [
         "name":"骨卷轴",
         "desc":"圣堡工厂拿地图房间",
         "scene": "圣堡工厂",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/e7/Bone_Scroll.png/69px-Bone_Scroll.png",
         "cur": get_relic("Bone Record Understore_Map_Room")
     },
@@ -1593,7 +1593,7 @@ other_items = [
         "name":"骨卷轴",
         "desc":"火灵竹丛最顶端",
         "scene": "火灵竹丛",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/e7/Bone_Scroll.png/69px-Bone_Scroll.png",
         "cur": get_relic("Bone Record Wisp Top")
     },
@@ -1601,7 +1601,7 @@ other_items = [
         "name":"织者雕像",
         "desc":"骸底镇上空",
         "scene": "骸底镇",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/c/cd/Weaver_Effigy.png/49px-Weaver_Effigy.png",
         "cur": get_relic("Weaver Totem Bonetown_upper_room")
     },
@@ -1609,7 +1609,7 @@ other_items = [
         "name":"织者雕像",
         "desc":"壳木林下方，被寄生后可拿",
         "scene": "壳木林",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/c/cd/Weaver_Effigy.png/49px-Weaver_Effigy.png",
         "cur": get_relic("Weaver Totem Witch")
     },
@@ -1617,7 +1617,7 @@ other_items = [
         "name":"织者雕像",
         "desc":"罪石牢狱底部",
         "scene": "罪石牢狱",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/c/cd/Weaver_Effigy.png/49px-Weaver_Effigy.png",
         "cur": get_relic("Weaver Totem Slab_Bottom")
     },
@@ -1625,7 +1625,7 @@ other_items = [
         "name":"圣咏戒律",
         "desc":"骸底镇上方悬崖",
         "scene": "骸底镇",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/7/77/Choral_Commandment.png/59px-Choral_Commandment.png",
         "cur": get_relic("Seal Chit Aspid_01")
     },
@@ -1633,7 +1633,7 @@ other_items = [
         "name":"圣咏戒律",
         "desc":"白愈厅左侧",
         "scene": "白愈厅",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/7/77/Choral_Commandment.png/59px-Choral_Commandment.png",
         "cur": get_relic("Seal Chit Ward Corpse")
     },
@@ -1641,7 +1641,7 @@ other_items = [
         "name":"圣咏戒律",
         "desc":"圣歌盟地再寻商贾后购买",
         "scene": "圣歌盟地",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/7/77/Choral_Commandment.png/59px-Choral_Commandment.png",
         "cur": get_relic("Seal Chit City Merchant")
     },
@@ -1649,15 +1649,15 @@ other_items = [
         "name":"圣咏戒律（第三幕）",
         "desc":"第三幕白愈厅上冲",
         "scene": "第三幕",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/7/77/Choral_Commandment.png/59px-Choral_Commandment.png",
         "cur": get_relic("Seal Chit Silk Siphon")
     },
     {
         "name":"符文竖琴",
         "desc":"阿特拉织巢右上",
-        "scene": "苔藓洞穴",
-        "category": "遗物和音筒（不计完成度）",
+        "scene": "阿特拉织巢",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/eb/Rune_Harp.png/48px-Rune_Harp.png",
         "cur": get_relic("Weaver Record Weave_08")
     },
@@ -1665,7 +1665,7 @@ other_items = [
         "name":"符文竖琴",
         "desc":"远野织巢隐藏",
         "scene": "远野",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/eb/Rune_Harp.png/48px-Rune_Harp.png",
         "cur": get_relic("Weaver Record Sprint_Challenge")
     },
@@ -1673,7 +1673,7 @@ other_items = [
         "name":"符文竖琴（第三幕）",
         "desc":"第三幕高庭，指挥家身旁",
         "scene": "第三幕",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/eb/Rune_Harp.png/48px-Rune_Harp.png",
         "cur": get_relic("Weaver Record Conductor")
     },
@@ -1681,7 +1681,7 @@ other_items = [
         "name":"神秘蛋（第三幕）",
         "desc":"第三幕深渊",
         "scene": "第三幕",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/44/Arcane_Egg_Silksong.png/80px-Arcane_Egg_Silksong.png",
         "cur": get_relic("Ancient Egg Abyss Middle")
     },
@@ -1689,7 +1689,7 @@ other_items = [
         "name":"圣咏音筒",
         "desc":"低语书库管理员房间",
         "scene": "低语书库",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/41/Psalm_Cylinder.png/79px-Psalm_Cylinder.png",
         "cur": get_relic("Psalm Cylinder Librarian")
     },
@@ -1697,7 +1697,7 @@ other_items = [
         "name":"圣咏音筒",
         "desc":"白愈厅打完boss向下",
         "scene": "白愈厅",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/41/Psalm_Cylinder.png/79px-Psalm_Cylinder.png",
         "cur": get_relic("Psalm Cylinder Ward")
     },
@@ -1705,7 +1705,7 @@ other_items = [
         "name":"圣咏音筒",
         "desc":"高庭中部澡堂",
         "scene": "高庭",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/41/Psalm_Cylinder.png/79px-Psalm_Cylinder.png",
         "cur": get_relic("Psalm Cylinder Hang")
     },
@@ -1713,7 +1713,7 @@ other_items = [
         "name":"圣咏音筒",
         "desc":"风蚀长阶小偷购买",
         "scene": "风蚀长阶",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/41/Psalm_Cylinder.png/79px-Psalm_Cylinder.png",
         "cur": get_relic("Psalm Cylinder Grindle")
     },
@@ -1721,7 +1721,7 @@ other_items = [
         "name":"圣咏音筒",
         "desc":"低语书库右上隐藏通道",
         "scene": "低语书库",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/41/Psalm_Cylinder.png/79px-Psalm_Cylinder.png",
         "cur": get_relic("Psalm Cylinder Library Roof")
     },
@@ -1729,7 +1729,7 @@ other_items = [
         "name":"圣歌音筒",
         "desc":"低语书库底部，主线必拿",
         "scene": "低语书库",
-        "category": "遗物和音筒（不计完成度）",
+        "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/d/d0/Sacred_Cylinder.png/80px-Sacred_Cylinder.png",
         "cur": get_relic("Librarian Melody Cylinder")
     },

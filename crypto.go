@@ -108,6 +108,7 @@ type AnalyzeResult struct {
 	Completion int
 	PlayTime   string
 	Categories []*CategoryResult
+	SceneNames []string
 }
 
 type CategoryResult struct {
@@ -123,9 +124,10 @@ type ItemResult struct {
 	Desc       string `json:"desc"`
 	Wiki       string `json:"wiki"`
 	Scene      string `json:"scene"`
+	IsDetail   bool   `json:"is_detail,omitempty"`
 }
 
-func (a *App) analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items starlark.Value, starBuf starlark.Value) (int, error) {
+func (a *App) analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items starlark.Value, starBuf starlark.Value, isDetail bool) (int, error) {
 	var totalCompletion int
 	for item := range starlark.Elements(items.(starlark.Iterable)) {
 		var (
@@ -222,6 +224,7 @@ func (a *App) analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, i
 			Desc:       desc,
 			Wiki:       wiki,
 			Scene:      scene,
+			IsDetail:   isDetail,
 		})
 	}
 	return totalCompletion, nil
@@ -275,11 +278,11 @@ func (a *App) analyze(buf []byte) (ret *AnalyzeResult, err error) {
 		return nil, errors.WithStack(err)
 	}
 	m := make(map[string][]ItemResult)
-	totalCompletion, err := a.analyzeItems(m, thread, global["items"], starBuf)
+	totalCompletion, err := a.analyzeItems(m, thread, global["items"], starBuf, false)
 	if err != nil {
 		return nil, err
 	}
-	_, err = a.analyzeItems(m, thread, global["other_items"], starBuf)
+	_, err = a.analyzeItems(m, thread, global["other_items"], starBuf, true)
 	if err != nil {
 		return nil, err
 	}
@@ -291,11 +294,19 @@ func (a *App) analyze(buf []byte) (ret *AnalyzeResult, err error) {
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
+	var sceneNames []string
+	if iterable, ok := global["scene_names"].(starlark.Iterable); ok {
+		for v := range starlark.Elements(iterable) {
+			s, _ := starlark.AsString(v)
+			sceneNames = append(sceneNames, s)
+		}
+	}
 	playTime := time.Duration(playTimeValue.(starlark.Float)) * time.Second
 	ret = &AnalyzeResult{
 		Completion: totalCompletion,
 		PlayTime:   playTime.String(),
 		Categories: make([]*CategoryResult, 0, len(m)),
+		SceneNames: sceneNames,
 	}
 	for categoryName := range starlark.Elements(global["categories"].(starlark.Iterable)) {
 		name, _ := starlark.AsString(categoryName)

@@ -1,18 +1,14 @@
 import {main} from '../wailsjs/go/models';
+import AnalyzeResult = main.AnalyzeResult;
 import CategoryResult = main.CategoryResult;
 import ItemResult = main.ItemResult;
 
-const sceneOrder = {
-    '其它': 98,
-    '第三幕': 99,
-};
-
-export const sortResultByScene = (res: CategoryResult[]): CategoryResult[] => {
+export const sortResultByScene = (res: AnalyzeResult): CategoryResult[] => {
     if (!res) return [];
     const result: CategoryResult[] = [];
     const categories = new Map<string, ItemResult[]>();
-    for (const r of res) {
-        for (const item of r.items) {
+    for (const c of res.Categories) {
+        for (const item of c.items) {
             const scene = item.scene || '其它';
             if (!categories.has(scene)) {
                 const newItem = new CategoryResult({name: scene, items: []});
@@ -20,9 +16,16 @@ export const sortResultByScene = (res: CategoryResult[]): CategoryResult[] => {
                 categories.set(scene, newItem.items);
             }
             const category = categories.get(scene);
-            category.push(item);
+            if (item.is_detail && item.scene !== "第三幕" && item.scene !=="其它" && !c.name.includes("遗物和音筒") && !c.name.includes("工具袋") && !c.name.includes("制作匣")) {
+                category.push({...item, show_text: c.name.replace("详情", "").replace("（不占完成度）", "")});
+            } else {
+                category.push(item);
+            }
         }
     }
-    result.sort((a, b) => (sceneOrder[a.name] ?? 0) - (sceneOrder[b.name] ?? 0));
+    const sceneOrder = Object.fromEntries(
+        res.SceneNames.map((item, index) => [item, index])
+    );
+    result.sort((a, b) => (sceneOrder[a.name] ?? 99) - (sceneOrder[b.name] ?? 99));
     return result;
 };
