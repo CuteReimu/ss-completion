@@ -730,107 +730,91 @@ other_items = [
     {
         "name": "斯莱商店（1）",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "cur": lambda d: d["playerData"].get("slyShellFrag1", False)
     },
     {
         "name": "斯莱商店（2）",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "cur": lambda d: d["playerData"].get("slyShellFrag2", False)
     },
     {
         "name": "斯莱商店（3）",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "cur": lambda d: d["playerData"].get("slyShellFrag3", False)
     },
     {
         "name": "斯莱商店（4）",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "cur": lambda d: d["playerData"].get("slyShellFrag4", False)
     },
     {
         "name": "先知给予",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "cur": lambda d: d["playerData"].get("dreamReward8", False)
     },
     {
         "name": "毛里克巢穴",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "desc": "遗忘十字路左部，杀死躁郁的毛里克的奖励",
         "cur": get_scene_bool("Crossroads_13", "Heart Piece")
     },
     {
         "name": "虫爷爷赠予",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "desc": "由虫爷爷赠予，需要营救5只幼虫",
         "cur": get_scene_bool("Crossroads_38", "Heart Piece")
     },
     {
         "name": "遗忘十字路",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "desc": "遗忘十字路，假骑士下方有很多戈姆处，推荐先获取螳螂爪，或使用下劈",
         "cur": get_scene_bool("Crossroads_09", "Heart Piece")
     },
     {
         "name": "布蕾塔房间",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "desc": "德特茅斯布蕾塔的屋子里，需要在真菌荒地救出布蕾塔",
         "cur": get_scene_bool("Room_Bretta", "Heart Piece")
     },
     {
         "name": "王后驿站",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "desc": "王后驿站右部，需要螳螂爪",
         "cur": get_scene_bool("Fungus2_01", "Heart Piece")
     },
     {
         "name": "石之庇护所",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "desc": "苍绿之径的石之庇护所，推荐先获取光蝇灯笼",
         "cur": get_scene_bool("Fungus1_36", "Heart Piece")
     },
     {
         "name": "皇家下水道",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "desc": "皇家下水道左上部，游到左边的房间主道下",
         "cur": get_scene_bool("Waterways_04b", "Heart Piece")
     },
     {
         "name": "水晶山峰",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "desc": "水晶山峰，击败暴怒守卫的奖励，需要帝王之翼",
         "cur": get_scene_bool("Mines_32", "Heart Piece")
     },
     {
         "name": "深邃巢穴",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "desc": "通过真菌核心进入深邃巢穴，在螳螂领主附近，需要帝王之翼",
         "cur": get_scene_bool("Fungus2_25", "Heart Piece")
     },
     {
         "name": "蜂巢",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "desc": "在蜂巢的一堵墙后，需要引蜂巢守卫撞碎墙壁",
         "cur": get_scene_bool("Hive_04", "Heart Piece")
     },
     {
         "name": "送花任务",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
         "desc": "由安息之地的灰色哀悼者给予，需要完成送娇嫩的花的任务",
         "cur": get_scene_bool("Room_Mansion", "Heart Piece")
     },
@@ -838,59 +822,50 @@ other_items = [
     {
         "name": "斯莱商店（1）",
         "category": "容器碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/29/Vessel_Fragment.png",
         "cur": lambda d: d["playerData"].get("slyVesselFrag1", False)
     },
     {
         "name": "斯莱商店（2）",
         "category": "容器碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/29/Vessel_Fragment.png",
         "cur": lambda d: d["playerData"].get("slyVesselFrag2", False)
     },
     {
         "name": "先知给予",
         "category": "容器碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/29/Vessel_Fragment.png",
         "cur": lambda d: d["playerData"].get("dreamReward5", False)
     },
     {
         "name": "鹿角虫巢穴",
         "category": "容器碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/29/Vessel_Fragment.png",
         "cur": lambda d: d["playerData"].get("vesselFragStagNest", False)
     },
     {
         "name": "苍绿之径",
         "category": "容器碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/29/Vessel_Fragment.png",
         "desc": "苍绿之径中，通往王后花园但无法从这侧打开的入口附近",
         "cur": get_scene_bool("Fungus1_13", "Vessel Fragment")
     },
     {
         "name": "遗忘十字路",
         "category": "容器碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/29/Vessel_Fragment.png",
         "desc": "遗忘十字路电梯左边，需要在泪水之城解锁电梯",
         "cur": get_scene_bool("Crossroads_37", "Vessel Fragment")
     },
     {
         "name": "国王驿站",
         "category": "容器碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/29/Vessel_Fragment.png",
         "desc": "国王驿站上方的电梯旁，通过遭遇战后",
         "cur": get_scene_bool("Ruins2_09", "Vessel Fragment")
     },
     {
         "name": "深邃巢穴",
         "category": "容器碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/29/Vessel_Fragment.png",
         "desc": "深邃巢穴可使用的电车上方",
         "cur": get_scene_bool("Deepnest_38", "Vessel Fragment")
     },
     {
         "name": "古老盆地",
         "category": "容器碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/29/Vessel_Fragment.png",
         "desc": "向古老盆地喷泉中投入3000吉欧获得",
         "cur": get_scene_bool("Abyss_04", "Vessel Fragment")
     },
@@ -898,309 +873,271 @@ other_items = [
     {
         "name": "1-遗忘十字路",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "黑卵圣殿右侧，需要打败/绕过躯壳守卫",
         "cur": get_scene_bool("Crossroads_48", "Grub Bottle")
     },
     {
         "name": "2-遗忘十字路",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "",
         "cur": get_scene_bool("Crossroads_35", "Grub Bottle")
     },
     {
         "name": "3-遗忘十字路",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要打破可破坏的墙壁",
         "cur": get_scene_bool("Crossroads_03", "Grub Bottle")
     },
     {
         "name": "4-遗忘十字路",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要下批跳过刺",
         "cur": get_scene_bool("Crossroads_31", "Grub Bottle")
     },
     {
         "name": "5-遗忘十字路",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要蛾翼披风或对刺下劈",
         "cur": get_scene_bool("Crossroads_05", "Grub Bottle")
     },
     {
         "name": "6-苍绿之径",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "",
         "cur": get_scene_bool("Fungus1_06", "Grub Bottle")
     },
     {
         "name": "7-苍绿之径",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "",
         "cur": get_scene_bool("Fungus1_07", "Grub Bottle")
     },
     {
         "name": "8-苍绿之径",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要打败苔藓骑士",
         "cur": get_scene_bool("Fungus1_21", "Grub Bottle")
     },
     {
         "name": "9-苍绿之径",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要蛾翼披风",
         "cur": get_scene_bool("Fungus1_13", "Grub Bottle")
     },
     {
         "name": "10-真菌荒地",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要蛾翼披风",
         "cur": get_scene_bool("Fungus2_18", "Grub Bottle")
     },
     {
         "name": "11-真菌荒地",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要螳螂爪",
         "cur": get_scene_bool("Fungus2_20", "Grub Bottle")
     },
     {
         "name": "12-泪水之城",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "",
         "cur": get_scene_bool("Ruins1_05", "Grub Bottle")
     },
     {
         "name": "13-泪水之城",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "",
         "cur": get_scene_bool("Ruins_House_01", "Grub Bottle")
     },
     {
         "name": "14-泪水之城",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "",
         "cur": get_scene_bool("Ruins1_32", "Grub Bottle")
     },
     {
         "name": "15-泪水之城",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "",
         "cur": get_scene_bool("Ruins2_07", "Grub Bottle")
     },
     {
         "name": "16-泪水之城",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "",
         "cur": get_scene_bool("Ruins2_03", "Grub Bottle")
     },
     {
         "name": "17-水晶山峰",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要蛾翼披风和螳螂爪",
         "cur": get_scene_bool("Mines_16", "Grub Bottle")
     },
     {
         "name": "18-水晶山峰",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要水晶之心",
         "cur": get_scene_bool("Mines_19", "Grub Bottle")
     },
     {
         "name": "19-水晶山峰",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要帝王之翼",
         "cur": get_scene_bool("Mines_31", "Grub Bottle")
     },
     {
         "name": "20-水晶山峰",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要水晶之心",
         "cur": get_scene_bool("Mines_24", "Grub Bottle")
     },
     {
         "name": "21-水晶山峰",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要蛾翼披风",
         "cur": get_scene_bool("Mines_03", "Grub Bottle")
     },
     {
         "name": "22-水晶山峰",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "",
         "cur": get_scene_bool("Mines_04", "Grub Bottle")
     },
     {
         "name": "23-水晶山峰",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要进行平台跳跃/跳跳乐",
         "cur": get_scene_bool("Mines_35", "Grub Bottle")
     },
     {
         "name": "24-安息之地",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要荒芜俯冲",
         "cur": get_scene_bool("RestingGrounds_10", "Grub Bottle")
     },
     {
         "name": "25-皇家下水道",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "",
         "cur": get_scene_bool("Waterways_04", "Grub Bottle")
     },
     {
         "name": "26-皇家下水道",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要水晶之心或伊思玛的眼泪",
         "cur": get_scene_bool("Waterways_14", "Grub Bottle")
     },
     {
         "name": "27-伊思玛森林",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要伊思玛的眼泪",
         "cur": get_scene_bool("Waterways_13", "Grub Bottle")
     },
     {
         "name": "28-呼啸悬崖",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要螳螂爪",
         "cur": get_scene_bool("Fungus1_28", "Grub Bottle")
     },
     {
         "name": "29-王国边缘",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要荒芜俯冲",
         "cur": get_scene_bool("Deepnest_East_14", "Grub Bottle")
     },
     {
         "name": "30-王国边缘",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要螳螂爪",
         "cur": get_scene_bool("Deepnest_East_11", "Grub Bottle")
     },
     {
         "name": "31-雾之峡谷",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要水晶之心",
         "cur": get_scene_bool("Fungus3_47", "Grub Bottle")
     },
     {
         "name": "32-王后花园",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "",
         "cur": get_scene_bool("Fungus3_10", "Grub Bottle")
     },
     {
         "name": "33-王后花园",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要所有能力",
         "cur": get_scene_bool("Fungus3_22", "Grub Bottle")
     },
     {
         "name": "34-王后花园",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要螳螂爪",
         "cur": get_scene_bool("Fungus3_48", "Grub Bottle")
     },
     {
         "name": "35-深邃巢穴",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要打破隐藏的可以破坏的墙壁",
         "cur": get_scene_bool("Deepnest_36", "Grub Bottle")
     },
     {
         "name": "36-深邃巢穴",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要打破隐藏的可以破坏的墙壁",
         "cur": get_scene_bool("Deepnest_03", "Grub Bottle")
     },
     {
         "name": "37-深邃巢穴",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要水晶之心",
         "cur": get_scene_bool("Deepnest_31", "Grub Bottle")
     },
     {
         "name": "38-深邃巢穴",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "",
         "cur": get_scene_bool("Deepnest_39", "Grub Bottle")
     },
     {
         "name": "39-深邃巢穴",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "",
         "cur": get_scene_bool("Deepnest_Spider_Town", "Grub Bottle")
     },
     {
         "name": "40-古老盆地",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要蛾翼披风和帝王之翼",
         "cur": get_scene_bool("Abyss_19", "Grub Bottle")
     },
     {
         "name": "41-古老盆地",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要荒芜俯冲",
         "cur": get_scene_bool("Abyss_17", "Grub Bottle")
     },
     {
         "name": "42-蜂巢",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要荒芜俯冲和伊思玛的眼泪",
         "cur": get_scene_bool("Hive_03", "Grub Bottle")
     },
     {
         "name": "43-蜂巢",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要荒芜俯冲，伊思玛的眼泪和帝王之翼",
         "cur": get_scene_bool("Hive_04", "Grub Bottle")
     },
     {
         "name": "44-46-爱之塔",
         "category": "幼虫",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
         "desc": "需要爱之钥并打败收藏家，可以一次性解救3只幼虫。需要注意，若解救任何1只后直接退出游戏的话会导致剩下幼虫消失的bug",
         "cur": get_scene_bool("Ruins2_11", "Grub Bottle")
     },
 ]
+
+category_icon = {
+    "面具碎片详情": "https://huiji-public.huijistatic.com/hkss/uploads/6/69/Mask_Shard.png",
+    "容器碎片详情": "https://huiji-public.huijistatic.com/hkss/uploads/2/29/Vessel_Fragment.png",
+    "幼虫": "https://huiji-public.huijistatic.com/hkss/uploads/0/0c/Grub.png",
+}

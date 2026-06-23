@@ -23,7 +23,7 @@
     <el-button @click="outputResult" type="danger" :disabled="disableReloadBtn">导出解析后的存档</el-button>
     <el-button @click="modifyAnalyzeScript" type="danger">修改解析脚本</el-button>
     <el-button @click="captureApp" type="primary" :disabled="isCapturing" :loading="isCapturing">截图</el-button>
-    <el-switch v-model="isSortedByScene" inline-prompt active-text="按区域排序" inactive-text="按分类排序" :disabled="currentGame!='silksong'" style="margin-left:10px" size="large"></el-switch>
+    <el-switch v-model="isSortedByScene" inline-prompt active-text="按区域排序" inactive-text="按分类排序" style="margin-left:10px" size="large"></el-switch>
   </div>
   <el-text size="large" style="margin: 10px 0;">完成度：{{data.Completion ?? 0}}%{{data.PlayTime ? " 游戏时长：" + data.PlayTime : ""}}</el-text>
   <div class="card-container">
@@ -107,7 +107,6 @@ const onChangeTab = gameName => {
   ChangeGame(gameName).then(() => {
     disableReloadBtn.value = true;
     selectedUserDataFile.value = "";
-    isSortedByScene.value = false;
     data.value = new main.AnalyzeResult();
     refreshUserDataFiles();
   });

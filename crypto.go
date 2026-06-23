@@ -107,8 +107,8 @@ func (a *App) doDecryptFile(fileContent string) ([]byte, error) {
 type AnalyzeResult struct {
 	Completion int
 	PlayTime   string
-	Categories []*CategoryResult
-	SceneNames []string
+	Categories []*CategoryResult `json:"Categories,omitempty"`
+	SceneNames []string          `json:"SceneNames,omitempty"`
 }
 
 type CategoryResult struct {

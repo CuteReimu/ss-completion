@@ -61,8 +61,8 @@ export namespace main {
 	export class AnalyzeResult {
 	    Completion: number;
 	    PlayTime: string;
-	    Categories: CategoryResult[];
-	    SceneNames: string[];
+	    Categories?: CategoryResult[];
+	    SceneNames?: string[];
 	
 	    static createFrom(source: any = {}) {
 	        return new AnalyzeResult(source);
