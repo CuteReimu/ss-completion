@@ -33,7 +33,8 @@ def get_collectable_amount(collectable_name):
 # category: 所属类别
 # cur: 当前值，类型为一个函数 (d) => cur ，会将存档解析后的完整json格式传入d参数，可以返回一个数值，也可以返回bool值（表示已收集/未收集）
 # total: 总值，不填则默认为1
-# icon: 图标，填写一个url，可以不填
+# scene: 属于哪个地图，不填默认为“其它”地图
+# icon: 图标，填写一个url，可以不填。不填就去 category_icon 里面找当前 scene 的图标
 # wiki: Wiki链接，填写一个url，可以不填
 # desc: 简介，鼠标放上去弹出的tooltip，可以不填
 items = [
@@ -749,7 +750,6 @@ other_items = [
         "name": "骸底镇商店",
         "category": "面具碎片详情",
         "scene": "骸底镇",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "花费300念珠在骸底镇佩珀处购买。若未购买，到第三幕时，则需从风蚀长阶中格林德尔处购买",
         "cur": lambda d: d["playerData"].get("PurchasedBonebottomHeartPiece", False)
     },
@@ -757,14 +757,12 @@ other_items = [
         "name": "圣歌盟地商店",
         "category": "面具碎片详情",
         "scene": "圣歌盟地",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "花费750念珠在圣歌盟地购买。完成任务商贾无踪后朱比拉娜会在圣歌盟地出售",
         "cur": lambda d: d["playerData"].get("MerchantEnclaveShellFragment", False)
     },
     {
         "name": "暴怒兽蝇祈愿",
         "category": "面具碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "完成祈愿暴怒兽蝇的奖励，需要击败第一只兽蝇与第四圣咏团并且进入纺络后在钟心镇接取",
         "cur": get_quest_complete("Beastfly Hunt")
     },
@@ -772,7 +770,6 @@ other_items = [
         "name": "沙噬虫道",
         "category": "面具碎片详情",
         "scene": "沙噬虫道",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "在沙噬虫道简单钥匙门的下方获取，在一堵易碎墙壁的后方",
         "cur": get_scene_bool("Crawl_02", "Heart Piece")
     },
@@ -780,7 +777,6 @@ other_items = [
         "name": "深坞",
         "category": "面具碎片详情",
         "scene": "深坞",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "在髓骨洞窟和深坞中间的上通道",
         "cur": get_scene_bool("Dock_08", "Heart Piece")
     },
@@ -788,7 +784,6 @@ other_items = [
         "name": "远野",
         "category": "面具碎片详情",
         "scene": "远野",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "在远野织姬左上角的区域获取，需要飘泊者披风",
         "cur": get_scene_bool("Bone_East_20", "Heart Piece")
     },
@@ -796,7 +791,6 @@ other_items = [
         "name": "壳木林",
         "category": "面具碎片详情",
         "scene": "壳木林",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "在壳木林钟道站右边，需要完成平台跳跃挑战，中间有一堵易碎墙壁",
         "cur": get_scene_bool("Shellwood_14", "Heart Piece")
     },
@@ -804,7 +798,6 @@ other_items = [
         "name": "圣堡机枢核心",
         "category": "面具碎片详情",
         "scene": "机枢核心",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "圣堡机枢核心下半部分左边通道尽头",
         "cur": get_scene_bool("Song_09", "Heart Piece")
     },
@@ -812,7 +805,6 @@ other_items = [
         "name": "低语书库",
         "category": "面具碎片详情",
         "scene": "低语书库",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "需要解密低语书库的移动方块",
         "cur": get_scene_bool("Library_05", "Heart Piece")
     },
@@ -820,7 +812,6 @@ other_items = [
         "name": "雪灵山（左下角）",
         "category": "面具碎片详情",
         "scene": "雪灵山",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "雪灵山左下角，需要雪灵披风",
         "cur": get_scene_bool("Peak_04c", "Heart Piece")
     },
@@ -828,7 +819,6 @@ other_items = [
         "name": "远野东部",
         "category": "面具碎片详情",
         "scene": "远野",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "远野东部的骨头建筑内，需要完成战斗和岩浆逃生",
         "cur": get_scene_bool("Bone_East_LavaChallenge", "Heart Piece (1)")
     },
@@ -836,7 +826,6 @@ other_items = [
         "name": "阿特拉织巢",
         "category": "面具碎片详情",
         "scene": "阿特拉织巢",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "阿特拉织巢的中部隐藏区域往右边的通道，需要织忆弦针",
         "cur": get_scene_bool("Weave_05b", "Heart Piece")
     },
@@ -844,7 +833,6 @@ other_items = [
         "name": "风蚀长阶",
         "category": "面具碎片详情",
         "scene": "风蚀长阶",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "风蚀长阶左下角的向上通道，需要蛛攀术与雪灵披风",
         "cur": get_scene_bool("Coral_19b", "Heart Piece")
     },
@@ -852,7 +840,6 @@ other_items = [
         "name": "火灵竹丛",
         "category": "面具碎片详情",
         "scene": "火灵竹丛",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "火灵竹丛右边通道尽头，需要雪灵披风",
         "cur": get_scene_bool("Wisp_07", "Heart Piece")
     },
@@ -860,7 +847,6 @@ other_items = [
         "name": "罪石牢狱",
         "category": "面具碎片详情",
         "scene": "罪石牢狱",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "罪石牢狱的右上角，需要叛教之钥与雪灵披风",
         "cur": get_scene_bool("Slab_17", "Heart Piece")
     },
@@ -868,7 +854,6 @@ other_items = [
         "name": "腐汁泽",
         "category": "面具碎片详情",
         "scene": "腐汁泽",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "腐汁泽右边的一条通道尽头，需要飞针冲刺，通道里面挤满了沼蛆",
         "cur": get_scene_bool("Shadow_13", "Heart Piece")
     },
@@ -876,7 +861,6 @@ other_items = [
         "name": "雪灵山（第三幕冰晶脉窟）",
         "category": "面具碎片详情",
         "scene": "第三幕",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "在雪灵山冰晶脉窟顶端，需要灵丝升腾",
         "cur": get_scene_bool("Peak_06", "Heart Piece")
     },
@@ -884,7 +868,6 @@ other_items = [
         "name": "隐秘猎手祈愿（第三幕）",
         "category": "面具碎片详情",
         "scene": "第三幕",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "与卡梅莉塔交谈或使用深邃挽歌进入过她的记忆后，在钟心镇接取祈愿",
         "cur": get_quest_complete("Ant Trapper")
     },
@@ -892,7 +875,6 @@ other_items = [
         "name": "竞速冠军祈愿（第三幕）",
         "category": "面具碎片详情",
         "scene": "第三幕",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "完成祈愿纺络竞速冠军，在飞毛腿斯威夫特设置的第三轮赛跑比赛中获胜",
         "cur": get_quest_complete("Sprintmaster Race")
     },
@@ -900,7 +882,6 @@ other_items = [
         "name": "暗蚀之心祈愿（第三幕）",
         "category": "面具碎片详情",
         "scene": "第三幕",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
         "desc": "完成主线任务寻觅：等候终局的暗蚀之心祈愿，在钟心镇接取",
         "cur": get_quest_complete("Black Thread Pt5 Heart")
     },
@@ -908,7 +889,6 @@ other_items = [
         "name": "钟心镇商店",
         "category": "灵丝轴碎片详情",
         "scene": "钟心镇",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "花费270念珠从芙蕾的商店中购买，需要完成祈愿失踪送货员",
         "cur": lambda d: d["playerData"].get("PurchasedBelltownSpoolSegment", False)
     },
@@ -916,7 +896,6 @@ other_items = [
         "name": "圣歌盟地商店",
         "category": "灵丝轴碎片详情",
         "scene": "圣歌盟地",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "花费500念珠从朱比拉娜处购买，需要完成祈愿商贾无踪",
         "cur": lambda d: d["playerData"].get("MerchantEnclaveSpoolPiece", False)
     },
@@ -924,21 +903,18 @@ other_items = [
         "name": "格林德尔商店",
         "category": "灵丝轴碎片详情",
         "scene": "风蚀长阶",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "花费680念珠从小偷格林德尔处购买，需要雪灵披风",
         "cur": lambda d: d["playerData"].get("purchasedGrindleSpoolPiece", False)
     },
     {
         "name": "跳蚤旅团",
         "category": "灵丝轴碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "找到至少12个跳蚤并击败末代裁决者，由跳蚤旅团团长穆什卡赠予",
         "cur": lambda d: d["playerData"].get("MetCaravanTroupeLeaderJudge", False)
     },
     {
         "name": "谢尔玛祈愿",
         "category": "灵丝轴碎片详情",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "完成祈愿愈伤良方后，由谢尔玛赠与，需要使用白愈钥匙打开通往白愈厅的电梯",
         "cur": get_quest_complete("Save Sherma")
     },
@@ -946,7 +922,6 @@ other_items = [
         "name": "骸底镇",
         "category": "灵丝轴碎片详情",
         "scene": "骸底镇",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于骸底镇上方被苔藓覆盖的一面可打碎的墙壁后面",
         "cur": get_scene_bool("Bone_11b", "Silk Spool")
     },
@@ -954,7 +929,6 @@ other_items = [
         "name": "深坞右下角",
         "category": "灵丝轴碎片详情",
         "scene": "深坞",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于深坞的右下角，需要蛛攀术和飞针冲刺",
         "cur": get_scene_bool("Bone_East_13", "Silk Spool")
     },
@@ -962,7 +936,6 @@ other_items = [
         "name": "灰沼",
         "category": "灵丝轴碎片详情",
         "scene": "灰沼",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于灰沼，沙克拉长椅上方，需要打开气球机关，需要蛛攀术",
         "cur": get_scene_bool("Greymoor_02", "Silk Spool")
     },
@@ -970,7 +943,6 @@ other_items = [
         "name": "罪石牢狱",
         "category": "灵丝轴碎片详情",
         "scene": "罪石牢狱",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于罪石牢狱左侧的开放区域，需要被狱卒蝇抓捕至罪石牢狱，或者通过叛教之钥进入",
         "cur": get_scene_bool("Peak_01", "Silk Spool")
     },
@@ -978,7 +950,6 @@ other_items = [
         "name": "圣堡巨扉圣门",
         "category": "灵丝轴碎片详情",
         "scene": "巨扉圣门",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于圣堡巨扉圣门顶端，可以通过敲打天秤上来",
         "cur": get_scene_bool("Song_19_entrance", "Silk Spool")
     },
@@ -986,7 +957,6 @@ other_items = [
         "name": "白愈厅",
         "category": "灵丝轴碎片详情",
         "scene": "白愈厅",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于白愈厅的电梯井下方，需要使用白愈钥匙打开通往白愈厅的电梯",
         "cur": get_scene_bool("Ward_01", "Silk Spool")
     },
@@ -994,7 +964,6 @@ other_items = [
         "name": "圣堡机枢核心",
         "category": "灵丝轴碎片详情",
         "scene": "机枢核心",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于机枢核心的右下方",
         "cur": get_scene_bool("Cog_07", "Silk Spool")
     },
@@ -1002,7 +971,6 @@ other_items = [
         "name": "圣堡工厂右下方",
         "category": "灵丝轴碎片详情",
         "scene": "圣堡工厂",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于圣堡工厂的右下方，从第十二席建筑师的房间向右",
         "cur": get_scene_bool("Library_11b", "Silk Spool")
     },
@@ -1010,7 +978,6 @@ other_items = [
         "name": "圣堡工厂中心",
         "category": "灵丝轴碎片详情",
         "scene": "圣堡工厂",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于圣堡工厂的中心",
         "cur": get_scene_bool("Under_10", "Silk Spool")
     },
@@ -1018,7 +985,6 @@ other_items = [
         "name": "高庭顶端",
         "category": "灵丝轴碎片详情",
         "scene": "高庭",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于高庭的塔楼顶端，需要蛛攀术和飞针冲刺",
         "cur": get_scene_bool("Hang_03_top", "Silk Spool")
     },
@@ -1026,7 +992,6 @@ other_items = [
         "name": "忆廊",
         "category": "灵丝轴碎片详情",
         "scene": "忆廊",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于忆廊的左侧，翠庭展示区域，需要从四楼进入，需要飞针冲刺和雪灵披风",
         "cur": get_scene_bool("Arborium_09", "Silk Spool")
     },
@@ -1034,7 +999,6 @@ other_items = [
         "name": "深坞左下",
         "category": "灵丝轴碎片详情",
         "scene": "深坞",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于深坞，熔炉之女的左下侧",
         "cur": get_scene_bool("Dock_03c", "Silk Spool")
     },
@@ -1042,7 +1006,6 @@ other_items = [
         "name": "阿特拉织巢",
         "category": "灵丝轴碎片详情",
         "scene": "阿特拉织巢",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
         "desc": "位于阿特拉织巢，垂直通道的左侧，需要织忆弦针进入织巢",
         "cur": get_scene_bool("Weave_11", "Silk Spool")
     },
@@ -1050,7 +1013,6 @@ other_items = [
         "name": "髓骨洞窟",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "髓骨洞窟",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，需要蛛攀术",
         "cur": get_scene_bool("Bone_18", "Collectable Item Pickup")
     },
@@ -1058,7 +1020,6 @@ other_items = [
         "name": "猎者小径",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "猎者小径",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，猎者小径区域获取",
         "cur": get_scene_bool("Ant_20", "Collectable Item Pickup")
     },
@@ -1066,7 +1027,6 @@ other_items = [
         "name": "远野 / 风蚀长阶",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "远野",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，由莫特以150念珠出售，若到第三幕中仍未购买则改为格林德尔以250念珠出售",
         "cur": lambda d: d["playerData"].get("PurchasedPilgrimsRestMemoryLocket", False) or d["playerData"].get("purchasedGrindleMemoryLocket", False)
     },
@@ -1074,14 +1034,12 @@ other_items = [
         "name": "灰沼",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "灰沼",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，灰沼区域获取",
         "cur": get_scene_bool("Greymoor_16", "Collectable Item Pickup")
     },
     {
         "name": "骸底镇祈愿",
         "category": "忆境纪念盒（不占完成度）",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，祈愿任务狩猎暴烈燧甲虫的回报",
         "cur": get_quest_complete("Rock Rollers")
     },
@@ -1089,7 +1047,6 @@ other_items = [
         "name": "钟心镇（芙蕾商店）",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "钟心镇",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": '第一幕，由芙蕾以330念珠出售；需完成主线任务“拯救：丝缚小镇”',
         "cur": lambda d: d["playerData"].get("PurchasedBelltownMemoryLocket", False)
     },
@@ -1097,7 +1054,6 @@ other_items = [
         "name": "风蚀长阶",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "风蚀长阶",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，需要蛛攀术",
         "cur": get_scene_bool("Coral_02", "Collectable Item Pickup (1)")
     },
@@ -1105,7 +1061,6 @@ other_items = [
         "name": "沙噬虫道",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "沙噬虫道",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，沙噬虫道区域获取",
         "cur": get_scene_bool("Crawl_09", "Collectable Item Pickup")
     },
@@ -1113,7 +1068,6 @@ other_items = [
         "name": "腐汁泽（左下）",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "腐汁泽",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第一幕，腐汁泽区域获取",
         "cur": get_scene_bool("Shadow_20", "Collectable Item Pickup")
     },
@@ -1121,7 +1075,6 @@ other_items = [
         "name": "圣堡钟道",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "圣咏殿",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，击败幽影并从废鸣管风琴进入",
         "cur": get_scene_bool("Bellway_City", "Collectable Item Pickup")
     },
@@ -1129,7 +1082,6 @@ other_items = [
         "name": "圣堡工厂",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "圣堡工厂",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，圣堡工厂区域获取",
         "cur": get_scene_bool("Under_08", "Collectable Item Pickup")
     },
@@ -1137,7 +1089,6 @@ other_items = [
         "name": "深坞",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "深坞",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，需要简易钥匙和飞针冲刺；击败监工兄弟西格尼斯&格隆",
         "cur": get_scene_bool("Dock_13", "Collectable Item Pickup")
     },
@@ -1145,7 +1096,6 @@ other_items = [
         "name": "低语书库",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "低语书库",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，低语书库区域获取",
         "cur": get_scene_bool("Library_08", "Collectable Item Pickup")
     },
@@ -1153,7 +1103,6 @@ other_items = [
         "name": "卡拉卡沙川",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "卡拉卡沙川",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，需要飞针冲刺",
         "cur": get_scene_bool("Coral_23", "Collectable Item Pickup")
     },
@@ -1161,7 +1110,6 @@ other_items = [
         "name": "中途酒馆",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "灰沼",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，需要幻羽披风",
         "cur": get_scene_bool("Halfway_01", "Collectable Item Pickup")
     },
@@ -1169,7 +1117,6 @@ other_items = [
         "name": "忆廊",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "忆廊",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，需要幻羽披风",
         "cur": get_scene_bool("Arborium_05", "Collectable Item Pickup")
     },
@@ -1177,7 +1124,6 @@ other_items = [
         "name": "罪石牢狱",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "罪石牢狱",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，需要幻羽披风",
         "cur": get_scene_bool("Slab_Cell_Quiet", "Collectable Item Pickup")
     },
@@ -1185,7 +1131,6 @@ other_items = [
         "name": "腐汁泽（右上）",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "腐汁泽",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，需要幻羽披风，藏在一个悬挂的包裹中",
         "cur": get_scene_bool("Shadow_27", "Sack Corpse Pickup")
     },
@@ -1193,7 +1138,6 @@ other_items = [
         "name": "钟心镇（第三幕）",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "第三幕",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第三幕，需要灵丝升腾",
         "cur": get_scene_bool("Belltown", "Collectable Item Pickup")
     },
@@ -1201,7 +1145,6 @@ other_items = [
         "name": "远野（第三幕）",
         "category": "忆境纪念盒（不占完成度）",
         "scene": "第三幕",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第三幕，需要灵丝升腾",
         "cur": get_scene_bool("Bone_East_25", "Collectable Item Pickup")
     },
@@ -1209,7 +1152,6 @@ other_items = [
         "name": "1-髓骨洞窟",
         "category": "跳蚤",
         "scene": "髓骨洞窟",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "需要击败钟道兽并激活髓骨洞窟的钟殿",
         "cur": lambda d: d["playerData"].get("SavedFlea_Bone_06", False)
     },
@@ -1217,7 +1159,6 @@ other_items = [
         "name": "2-深坞",
         "category": "跳蚤",
         "scene": "深坞",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "在深坞钟道兽车站左侧一堵可破坏的墙后面",
         "cur": lambda d: d["playerData"].get("SavedFlea_Dock_16", False)
     },
@@ -1225,7 +1166,6 @@ other_items = [
         "name": "3-深坞",
         "category": "跳蚤",
         "scene": "深坞",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "需要疾风步，从获得疾风步的位置向左跑，然后击打房间右上角的拉杆",
         "cur": lambda d: d["playerData"].get("SavedFlea_Bone_East_05", False)
     },
@@ -1233,7 +1173,6 @@ other_items = [
         "name": "4-深坞",
         "category": "跳蚤",
         "scene": "深坞",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "需要飞针冲刺，可以使用飞针抓住下方房间中央的圆环来到达上层区域",
         "cur": lambda d: d["playerData"].get("SavedFlea_Dock_03d", False)
     },
@@ -1241,7 +1180,6 @@ other_items = [
         "name": "5-猎者小径",
         "category": "跳蚤",
         "scene": "猎者小径",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "需要击败猎者小径入口的斯卡尔禁卫，经过一段小小的平台跳跃挑战后即可到达",
         "cur": lambda d: d["playerData"].get("SavedFlea_Ant_03", False)
     },
@@ -1249,7 +1187,6 @@ other_items = [
         "name": "6-远野",
         "category": "跳蚤",
         "scene": "远野",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "跳蚤被关在一个笼子里，笼子前面有陷阱笼",
         "cur": lambda d: d["playerData"].get("SavedFlea_Bone_East_17b", False)
     },
@@ -1257,7 +1194,6 @@ other_items = [
         "name": "7-远野",
         "category": "跳蚤",
         "scene": "远野",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "需要流浪者披风和蛛攀术",
         "cur": lambda d: d["playerData"].get("SavedFlea_Bone_East_10_Church", False)
     },
@@ -1265,7 +1201,6 @@ other_items = [
         "name": "8-沙噬虫道",
         "category": "跳蚤",
         "scene": "沙噬虫道",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "跳蚤被一只阿克尼叼着，打败它就能救出跳蚤",
         "cur": lambda d: d["playerData"].get("SavedFlea_Crawl_06", False)
     },
@@ -1273,7 +1208,6 @@ other_items = [
         "name": "9-灰沼",
         "category": "跳蚤",
         "scene": "灰沼",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "需要完成腐囊虫泽的遭遇战，打开气球机关后才可到达",
         "cur": lambda d: d["playerData"].get("SavedFlea_Greymoor_15b", False)
     },
@@ -1281,7 +1215,6 @@ other_items = [
         "name": "10-灰沼",
         "category": "跳蚤",
         "scene": "灰沼",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "灰沼左侧塔楼的顶端，需要蛛攀术",
         "cur": lambda d: d["playerData"].get("SavedFlea_Greymoor_06", False)
     },
@@ -1297,7 +1230,6 @@ other_items = [
         "name": "12-钟心镇",
         "category": "跳蚤",
         "scene": "钟心镇",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "需要打败碎裂者修姊，需要蛛攀术",
         "cur": lambda d: d["playerData"].get("SavedFlea_Belltown_04", False)
     },
@@ -1305,7 +1237,6 @@ other_items = [
         "name": "13-壳木林",
         "category": "跳蚤",
         "scene": "壳木林",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "位于一些有固定敌人的平台下方",
         "cur": lambda d: d["playerData"].get("SavedFlea_Shellwood_03", False)
     },
@@ -1313,7 +1244,6 @@ other_items = [
         "name": "14-风蚀长阶",
         "category": "跳蚤",
         "scene": "风蚀长阶",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "位于钟道站左侧房间的顶部，需要蛛攀术",
         "cur": lambda d: d["playerData"].get("SavedFlea_Coral_35", False)
     },
@@ -1321,7 +1251,6 @@ other_items = [
         "name": "15-罪途",
         "category": "跳蚤",
         "scene": "罪途",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "一只蟑螂在附近游荡，当靠近营救跳蚤时，它会发动攻击",
         "cur": lambda d: d["playerData"].get("SavedFlea_Dust_12", False)
     },
@@ -1329,7 +1258,6 @@ other_items = [
         "name": "16-腐汁泽",
         "category": "跳蚤",
         "scene": "腐汁泽",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "位于一堵可破坏的墙后面",
         "cur": lambda d: d["playerData"].get("SavedFlea_Shadow_28", False)
     },
@@ -1337,7 +1265,6 @@ other_items = [
         "name": "17-腐汁泽",
         "category": "跳蚤",
         "scene": "腐汁泽",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "需要穿过迷瘴",
         "cur": lambda d: d["playerData"].get("SavedFlea_Dust_09", False)
     },
@@ -1345,7 +1272,6 @@ other_items = [
         "name": "18-腐汁泽",
         "category": "跳蚤",
         "scene": "腐汁泽",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "需要蛛攀术",
         "cur": lambda d: d["playerData"].get("SavedFlea_Shadow_10", False)
     },
@@ -1353,7 +1279,6 @@ other_items = [
         "name": "19-圣堡工厂",
         "category": "跳蚤",
         "scene": "圣堡工厂",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "需要穿过可破坏的天花板，然后经过一些简短的平台跳跃挑战",
         "cur": lambda d: d["playerData"].get("SavedFlea_Under_23", False)
     },
@@ -1361,7 +1286,6 @@ other_items = [
         "name": "20-圣堡工厂",
         "category": "跳蚤",
         "scene": "圣堡工厂",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "房间里有很多敌人",
         "cur": lambda d: d["playerData"].get("SavedFlea_Under_21", False)
     },
@@ -1369,7 +1293,6 @@ other_items = [
         "name": "21-圣咏殿",
         "category": "跳蚤",
         "scene": "圣咏殿",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "经过一段平台跳跃关卡后即可到达",
         "cur": lambda d: d["playerData"].get("SavedFlea_Song_14", False)
     },
@@ -1377,7 +1300,6 @@ other_items = [
         "name": "22-圣咏殿",
         "category": "跳蚤",
         "scene": "圣咏殿",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "需要流浪者披风或对风扇下劈",
         "cur": lambda d: d["playerData"].get("SavedFlea_Song_11", False)
     },
@@ -1385,7 +1307,6 @@ other_items = [
         "name": "23-圣咏殿",
         "category": "跳蚤",
         "scene": "圣咏殿",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "",
         "cur": lambda d: d["playerData"].get("SavedFlea_Library_09", False)
     },
@@ -1401,7 +1322,6 @@ other_items = [
         "name": "25-罪石牢狱",
         "category": "跳蚤",
         "scene": "罪石牢狱",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": '一扇被雾气笼罩的门内，可以选择"进入"',
         "cur": lambda d: d["playerData"].get("SavedFlea_Slab_Cell", False)
     },
@@ -1409,7 +1329,6 @@ other_items = [
         "name": "26-罪石牢狱",
         "category": "跳蚤",
         "scene": "罪石牢狱",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "跳蚤位于休息长凳上方，在开口左上方的一个小房间里",
         "cur": lambda d: d["playerData"].get("SavedFlea_Slab_06", False)
     },
@@ -1417,7 +1336,6 @@ other_items = [
         "name": "27-雪灵山",
         "category": "跳蚤",
         "scene": "雪灵山",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "跳蚤被冻在冰里，必须用针刺它才能把它弄出来",
         "cur": lambda d: d["playerData"].get("SavedFlea_Peak_05c", False)
     },
@@ -1425,7 +1343,6 @@ other_items = [
         "name": "28-卡拉卡沙川",
         "category": "跳蚤",
         "scene": "卡拉卡沙川",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "位于房间顶部，可从右侧覆盖着珊瑚的后面到达，也可以通过使用超级跳来到达",
         "cur": lambda d: d["playerData"].get("SavedFlea_Coral_24", False)
     },
@@ -1441,7 +1358,6 @@ other_items = [
         "name": "30-低语书库",
         "category": "跳蚤",
         "scene": "低语书库",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
         "desc": "房间顶部可通过推动位于房间左侧中间的箱子到达",
         "cur": lambda d: d["playerData"].get("SavedFlea_Library_01", False)
     },
@@ -1449,7 +1365,6 @@ other_items = [
         "name": "忆廊椅子旁",
         "category": "苔莓（不占完成度）",
         "scene": "忆廊",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
         "desc": "在忆廊，位于长椅右侧的一个房间中，需要从另一侧进入",
         "cur": get_scene_bool("Arborium_04", "moss_berry_fruit")
     },
@@ -1457,7 +1372,6 @@ other_items = [
         "name": "苔藓洞穴出生点左上",
         "category": "苔莓（不占完成度）",
         "scene": "苔藓洞穴",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
         "desc": "在苔藓洞穴，位于初始房间左上方的房间中顶部",
         "cur": get_scene_bool("Tut_02", "moss_berry_fruit")
     },
@@ -1465,7 +1379,6 @@ other_items = [
         "name": "阿特拉织巢左侧",
         "category": "苔莓（不占完成度）",
         "scene": "阿特拉织巢",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
         "desc": "在阿特拉织巢左下部的一个隐藏房间中，位于长椅所在房间左侧",
         "cur": get_scene_bool("Weave_03", "moss_berry_fruit")
     },
@@ -1473,7 +1386,6 @@ other_items = [
         "name": "苔藓洞穴出生点右上",
         "category": "苔莓（不占完成度）",
         "scene": "苔藓洞穴",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
         "desc": "在苔藓洞穴右部，阿特拉织巢大门所在房间的顶部",
         "cur": get_scene_bool("Tut_01b", "moss_berry_fruit")
     },
@@ -1481,7 +1393,6 @@ other_items = [
         "name": "骸底镇上空蚊子",
         "category": "苔莓（不占完成度）",
         "scene": "骸底镇",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
         "desc": "前两幕中，位于骸底镇上方，被一只阿克尼叼着。第三幕中，该阿克尼移动至原位置正右方的房间内",
         "cur": lambda d: d["playerData"].get("bonetownAspidBerryCollected", False)
     },
@@ -1489,7 +1400,6 @@ other_items = [
         "name": "德鲁伊下方蚊子",
         "category": "苔莓（不占完成度）",
         "scene": "苔栖乡",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
         "desc": "在骸底镇的苔栖乡，位于苔藓德鲁伊所在房间正下方的一个隐藏房间内，被一只阿克尼叼着",
         "cur": lambda d: d["playerData"].get("mosstownAspidBerryCollected", False)
     },
@@ -1497,7 +1407,6 @@ other_items = [
         "name": "漫游者教堂上空蚊子",
         "category": "苔莓（不占完成度）",
         "scene": "骸底镇",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
         "desc": "位于骸冢上部，被一只阿克尼叼着",
         "cur": lambda d: d["playerData"].get("bonegraveAspidBerryCollected", False)
     },
@@ -1505,7 +1414,6 @@ other_items = [
         "name": "髓骨洞窟",
         "category": "制造金属",
         "scene": "髓骨洞窟",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
         "desc": "在猎者小径入口左侧，髓骨洞窟右上部的大型房间的左下角，引爆燧石炸开的通道尽头",
         "cur": get_scene_bool("Bone_07", "Collectable Item Pickup - Tool Metal")
     },
@@ -1513,7 +1421,6 @@ other_items = [
         "name": "深坞右侧宝箱",
         "category": "制造金属",
         "scene": "深坞",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
         "desc": "在深坞右端与远野联通的房间左下角，一扇上锁的门后面的宝箱内",
         "cur": get_scene_bool("Dock_03", "Collectable Item Pickup")
     },
@@ -1521,7 +1428,6 @@ other_items = [
         "name": "骸底镇购买",
         "category": "制造金属",
         "scene": "骸底镇",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
         "desc": "在骸底镇由佩珀以60念珠出售。如果没有购买，则由格林德尔在风蚀长阶以120念珠出售",
         "cur": lambda d: d["playerData"].get("PurchasedBonebottomToolMetal", False)
     },
@@ -1529,7 +1435,6 @@ other_items = [
         "name": "圣堡工厂",
         "category": "制造金属",
         "scene": "圣堡工厂",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
         "desc": "在圣堡工厂右部一条管道的尽头，位于获得飞针冲刺的位置的正下方",
         "cur": get_scene_bool("Under_19b", "Collectable Item Pickup - Tool Metal")
     },
@@ -1537,7 +1442,6 @@ other_items = [
         "name": "火灵竹丛上方小道旁",
         "category": "制造金属",
         "scene": "火灵竹丛",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
         "desc": "在火灵竹丛顶端一块可破坏天花板的后面",
         "cur": get_scene_bool("Wisp_05", "Collectable Item Pickup - Tool Metal")
     },
@@ -1545,7 +1449,6 @@ other_items = [
         "name": "腐殖渠",
         "category": "制造金属",
         "scene": "腐殖渠",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
         "desc": "在腐殖渠的苍湖右端尽头",
         "cur": get_scene_bool("Aqueduct_05", "Collectable Item Pickup - Tool Metal")
     },
@@ -1553,7 +1456,6 @@ other_items = [
         "name": "风蚀长阶",
         "category": "制造金属",
         "scene": "风蚀长阶",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
         "desc": "在风蚀长阶右上部的一个隐藏房间中，位于通往末代裁决者Boss房的长型洞穴右侧的一个洞口底部",
         "cur": get_scene_bool("Coral_32", "Collectable Item Pickup - Tool Metal")
     },
@@ -1561,7 +1463,6 @@ other_items = [
         "name": "圣歌盟地购买",
         "category": "制造金属",
         "scene": "圣歌盟地",
-        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
         "desc": "在圣歌盟地由朱比拉娜以180念珠出售",
         "cur": lambda d: d["playerData"].get("MerchantEnclaveToolMetal", False)
     },
@@ -1795,3 +1696,12 @@ other_items = [
         "cur": lambda d: d["playerData"].get("purchasedGrindleToolKit", False)
     },
 ]
+
+category_icon = {
+    "面具碎片详情": "https://huiji-public.huijistatic.com/hkss/uploads/2/2c/Mask_Shard_SS.png",
+    "灵丝轴碎片详情": "https://huiji-public.huijistatic.com/hkss/uploads/6/63/Spool_Fragment.png",
+    "苔莓（不占完成度）": "https://huiji-public.huijistatic.com/hkss/uploads/d/da/Mossberry.png",
+    "忆境纪念盒（不占完成度）": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
+    "制造金属": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
+    "跳蚤": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
+}

@@ -127,7 +127,7 @@ type ItemResult struct {
 	IsDetail   bool   `json:"is_detail,omitempty"`
 }
 
-func (a *App) analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items starlark.Value, starBuf starlark.Value, isDetail bool) (int, error) {
+func (a *App) analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items starlark.Value, starBuf starlark.Value, categoryIcon *starlark.Dict, isDetail bool) (int, error) {
 	var totalCompletion int
 	for item := range starlark.Elements(items.(starlark.Iterable)) {
 		var (
@@ -185,16 +185,22 @@ func (a *App) analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, i
 			return 0, errors.WithStack(err)
 		} else if ok {
 			icon, _ = starlark.AsString(v)
-		}
-		if v, ok, err := d.Get(starlark.String("desc")); err != nil {
-			return 0, errors.WithStack(err)
-		} else if ok {
-			desc, _ = starlark.AsString(v)
+		} else if categoryIcon != nil {
+			v, _, err = categoryIcon.Get(starlark.String(category))
+			if err != nil {
+				return 0, errors.WithStack(err)
+			}
+			icon, _ = starlark.AsString(v)
 		}
 		if v, ok, err := d.Get(starlark.String("scene")); err != nil {
 			return 0, errors.WithStack(err)
 		} else if ok {
 			scene, _ = starlark.AsString(v)
+		}
+		if v, ok, err := d.Get(starlark.String("desc")); err != nil {
+			return 0, errors.WithStack(err)
+		} else if ok {
+			desc, _ = starlark.AsString(v)
 		}
 		if v, ok, err := d.Get(starlark.String("wiki")); err != nil {
 			return 0, errors.WithStack(err)
@@ -277,12 +283,13 @@ func (a *App) analyze(buf []byte) (ret *AnalyzeResult, err error) {
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
+	categoryIcon, _ := global["category_icon"].(*starlark.Dict)
 	m := make(map[string][]ItemResult)
-	totalCompletion, err := a.analyzeItems(m, thread, global["items"], starBuf, false)
+	totalCompletion, err := a.analyzeItems(m, thread, global["items"], starBuf, categoryIcon, false)
 	if err != nil {
 		return nil, err
 	}
-	_, err = a.analyzeItems(m, thread, global["other_items"], starBuf, true)
+	_, err = a.analyzeItems(m, thread, global["other_items"], starBuf, categoryIcon, true)
 	if err != nil {
 		return nil, err
 	}
