@@ -884,7 +884,7 @@ other_items = [
         "name": "暗蚀之心祈愿（第三幕）",
         "category": "面具碎片详情",
         "scene": "第三幕",
-        "desc": "完成主线任务寻觅：等候终局的暗蚀之心祈愿，在钟心镇接取",
+        "desc": "完成主线任务寻觅：等候终局后，在钟心镇接取祈愿",
         "cur": get_quest_complete("Black Thread Pt5 Heart")
     },
     {
