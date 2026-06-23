@@ -7,6 +7,7 @@ export namespace main {
 	    icon: string;
 	    desc: string;
 	    wiki: string;
+	    scene: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new ItemResult(source);
@@ -20,6 +21,7 @@ export namespace main {
 	        this.icon = source["icon"];
 	        this.desc = source["desc"];
 	        this.wiki = source["wiki"];
+	        this.scene = source["scene"];
 	    }
 	}
 	export class CategoryResult {

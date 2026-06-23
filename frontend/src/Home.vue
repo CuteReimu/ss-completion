@@ -20,13 +20,14 @@
     ><el-icon><RefreshRight /></el-icon></el-button>
     <el-button @click="OpenDataFolder" type="primary" style="margin-right: 15px">打开存档目录</el-button>
     <el-button @click="onChooseDataFile" type="primary">手动选择存档</el-button>
-    <el-button @click="outputResult" type="primary" :disabled="disableReloadBtn">将解析后的存档导出为json</el-button>
+    <el-button @click="outputResult" type="danger" :disabled="disableReloadBtn">导出解析后的存档</el-button>
     <el-button @click="modifyAnalyzeScript" type="danger">修改解析脚本</el-button>
     <el-button @click="captureApp" type="primary" :disabled="isCapturing" :loading="isCapturing">截图</el-button>
+    <el-switch v-model="isSortedByScene" inline-prompt active-text="按区域排序" inactive-text="按分类排序" :disabled="currentGame!='silksong'" style="margin-left:10px" size="large"></el-switch>
   </div>
   <el-text size="large" style="margin: 10px 0;">完成度：{{data.Completion ?? 0}}%{{data.PlayTime ? " 游戏时长：" + data.PlayTime : ""}}</el-text>
   <div class="card-container">
-    <el-card v-for="category in data.Categories">
+    <el-card v-for="category in (isSortedByScene?resultByScene:data.Categories)">
       <template #header>{{category.name}}</template>
       <el-table :show-header="false" border :data="category.items" :row-class-name="determineRowClass" @row-click="goToWiki">
         <el-table-column label="名称">
@@ -45,10 +46,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import {ref, onMounted, computed} from 'vue';
 import {
   ElAlert, ElText, ElIcon, ElTable, ElTableColumn, ElTabs, ElTabPane,
-  ElButton, ElMessage, ElCard, ElTooltip, ElImage, ElSelect
+  ElButton, ElMessage, ElCard, ElTooltip, ElImage, ElSelect, ElSwitch,
 } from 'element-plus';
 import { RefreshRight } from '@element-plus/icons-vue';
 import { BrowserOpenURL, LogError } from '../wailsjs/runtime';
@@ -58,6 +59,7 @@ import {
 } from '../wailsjs/go/main/App';
 import { main } from "../wailsjs/go/models";
 import html2canvas from 'html2canvas';
+import { sortResultByScene } from './utils';
 
 interface OptionData {
   label: string
@@ -70,6 +72,8 @@ const selectedUserDataFile = ref("");
 const userDataFiles = ref<OptionData[]>([]);
 const currentGame = ref("silksong");
 const isCapturing = ref(false);
+const isSortedByScene = ref(false);
+const resultByScene = computed(() => sortResultByScene(data.value.Categories));
 
 const refreshUserDataFiles = () => {
   ShowDataFolder().then(files => {
@@ -103,6 +107,7 @@ const onChangeTab = gameName => {
   ChangeGame(gameName).then(() => {
     disableReloadBtn.value = true;
     selectedUserDataFile.value = "";
+    isSortedByScene.value = false;
     data.value = new main.AnalyzeResult();
     refreshUserDataFiles();
   });

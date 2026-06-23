@@ -122,6 +122,7 @@ type ItemResult struct {
 	Icon       string `json:"icon"`
 	Desc       string `json:"desc"`
 	Wiki       string `json:"wiki"`
+	Scene      string `json:"scene"`
 }
 
 func (a *App) analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, items starlark.Value, starBuf starlark.Value) (int, error) {
@@ -134,7 +135,7 @@ func (a *App) analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, i
 			status         int
 			statusText     string
 			icon, wiki     string
-			desc           string
+			desc, scene    string
 		)
 		d := item.(*starlark.Dict)
 		if v, ok, err := d.Get(starlark.String("name")); err != nil {
@@ -188,6 +189,11 @@ func (a *App) analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, i
 		} else if ok {
 			desc, _ = starlark.AsString(v)
 		}
+		if v, ok, err := d.Get(starlark.String("scene")); err != nil {
+			return 0, errors.WithStack(err)
+		} else if ok {
+			scene, _ = starlark.AsString(v)
+		}
 		if v, ok, err := d.Get(starlark.String("wiki")); err != nil {
 			return 0, errors.WithStack(err)
 		} else if ok {
@@ -215,6 +221,7 @@ func (a *App) analyzeItems(m map[string][]ItemResult, thread *starlark.Thread, i
 			Icon:       icon,
 			Desc:       desc,
 			Wiki:       wiki,
+			Scene:      scene,
 		})
 	}
 	return totalCompletion, nil
