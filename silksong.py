@@ -1120,7 +1120,7 @@ other_items = [
     {
         "name": "圣堡钟道",
         "category": "忆境纪念盒（不计完成度）",
-        "scene": "圣堡钟道",
+        "scene": "圣咏殿",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
         "desc": "第二幕，击败幽影并从废鸣管风琴进入",
         "cur": get_scene_bool("Bellway_City", "Collectable Item Pickup")
@@ -1502,9 +1502,9 @@ other_items = [
         "cur": lambda d: d["playerData"].get("bonegraveAspidBerryCollected", False)
     },
     {
-        "name": "骸骨洞窟",
+        "name": "髓骨洞窟",
         "category": "制造金属",
-        "scene": "骸骨洞窟",
+        "scene": "髓骨洞窟",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
         "desc": "在猎者小径入口左侧，髓骨洞窟右上部的大型房间的左下角，引爆燧石炸开的通道尽头",
         "cur": get_scene_bool("Bone_07", "Collectable Item Pickup - Tool Metal")
@@ -1526,17 +1526,17 @@ other_items = [
         "cur": lambda d: d["playerData"].get("PurchasedBonebottomToolMetal", False)
     },
     {
-        "name": "圣煲工厂",
+        "name": "圣堡工厂",
         "category": "制造金属",
-        "scene": "圣煲工厂",
+        "scene": "圣堡工厂",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
         "desc": "在圣堡工厂右部一条管道的尽头，位于获得飞针冲刺的位置的正下方",
         "cur": get_scene_bool("Under_19b", "Collectable Item Pickup - Tool Metal")
     },
     {
-        "name": "火灵竹林上方小道旁",
+        "name": "火灵竹丛上方小道旁",
         "category": "制造金属",
-        "scene": "火灵竹林",
+        "scene": "火灵竹丛",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
         "desc": "在火灵竹丛顶端一块可破坏天花板的后面",
         "cur": get_scene_bool("Wisp_05", "Collectable Item Pickup - Tool Metal")
@@ -1591,8 +1591,8 @@ other_items = [
     },
     {
         "name":"骨卷轴",
-        "desc":"火灵竹林最顶端",
-        "scene": "火灵竹林",
+        "desc":"火灵竹丛最顶端",
+        "scene": "火灵竹丛",
         "category": "遗物和音筒（不计完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/e/e7/Bone_Scroll.png/69px-Bone_Scroll.png",
         "cur": get_relic("Bone Record Wisp Top")
@@ -1734,7 +1734,7 @@ other_items = [
         "cur": get_relic("Librarian Melody Cylinder")
     },
     {
-        "name":"工具袋-骸骨洞窟小游戏",
+        "name":"工具袋-髓骨洞窟小游戏",
         "desc":"在髓骨洞窟游玩洛迪的飞镖小游戏，完成难度一（击中15次目标）后由洛迪给予。第三幕中在洛迪所在位置附近的桌子上拾取",
         "scene": "髓骨洞窟",
         "category": "工具袋&制作匣",
