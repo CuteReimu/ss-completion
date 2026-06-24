@@ -16,7 +16,7 @@ export const sortResultByScene = (res?: AnalyzeResult): CategoryResult[] => {
                 categories.set(scene, newItem.items);
             }
             const category = categories.get(scene)!;
-            if (item.is_detail && item.scene !== "第三幕" && item.scene !=="其它" && !c.name.includes("遗物和音筒") && !c.name.includes("工具袋") && !c.name.includes("制作匣")) {
+            if (item.is_detail && item.scene !== "第三幕" && item.scene !=="其它" && !c.name.includes("遗物和音筒") && !c.name.includes("工具") && !c.name.includes("制作匣")) {
                 category.push({...item, show_text: c.name.replace("详情", "").replace("（不占完成度）", "")});
             } else {
                 category.push(item);

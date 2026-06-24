@@ -1697,6 +1697,14 @@ other_items = [
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/5d/Crafting_Kit.png",
         "cur": lambda d: d["playerData"].get("purchasedGrindleToolKit", False)
     },
+    {
+        "name":"陷阱设置器（不占完成度）",
+        "desc":"在阿特拉织巢，需要二段跳。灵丝与灵魂祈愿必须",
+        "scene": "阿特拉织巢",
+        "category": "红色工具",
+        "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/5d/Crafting_Kit.png",
+        "cur": get_tool("Silk Snare")
+    },
 ]
 
 category_icon = {
