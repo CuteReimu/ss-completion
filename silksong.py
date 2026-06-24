@@ -797,10 +797,10 @@ other_items = [
         "cur": get_scene_bool("Shellwood_14", "Heart Piece")
     },
     {
-        "name": "圣堡机枢核心",
+        "name": "机枢核心",
         "category": "面具碎片详情",
         "scene": "机枢核心",
-        "desc": "圣堡机枢核心下半部分左边通道尽头",
+        "desc": "机枢核心下半部分左边通道尽头",
         "cur": get_scene_bool("Song_09", "Heart Piece")
     },
     {
@@ -949,10 +949,10 @@ other_items = [
         "cur": get_scene_bool("Peak_01", "Silk Spool")
     },
     {
-        "name": "圣堡巨扉圣门",
+        "name": "巨扉圣门",
         "category": "灵丝轴碎片详情",
         "scene": "巨扉圣门",
-        "desc": "位于圣堡巨扉圣门顶端，可以通过敲打天秤上来",
+        "desc": "位于巨扉圣门顶端，可以通过敲打天秤上来",
         "cur": get_scene_bool("Song_19_entrance", "Silk Spool")
     },
     {
@@ -963,7 +963,7 @@ other_items = [
         "cur": get_scene_bool("Ward_01", "Silk Spool")
     },
     {
-        "name": "圣堡机枢核心",
+        "name": "机枢核心",
         "category": "灵丝轴碎片详情",
         "scene": "机枢核心",
         "desc": "位于机枢核心的右下方",
