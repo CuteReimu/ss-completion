@@ -13,21 +13,28 @@ def get_tool(tool_name):
         return False
     return do_get_tool
 
+# 丝弹（红色工具）
+def get_webshot(d):
+    for tool in d["playerData"]["Tools"]["savedData"]:
+        if "WebShot" in tool.get("Name"):
+            return tool.get("Data", {}).get("IsUnlocked", False)
+    return False
+
 # 纹章
 def get_tool_equips(tool_equips_name):
     def do_get_tool_equips(d):
-        for tool in d["playerData"]["ToolEquips"]["savedData"]:
-            if tool.get("Name") == tool_equips_name:
-                return tool.get("Data", {}).get("IsUnlocked", False)
+        for tool_equip in d["playerData"]["ToolEquips"]["savedData"]:
+            if tool_equip.get("Name") == tool_equips_name:
+                return tool_equip.get("Data", {}).get("IsUnlocked", False)
         return False
     return do_get_tool_equips
 
 # 道具
 def get_collectable_amount(collectable_name):
     def do_get_collectable_amount(d):
-        for tool in d["playerData"]["Collectables"]["savedData"]:
-            if tool.get("Name") == collectable_name:
-                return tool.get("Data", {}).get("Amount", 0)
+        for collectable in d["playerData"]["Collectables"]["savedData"]:
+            if collectable.get("Name") == collectable_name:
+                return collectable.get("Data", {}).get("Amount", 0)
         return 0
     return do_get_collectable_amount
 
@@ -228,12 +235,21 @@ items = [
         "cur": get_tool("Conch Drill")
     },
     {
+        "name": "损坏的工具（丝弹材料）",
+        "category": "红色工具",
+        "scene": "腐汁泽",
+        "desc": "损坏的工具位于腐汁泽底部的默格林织巢内。获取损坏的工具后可通过三种途径将其修复为丝弹",
+        "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/7/72/Ruined_Tool.png/20px-Ruined_Tool.png",
+        "wiki": "https://hkss.huijiwiki.com/wiki/损坏的工具",
+        "cur": lambda d: get_webshot(d) or get_collectable_amount("Broken SilkShot")
+    },
+    {
         "name": "丝弹（三选一）",
         "category": "红色工具",
         "desc": "损坏的工具位于腐汁泽底部的默格林织巢内。获取损坏的工具后可通过三种途径将其修复为丝弹",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/b/b3/Silkshot.png/72px-Silkshot.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/丝弹",
-        "cur": lambda d: get_tool("WebShot Weaver")(d) or get_tool("WebShot Architect")(d) or get_tool("WebShot Forge")(d)
+        "cur": get_webshot
     },
     {
         "name": "掘洞钻",
@@ -1599,7 +1615,7 @@ other_items = [
     {
         "name":"圣咏音筒",
         "desc":"白愈厅打完boss向下",
-        "scene": "白愈厅",
+        "scene": "圣堡工厂",
         "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/41/Psalm_Cylinder.png/79px-Psalm_Cylinder.png",
         "cur": get_relic("Psalm Cylinder Ward")
