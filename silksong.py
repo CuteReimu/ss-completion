@@ -901,7 +901,7 @@ other_items = [
         "category": "面具碎片详情",
         "scene": "第三幕",
         "desc": "完成主线任务寻觅：等候终局后，在钟心镇接取祈愿",
-        "cur": get_quest_complete("Black Thread Pt5 Heart")
+        "cur": get_quest_complete("Destroy Thread Cores")
     },
     {
         "name": "钟心镇商店",
