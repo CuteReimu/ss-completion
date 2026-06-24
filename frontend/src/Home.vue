@@ -25,7 +25,7 @@
     <el-button @click="captureApp" type="primary" :disabled="isCapturing" :loading="isCapturing">截图</el-button>
     <el-switch v-model="isSortedByScene" inline-prompt active-text="按区域排序" inactive-text="按分类排序" style="margin-left:10px" size="large"></el-switch>
   </div>
-  <el-text size="large" style="margin: 10px 0;">完成度：{{data.Completion ?? 0}}%{{data.PlayTime ? " 游戏时长：" + data.PlayTime : ""}}</el-text>
+  <el-text size="large" style="margin: 10px 0;">完成度：{{data.Completion ?? 0}}%{{data.PlayTime ? "&emsp;游戏时长：" + data.PlayTime : ""}}</el-text>
   <div class="card-container">
     <el-card v-for="category in (isSortedByScene?resultByScene:data.Categories)">
       <template #header>{{category.name}}</template>
