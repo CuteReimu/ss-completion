@@ -616,8 +616,8 @@ items = [
     {
         "name": "野兽纹章",
         "category": "纹章",
-        "scene": "远野",
-        "desc": "野兽纹章可以在远野的野兽教堂获取，需要先在其中击败残暴的兽蝇",
+        "scene": "猎者小径",
+        "desc": "野兽纹章可以在猎者小径的野兽教堂获取，需要先在其中击败残暴的兽蝇",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/b/b9/Beast_Crest_Inventory.png/438px-Beast_Crest_Inventory.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/野兽纹章",
         "cur": get_tool_equips("Warrior"),
