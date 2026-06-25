@@ -585,12 +585,12 @@ items = [
         "cur": get_tool("Parry")
     },
     {
-        "name": "丝刃镖",
+        "name": "丝刃冲刺",
         "category": "法术",
         "scene": "沙噬虫道",
         "desc": "丝刃冲刺可以在沙噬虫道的卡恩织巢内习得，需要演奏织忆弦针来开启织巢大门",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/8/87/Icon_SS_Sharpdart.png/438px-Icon_SS_Sharpdart.png",
-        "wiki": "https://hkss.huijiwiki.com/wiki/丝刃镖",
+        "wiki": "https://hkss.huijiwiki.com/wiki/丝刃冲刺",
         "cur": get_tool("Silk Charge")
     },
     {
