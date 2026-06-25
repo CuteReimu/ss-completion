@@ -1,8 +1,8 @@
 # 所有类别的列表，按分类排序时最终会按照这个列表进行排序
-categories = ["红色工具", "蓝色工具", "黄色工具", "法术", "纹章", "能力", "其它", "面具碎片详情", "灵丝轴碎片详情", "跳蚤", "制造金属", "工具袋&制作匣", "忆境纪念盒（不占完成度）", "苔莓（不占完成度）", "遗物和音筒（不占完成度）"]
+categories = ["红色工具", "蓝色工具", "黄色工具", "法术", "纹章", "能力", "其它", "丝之心详情", "面具碎片详情", "灵丝轴碎片详情", "跳蚤", "制造金属", "工具袋&制作匣", "忆境纪念盒（不占完成度）", "苔莓（不占完成度）", "遗物和音筒（不占完成度）"]
 
 # 所有区域的列表，按区域排序时最终会按照这个列表进行排序
-scene_names = ["苔藓洞穴", "骸底镇", "髓骨洞窟", "苔栖乡", "深坞", "远野", "灰沼", "钟心镇", "壳木林", "阿特拉织巢", "风蚀长阶", "巨扉圣门", "圣咏殿", "圣歌盟地", "机枢核心", "低语书库", "圣堡工厂", "高庭", "罪石牢狱", "雪灵山", "沙噬虫道", "猎者小径", "卡拉卡沙川", "忆廊", "白愈厅", "火灵竹丛", "腐殖渠", "罪途", "腐汁泽", "其它", "第三幕"]
+scene_names = ["苔藓洞穴", "骸底镇", "髓骨洞窟", "苔栖乡", "深坞", "远野", "灰沼", "钟心镇", "壳木林", "阿特拉织巢", "风蚀长阶", "巨扉圣门", "圣咏殿", "圣歌盟地", "机枢核心", "低语书库", "圣堡工厂", "高庭", "罪石牢狱", "雪灵山", "沙噬虫道", "猎者小径", "卡拉卡沙川", "忆廊", "白愈厅", "火灵竹丛", "腐殖渠", "罪途", "腐汁泽", "摇篮圣所", "其它", "第三幕"]
 
 # 工具
 def get_tool(tool_name):
@@ -104,7 +104,7 @@ items = [
         "name": "磁石骰",
         "category": "黄色工具",
         "scene": "风蚀长阶",
-        "desc": "与风蚀长阶的幸运儿兰布尔进行游戏并赢光其念珠后由其赠与。击败机枢舞者或获得飞针冲刺后可在幸运儿兰布尔尸体旁拾取。进入第三幕后由格林德尔以300念珠出售",
+        "desc": "与风蚀长阶的幸运儿兰布尔进行游戏获取或满足特定条件后在其尸体旁拾取。第三幕由格林德尔以300念珠出售",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/3/3a/Magnetite_Dice.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/磁石骰",
         "cur": get_tool("Magnetite Dice")
@@ -203,7 +203,7 @@ items = [
         "name": "弧爪/曲镰",
         "category": "红色工具",
         "scene": "猎者小径",
-        "desc": "弧爪由猎者小径的白斑斯卡尔以140念珠出售。如果白斑斯卡尔已经死亡，则弧爪会出现在上方的一个房间中，由一只斯卡尔守卫和一只斯卡尔长矛手看守",
+        "desc": "弧爪由猎者小径的白斑斯卡尔以140念珠出售。如果白斑斯卡尔已经死亡，则弧爪会出现在上方的一个房间中",
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/2/20/Curveclaw.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/弧爪",
         "cur": lambda d: get_tool("Curve Claws")(d) or get_tool("Curve Claws Upgraded")(d)
@@ -241,7 +241,8 @@ items = [
         "desc": "损坏的工具位于腐汁泽底部的默格林织巢内。获取损坏的工具后可通过三种途径将其修复为丝弹",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/7/72/Ruined_Tool.png/20px-Ruined_Tool.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/损坏的工具",
-        "cur": lambda d: get_webshot(d) or get_collectable_amount("Broken SilkShot")
+        "cur": lambda d: get_webshot(d) or get_collectable_amount("Broken SilkShot"),
+        "multiple": 0
     },
     {
         "name": "丝弹（三选一）",
@@ -561,7 +562,6 @@ items = [
         "name": "丝之矛",
         "category": "法术",
         "scene": "苔栖乡",
-        "desc": "丝之矛可以在苔藓洞穴内的苔栖乡中习得",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/a/a4/Icon_SS_Silkspear.png/438px-Icon_SS_Silkspear.png",
         "wiki": "https://hkss.huijiwiki.com/wiki/丝之矛",
         "cur": get_tool("Silk Spear")
@@ -921,7 +921,7 @@ other_items = [
         "name": "格林德尔商店",
         "category": "灵丝轴碎片详情",
         "scene": "风蚀长阶",
-        "desc": "花费680念珠从小偷格林德尔处购买，需要雪灵披风",
+        "desc": "花费680念珠从格林德尔处购买，需要雪灵披风",
         "cur": lambda d: d["playerData"].get("purchasedGrindleSpoolPiece", False)
     },
     {
@@ -1283,7 +1283,7 @@ other_items = [
         "name": "17-腐汁泽",
         "category": "跳蚤",
         "scene": "腐汁泽",
-        "desc": "需要穿过迷瘴",
+        "desc": "该跳蚤在废鸣管风琴外面，要从废鸣管风琴的一个出口出来",
         "cur": lambda d: d["playerData"].get("SavedFlea_Dust_09", False)
     },
     {
@@ -1418,7 +1418,7 @@ other_items = [
         "name": "德鲁伊下方蚊子",
         "category": "苔莓（不占完成度）",
         "scene": "苔栖乡",
-        "desc": "在骸底镇的苔栖乡，位于苔藓德鲁伊所在房间正下方的一个隐藏房间内，被一只阿克尼叼着",
+        "desc": "在苔栖乡，位于苔藓德鲁伊所在房间正下方的一个隐藏房间内，被一只阿克尼叼着",
         "cur": lambda d: d["playerData"].get("mosstownAspidBerryCollected", False)
     },
     {
@@ -1614,7 +1614,7 @@ other_items = [
     },
     {
         "name":"圣咏音筒",
-        "desc":"白愈厅打完boss向下",
+        "desc":"白愈厅打完失缚怨魂向下",
         "scene": "圣堡工厂",
         "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/41/Psalm_Cylinder.png/79px-Psalm_Cylinder.png",
@@ -1630,7 +1630,7 @@ other_items = [
     },
     {
         "name":"圣咏音筒",
-        "desc":"风蚀长阶小偷购买",
+        "desc":"风蚀长阶格林德尔购买",
         "scene": "风蚀长阶",
         "category": "遗物和音筒（不占完成度）",
         "icon": "https://huiji-thumb.huijistatic.com/hkss/uploads/thumb/4/41/Psalm_Cylinder.png/79px-Psalm_Cylinder.png",
@@ -1721,6 +1721,27 @@ other_items = [
         "icon": "https://huiji-public.huijistatic.com/hkss/uploads/5/5d/Crafting_Kit.png",
         "cur": get_tool("Silk Snare")
     },
+    {
+        "name":"丝之心-钟道兽",
+        "scene": "髓骨洞窟",
+        "category": "丝之心详情",
+        "wiki": "https://hkss.huijiwiki.com/wiki/丝之心",
+        "cur": get_scene_bool("Memory_Silk_Heart_BellBeast", "glow_rim_Remasker")
+    },
+    {
+        "name":"丝之心-失缚怨魂",
+        "scene": "白愈厅",
+        "category": "丝之心详情",
+        "wiki": "https://hkss.huijiwiki.com/wiki/丝之心",
+        "cur": get_scene_bool("Memory_Silk_Heart_BellBeast", "glow_rim_Remasker")
+    },
+    {
+        "name":"丝之心-蕾丝",
+        "scene": "摇篮圣所",
+        "category": "丝之心详情",
+        "wiki": "https://hkss.huijiwiki.com/wiki/丝之心",
+        "cur": get_scene_bool("Memory_Silk_Heart_BellBeast", "glow_rim_Remasker")
+    },
 ]
 
 category_icon = {
@@ -1730,4 +1751,5 @@ category_icon = {
     "忆境纪念盒（不占完成度）": "https://huiji-public.huijistatic.com/hkss/uploads/a/ac/Memory_Locket.png",
     "制造金属": "https://huiji-public.huijistatic.com/hkss/uploads/0/0e/Craftmetal.png",
     "跳蚤": "https://huiji-public.huijistatic.com/hkss/uploads/d/d2/Flea.png",
+    "丝之心详情": "https://huiji-public.huijistatic.com/hkss/uploads/d/de/Icon_SS_Silk_Heart.png",
 }
