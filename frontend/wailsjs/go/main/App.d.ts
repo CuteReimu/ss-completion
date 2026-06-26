@@ -6,6 +6,8 @@ export function ChangeGame(arg1:string):Promise<void>;
 
 export function ChooseDataFile():Promise<main.AnalyzeResult>;
 
+export function GetInitialFile():Promise<string>;
+
 export function ModifyScript():Promise<void>;
 
 export function OpenDataFolder():Promise<void>;

@@ -6,6 +6,7 @@ import (
 	"log"
 	"log/slog"
 	"os"
+	"runtime"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
@@ -19,6 +20,10 @@ func main() {
 	// Create an instance of the app structure
 	app := NewApp()
 
+	if runtime.GOOS == "windows" && len(os.Args) > 1 {
+		app.initialFile = os.Args[1]
+	}
+
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:  "空洞骑士丝之歌存档分析器",
@@ -26,6 +31,10 @@ func main() {
 		Height: 900,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
+		},
+		DragAndDrop: &options.DragAndDrop{
+			EnableFileDrop:     true,
+			DisableWebViewDrop: true,
 		},
 		OnStartup: app.startup,
 		Bind:      []any{app},

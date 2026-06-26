@@ -10,6 +10,10 @@ export function ChooseDataFile() {
   return window['go']['main']['App']['ChooseDataFile']();
 }
 
+export function GetInitialFile() {
+  return window['go']['main']['App']['GetInitialFile']();
+}
+
 export function ModifyScript() {
   return window['go']['main']['App']['ModifyScript']();
 }

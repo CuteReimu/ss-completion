@@ -23,6 +23,7 @@ type App struct {
 
 	selectedFile string
 	currentGame  string
+	initialFile  string
 }
 
 // NewApp creates a new App application struct
@@ -72,6 +73,12 @@ func (a *App) setWindowSize() {
 
 	wailsRuntime.WindowSetSize(a.ctx, min(1400, targetScreen.Size.Width), newHeight)
 	wailsRuntime.WindowCenter(a.ctx)
+}
+
+func (a *App) GetInitialFile() string {
+	f := a.initialFile
+	a.initialFile = ""
+	return f
 }
 
 func (a *App) ChangeGame(gameName string) {

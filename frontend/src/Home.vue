@@ -52,10 +52,10 @@ import {
   ElButton, ElMessage, ElCard, ElTooltip, ElImage, ElSelect, ElSwitch,
 } from 'element-plus';
 import { RefreshRight } from '@element-plus/icons-vue';
-import { BrowserOpenURL, LogError } from '../wailsjs/runtime';
+import { BrowserOpenURL, LogError, OnFileDrop } from '../wailsjs/runtime';
 import {
   OpenDataFolder, ChooseDataFile, SaveBuf, ModifyScript, SaveScreenshot,
-  ShowDataFolder, SelectUserData, ChangeGame, RefreshUserData,
+  ShowDataFolder, SelectUserData, ChangeGame, RefreshUserData, GetInitialFile,
 } from '../wailsjs/go/main/App';
 import { main } from "../wailsjs/go/models";
 import html2canvas from 'html2canvas';
@@ -158,8 +158,25 @@ const goToWiki = (row: main.ItemResult) => {
   if (row.wiki) BrowserOpenURL(row.wiki);
 };
 
+const handleFileDrop = (filePath: string) => {
+  SelectUserData(filePath).then(res => {
+    data.value = res;
+    disableReloadBtn.value = false;
+    ElMessage({ message: "解析成功", type: 'success', plain: true });
+  }).catch(err => {
+    LogError(err);
+    ElMessage({ message: String(err), type: 'error', plain: true });
+  });
+};
+
 onMounted(() => {
   refreshUserDataFiles();
+  GetInitialFile().then(f => {
+    if (f) handleFileDrop(f);
+  });
+  OnFileDrop((_x, _y, paths) => {
+    if (paths.length > 0) handleFileDrop(paths[0]);
+  }, false);
 });
 
 const captureApp = () => {
